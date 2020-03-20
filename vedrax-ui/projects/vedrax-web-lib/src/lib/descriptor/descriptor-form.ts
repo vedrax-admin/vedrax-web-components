@@ -1,7 +1,7 @@
-import { ApiMethod } from '../enum';
 import { DescriptorFormControl } from './descriptor-form-control';
 import { DescriptorFormGroup } from './descriptor-form-group';
 import { DescriptorAudit } from './descriptor-audit';
+import { ApiMethod } from '../enum/api-methods';
 
 
 /**

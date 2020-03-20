@@ -2,7 +2,8 @@ import { DescriptorProperty } from './descriptor-property';
 import { DescriptorValidation } from './descriptor-validation';
 import { DescriptorOption } from './descriptor-option';
 import { DescriptorTable } from './descriptor-table';
-import { ControlType } from '../enum';
+import { ControlType } from '../enum/control-types';
+
 
 /**
  * Class that describes a control
