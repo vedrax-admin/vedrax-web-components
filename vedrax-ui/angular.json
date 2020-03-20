@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "vedrax-web-lib": {
+      "projectType": "library",
+      "root": "projects/vedrax-web-lib",
+      "sourceRoot": "projects/vedrax-web-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/vedrax-web-lib/tsconfig.lib.json",
+            "project": "projects/vedrax-web-lib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/vedrax-web-lib/src/test.ts",
+            "tsConfig": "projects/vedrax-web-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/vedrax-web-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/vedrax-web-lib/tsconfig.lib.json",
+              "projects/vedrax-web-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }},
+  "defaultProject": "vedrax-web-lib"
+}
