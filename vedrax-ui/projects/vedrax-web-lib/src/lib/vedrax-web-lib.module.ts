@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
-import { VedraxWebLibComponent } from './vedrax-web-lib.component';
-
-
 
 @NgModule({
-  declarations: [VedraxWebLibComponent],
+  declarations: [],
   imports: [
   ],
-  exports: [VedraxWebLibComponent]
+  exports: []
 })
 export class VedraxWebLibModule { }

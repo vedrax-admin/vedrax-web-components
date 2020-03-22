@@ -7,7 +7,7 @@ export class DescriptorOption {
     /**
      * The option key
      */
-    key: any;
+    key: number | string;
 
     /**
      * The option value

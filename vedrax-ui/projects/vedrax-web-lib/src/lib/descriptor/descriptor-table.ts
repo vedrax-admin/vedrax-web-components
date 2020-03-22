@@ -20,12 +20,12 @@ export class DescriptorTable {
     /**
      * Is the result paginated
      */
-    paginated: boolean = false;
+    paginated?: boolean = false;
 
     /**
      * Should load data on component initialization
      */
-    loadOnInit: boolean = false;
+    loadOnInit?: boolean = false;
 
     /**
      * The endpoint for getting the data
