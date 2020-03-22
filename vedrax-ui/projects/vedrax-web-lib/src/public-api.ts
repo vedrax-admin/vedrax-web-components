@@ -3,5 +3,5 @@
  */
 export * from './lib/descriptor';
 export * from './lib/enum';
-export * from './lib/services/form.service';
+export * from './lib/services';
 export * from './lib/vedrax-web-lib.module';
