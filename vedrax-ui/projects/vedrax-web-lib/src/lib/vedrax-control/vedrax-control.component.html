@@ -1,0 +1,17 @@
+<div [ngSwitch]="descriptor.controlType">
+
+    <!-- handling text input -->
+    <vedrax-input *ngSwitchCase="'input'" [descriptor]="descriptor" [control]="control"></vedrax-input>
+
+    <!-- handling select -->
+    <vedrax-select *ngSwitchCase="'select'" [descriptor]="descriptor" [control]="control"></vedrax-select>
+
+    <!-- handling datepicker -->
+    <vedrax-datepicker *ngSwitchCase="'datepicker'" [descriptor]="descriptor" [control]="control">
+    </vedrax-datepicker>
+
+    <!-- handling checkbox -->
+    <vedrax-checkbox *ngSwitchCase="'checkbox'" [descriptor]="descriptor" [control]="control">
+    </vedrax-checkbox>
+
+</div>
