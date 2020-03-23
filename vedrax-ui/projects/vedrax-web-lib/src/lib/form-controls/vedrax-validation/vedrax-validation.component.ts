@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { DescriptorValidation } from '../descriptor/descriptor-validation';
-
+import { DescriptorValidation } from '../../descriptor/descriptor-validation';
 
 /**
  * Class that defines a component validation

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { VedraxBaseComponent } from '../shared/vedrax-base.component';
+import { VedraxBaseComponent } from '../../shared/vedrax-base.component';
 
 @Component({
   selector: 'vedrax-radio',

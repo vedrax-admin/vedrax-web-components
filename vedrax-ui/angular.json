@@ -15,7 +15,12 @@
             "tsConfig": "projects/vedrax-web-lib/tsconfig.lib.json",
             "project": "projects/vedrax-web-lib/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/vedrax-web-lib/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {

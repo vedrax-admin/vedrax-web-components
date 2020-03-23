@@ -5,8 +5,8 @@ import { FormControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { VedraxControlComponent } from './vedrax-control.component';
-import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
-import { ControlType } from '../enum/control-types';
+import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
+import { ControlType } from '../../enum/control-types';
 
 const inputDescriptor: DescriptorFormControl = {
   controlName: 'city',

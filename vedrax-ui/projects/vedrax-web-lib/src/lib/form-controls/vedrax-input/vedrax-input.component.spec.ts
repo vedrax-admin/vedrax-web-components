@@ -4,8 +4,8 @@ import { FormControl } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { VedraxInputComponent } from './vedrax-input.component';
-import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
-import { ControlType } from '../enum/control-types';
+import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
+import { ControlType } from '../../enum/control-types';
 
 const inputDescriptor: DescriptorFormControl = {
   controlName: 'city',

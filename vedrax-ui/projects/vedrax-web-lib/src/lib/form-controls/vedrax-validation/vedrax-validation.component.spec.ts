@@ -5,7 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { VedraxValidationComponent } from './vedrax-validation.component';
 
-import { DescriptorValidation } from '../descriptor/descriptor-validation';
+import { DescriptorValidation } from '../../descriptor/descriptor-validation';
 
 describe('VedraxValidationComponent', () => {
   let component: VedraxValidationComponent;

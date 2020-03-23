@@ -4,8 +4,8 @@ import { FormControl } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { VedraxDatepickerComponent } from './vedrax-datepicker.component';
-import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
-import { ControlType } from '../enum/control-types';
+import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
+import { ControlType } from '../../enum/control-types';
 
 const datepickerDescriptor: DescriptorFormControl = {
   controlName: 'birthdate',
