@@ -1,0 +1,12 @@
+<div [ngSwitch]="descriptor.controlType">
+
+    <!-- common form controls -->
+    <vedrax-control [descriptor]="descriptor" [control]="form.get(descriptor.controlName)"></vedrax-control>
+
+    <!-- handling dynamic form creation -->
+    <vedrax-dynamic *ngSwitchCase="'arrayOfControls'" [descriptor]="descriptor" [form]="form"></vedrax-dynamic>
+
+    <!-- add other custom components here -->
+    <vedrax-search *ngSwitchCase="'search'" [descriptor]="descriptor" [control]="form.get(descriptor.controlName)"></vedrax-search>
+
+</div>
