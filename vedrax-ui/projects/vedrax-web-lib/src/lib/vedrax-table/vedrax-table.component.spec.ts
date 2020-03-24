@@ -64,6 +64,8 @@ class VedraxDataServiceMock {
 
 }
 
+const mock = { id: 2, name: 'test' };
+
 describe('VedraxTableComponent', () => {
   let component: VedraxTableComponent;
   let fixture: ComponentFixture<VedraxTableComponent>;
@@ -140,7 +142,7 @@ describe('VedraxTableComponent', () => {
 
     const descriptor: DescriptorAction = { label: 'test', url: '/api', fragment: 'detail', redirect: true };
 
-    component.select(descriptor, {id:2,name:'test'});
+    component.select(descriptor, mock);
 
     expect(router.navigate).toHaveBeenCalledWith(['/api', 2, 'detail']);
 
@@ -150,11 +152,11 @@ describe('VedraxTableComponent', () => {
 
     const spy = spyOn(component.onSelect, 'emit');
 
-    const descriptor: DescriptorAction = { label: 'test', url: '/api', redirect: false };
+    const descriptor: DescriptorAction = { label: 'test', redirect: false };
 
-    component.select(descriptor, {id:2,name:'test'});
+    component.select(descriptor, mock);
 
-    expect(spy).toHaveBeenCalledWith({ action: descriptor, id: 2 });
+    expect(spy).toHaveBeenCalledWith({ action: descriptor, item: mock });
 
   });
 
