@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
-import { VedraxTableComponent } from '../vedrax-table/vedrax-table.component';
-import { VedraxModalComponent } from '../vedrax-modal/vedrax-modal.component';
-import { VedraxBaseComponent } from '../shared/vedrax-base.component';
-import { DescriptorAction } from '../descriptor/descriptor-action';
+import { VedraxTableComponent } from '../../vedrax-table/vedrax-table.component';
+import { VedraxModalComponent } from '../../vedrax-modal/vedrax-modal.component';
+import { VedraxBaseComponent } from '../../shared/vedrax-base.component';
 
 /**
  * Class that defines a search component where 

@@ -6,10 +6,10 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
 
 import { VedraxSearchComponent } from './vedrax-search.component';
-import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
-import { ControlType } from '../enum/control-types';
-import { VedraxModalComponent } from '../vedrax-modal/vedrax-modal.component';
-import { VedraxTableComponent } from '../vedrax-table/vedrax-table.component';
+import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
+import { ControlType } from '../../enum/control-types';
+import { VedraxModalComponent } from '../../vedrax-modal/vedrax-modal.component';
+import { VedraxTableComponent } from '../../vedrax-table/vedrax-table.component';
 
 const searchDescriptor: DescriptorFormControl = {
   controlName: 'productId',
