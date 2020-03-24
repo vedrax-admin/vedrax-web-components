@@ -140,7 +140,7 @@ describe('VedraxTableComponent', () => {
 
     const descriptor: DescriptorAction = { label: 'test', url: '/api', fragment: 'detail', redirect: true };
 
-    component.select(descriptor, 2);
+    component.select(descriptor, {id:2,name:'test'});
 
     expect(router.navigate).toHaveBeenCalledWith(['/api', 2, 'detail']);
 
@@ -152,7 +152,7 @@ describe('VedraxTableComponent', () => {
 
     const descriptor: DescriptorAction = { label: 'test', url: '/api', redirect: false };
 
-    component.select(descriptor, 2);
+    component.select(descriptor, {id:2,name:'test'});
 
     expect(spy).toHaveBeenCalledWith({ action: descriptor, id: 2 });
 

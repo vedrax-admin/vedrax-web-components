@@ -166,14 +166,14 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    * 
    * @param element the selected element
    */
-  select(action: DescriptorAction, id: any): void {
+  select(action: DescriptorAction, item: any): void {
 
     if (action && action.redirect) {
-      this.router.navigate([action.url, id, action.fragment]);
+      this.router.navigate([action.url, item['id'], action.fragment]);
       return;
     }
 
-    this.onSelect.emit({ action, id });
+    this.onSelect.emit({ action, item });
   }
 
 }

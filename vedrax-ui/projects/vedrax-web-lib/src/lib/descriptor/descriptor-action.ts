@@ -17,7 +17,7 @@ export class DescriptorAction {
     /**
      * Base url used for redirection or for API call
      */
-    url: string;
+    url?: string;
 
     /**
      * An optional fragment to append to the url and item identification

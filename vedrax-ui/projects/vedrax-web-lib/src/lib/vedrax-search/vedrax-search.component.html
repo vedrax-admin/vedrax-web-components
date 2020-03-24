@@ -1,0 +1,9 @@
+<mat-form-field>
+    <input readonly matInput type="text" [placeholder]="descriptor.controlLabel" [ngModel]="displayValue">
+    <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="openDialog()">
+        <mat-icon>search</mat-icon>
+    </button>
+    <mat-error>
+        <vedrax-validation [control]="control" [validations]="descriptor.controlValidations"></vedrax-validation>
+    </mat-error>
+</mat-form-field>

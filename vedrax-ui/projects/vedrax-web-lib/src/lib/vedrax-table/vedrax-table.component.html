@@ -12,7 +12,7 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #actionMenu="matMenu">
-                        <a *ngFor="let action of navigations" mat-menu-item (click)="select(action, element.id)">{{action.label}}</a>
+                        <a *ngFor="let action of navigations" mat-menu-item (click)="select(action, element)">{{action.label}}</a>
                     </mat-menu>
 
                 </div>
