@@ -15,8 +15,8 @@ import { VedraxApiService } from '../../services/vedrax-api.service';
  */
 @Component({
   selector: 'vedrax-form-card',
-  templateUrl: './vedrax-form.component.html',
-  styleUrls: ['./vedrax-form.component.scss']
+  templateUrl: './vedrax-form-card.component.html',
+  styleUrls: ['./vedrax-form-card.component.scss']
 })
 export class VedraxFormCardComponent implements OnInit, OnDestroy {
 
@@ -30,7 +30,7 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
   /**
    * The returned API error message if any
    */
-  error?: string;
+  error: string;
 
   private subscription: Subscription = new Subscription();
 

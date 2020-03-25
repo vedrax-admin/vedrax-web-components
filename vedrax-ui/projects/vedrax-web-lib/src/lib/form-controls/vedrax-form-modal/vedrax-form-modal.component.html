@@ -5,11 +5,7 @@
 
         <div class="alert alert-warning" *ngIf="error" role="alert">{{error}}</div>
 
-        <div *ngFor="let control of data.formDescriptor.controls">
-            <vedrax-control [control]="formModal.get(control.controlName)" [descriptor]="control">
-            </vedrax-control>
-            <vedrax-control-custom [form]="formModal" [descriptor]="control"></vedrax-control-custom>
-        </div>
+        <vedrax-controls [descriptor]="descriptor" [form]="formModal"></vedrax-controls>
 
     </div>
     <div mat-dialog-actions>

@@ -1,18 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormTemplateControl } from '../descriptor/form-template-control';
-import { FormService } from '../services/form.service';
-import { VedraxApiService } from '../services/vedrax-api.service';
-import { ApiMethod } from '../enum/api-methods';
 import { Subscription, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
-import { FormDescriptor } from '../descriptor/form-descriptor';
-import { ModalFormDescriptor } from '../descriptor/modal-descriptor';
+
+
+import { FormService } from '../../services/form.service';
+import { VedraxApiService } from '../../services/vedrax-api.service';
+import { DescriptorModal } from '../../descriptor/descriptor-modal';
 
 
 @Component({
-  selector: 'app-vedrax-form-modal',
+  selector: 'vedrax-form-modal',
   templateUrl: './vedrax-form-modal.component.html',
   styleUrls: ['./vedrax-form-modal.component.scss']
 })
@@ -36,13 +35,15 @@ export class VedraxFormModalComponent implements OnInit {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ModalFormDescriptor,
+    @Inject(MAT_DIALOG_DATA) public data: DescriptorModal,
     public dialogRef: MatDialogRef<VedraxFormModalComponent>,
     private formService: FormService,
     private apiService: VedraxApiService) { }
 
   ngOnInit() {
-    this.formModal = this.formService.createFormGroup(this.data.formDescriptor.controls);
+    if (this.data.formDescriptor) {
+      this.formModal = this.formService.createFormGroup(this.data.formDescriptor.controls);
+    }
   }
 
   /**
