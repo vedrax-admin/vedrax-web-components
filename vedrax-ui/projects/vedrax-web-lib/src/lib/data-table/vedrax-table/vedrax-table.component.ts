@@ -7,15 +7,16 @@ import { tap } from 'rxjs/operators';
 
 import { VedraxTableDataSource } from './vedrax-table.datasource';
 
-import { VedraxDataService } from '../services/vedrax-data.service';
-import { DescriptorTable, DescriptorAction } from '../descriptor';
+import { VedraxDataService } from '../../services/vedrax-data.service';
+import { DescriptorTable, DescriptorAction } from '../../descriptor';
 
 /**
  * Class that defines a table component with its search box
  */
 @Component({
   selector: 'vedrax-table',
-  templateUrl: './vedrax-table.component.html'
+  templateUrl: './vedrax-table.component.html',
+  styleUrls: ['./vedrax-table.component.scss']
 })
 export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
 

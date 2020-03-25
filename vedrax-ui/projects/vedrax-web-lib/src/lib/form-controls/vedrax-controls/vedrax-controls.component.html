@@ -1,0 +1,19 @@
+<div *ngIf="descriptor">
+    <mat-tab-group *ngIf="descriptor.groups; else simpleForm">
+
+        <mat-tab *ngFor="let group of descriptor.groups" [label]="group.name">
+
+            <vedrax-form-control *ngFor="let controlId of group.ids" [form]="form"
+                [descriptor]="getControlDescriptor(controlId)">
+            </vedrax-form-control>
+
+        </mat-tab>
+    </mat-tab-group>
+
+    <ng-template #simpleForm>
+
+        <vedrax-form-control *ngFor="let control of descriptor.controls" [form]="form" [descriptor]="control">
+        </vedrax-form-control>
+
+    </ng-template>
+</div>

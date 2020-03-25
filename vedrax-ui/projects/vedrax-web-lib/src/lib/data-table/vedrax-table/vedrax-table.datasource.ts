@@ -1,6 +1,6 @@
 import { DataSource, CollectionViewer } from "@angular/cdk/collections";
 import { Observable } from 'rxjs';
-import { VedraxDataService } from '../services/vedrax-data.service';
+import { VedraxDataService } from '../../services/vedrax-data.service';
 
 /**
  * Class that implements the {@link DataSource}.

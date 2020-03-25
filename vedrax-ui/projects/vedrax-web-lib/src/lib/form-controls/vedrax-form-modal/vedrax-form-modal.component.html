@@ -1,0 +1,20 @@
+<form [formGroup]="formModal" novalidate (ngSubmit)="submit(formModal.value)">
+
+    <h1 mat-dialog-title>{{data.title}}</h1>
+    <div mat-dialog-content>
+
+        <div class="alert alert-warning" *ngIf="error" role="alert">{{error}}</div>
+
+        <div *ngFor="let control of data.formDescriptor.controls">
+            <vedrax-control [control]="formModal.get(control.controlName)" [descriptor]="control">
+            </vedrax-control>
+            <vedrax-control-custom [form]="formModal" [descriptor]="control"></vedrax-control-custom>
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <button type="button" mat-button (click)="cancel()">Cancel</button>
+        <button type="submit" [disabled]="formModal.invalid || submitted" mat-raised-button color="primary">Submit</button>
+    </div>
+
+</form>

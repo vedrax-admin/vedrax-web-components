@@ -3,13 +3,13 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 import { VedraxTableComponent } from './vedrax-table.component';
-import { DescriptorTable } from '../descriptor/descriptor-table';
-import { ControlType } from '../enum/control-types';
-import { VedraxDataService } from '../services/vedrax-data.service';
-import { HttpParams } from '@angular/common/http';
-import { DescriptorAction } from '../descriptor/descriptor-action';
+import { DescriptorTable } from '../../descriptor/descriptor-table';
+import { ControlType } from '../../enum/control-types';
+import { VedraxDataService } from '../../services/vedrax-data.service';
+import { DescriptorAction } from '../../descriptor/descriptor-action';
 
 
 const tableDescriptor: DescriptorTable = {
