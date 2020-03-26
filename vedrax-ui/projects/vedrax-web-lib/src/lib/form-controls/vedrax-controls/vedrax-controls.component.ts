@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
-import { DescriptorFormGroup } from '../../descriptor/descriptor-form-group';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 
 @Component({

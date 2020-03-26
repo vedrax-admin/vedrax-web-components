@@ -47,7 +47,9 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.formCard = this.formService.createFormGroup(this.descriptor.controls);
+    if (this.descriptor) {
+      this.formCard = this.formService.createFormGroup(this.descriptor.controls);
+    }
   }
 
   ngOnDestroy(): void {
@@ -63,7 +65,7 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
     if (this.formCard.valid) {
       this.submitted = true;
       this.subscription.add(
-        this.apiService.callEndpoint(this.descriptor.endpoint, dto, this.descriptor.method)
+        this.apiService.callEndpoint(this.descriptor, dto)
           .pipe(
             catchError(err => this.handleError(err)),
             finalize(() => {

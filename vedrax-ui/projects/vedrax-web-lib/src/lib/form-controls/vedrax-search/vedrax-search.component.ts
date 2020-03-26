@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
-import { VedraxTableComponent } from '../../vedrax-table/vedrax-table.component';
 import { VedraxModalComponent } from '../../vedrax-modal/vedrax-modal.component';
 import { VedraxBaseComponent } from '../../shared/vedrax-base.component';
+import { VedraxTableComponent } from '../../data-table/vedrax-table/vedrax-table.component';
 
 /**
  * Class that defines a search component where 

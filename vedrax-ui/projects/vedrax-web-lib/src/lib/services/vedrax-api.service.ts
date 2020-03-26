@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-
 import { Observable } from 'rxjs';
 
 import { ApiMethod } from '../enum/api-methods';
 import { Validate } from '../util/validate';
+import { DescriptorForm } from '../descriptor/descriptor-form';
 
 @Injectable({ providedIn: 'root' })
 export class VedraxApiService {
@@ -26,15 +26,16 @@ export class VedraxApiService {
 
     /**
      * Helper method for calling either a HTTP POST or a HTTP PUT 
-     * @param path the endpoint
+     * @param descriptor the form descriptor
      * @param body the body of the request
-     * @param method POST or PUT method
      */
-    callEndpoint(path: string, body: object = {}, method: ApiMethod = ApiMethod.POST): Observable<any> {
+    callEndpoint(descriptor: DescriptorForm, body: object = {}): Observable<any> {
+        Validate.isNotNull(descriptor, 'Form descriptor must be provided');
+        Validate.isNotNull(descriptor.method, 'methid in descriptor must be provided');
 
         this.transformToISODate(body);
 
-        return method === ApiMethod.POST ? this.post(path, body) : this.put(path, body);
+        return descriptor.method === ApiMethod.POST ? this.post(descriptor.endpoint, body) : this.put(descriptor.endpoint, body);
     }
 
     /**

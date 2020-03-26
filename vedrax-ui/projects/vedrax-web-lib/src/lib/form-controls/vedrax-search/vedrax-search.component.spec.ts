@@ -9,7 +9,7 @@ import { VedraxSearchComponent } from './vedrax-search.component';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { ControlType } from '../../enum/control-types';
 import { VedraxModalComponent } from '../../vedrax-modal/vedrax-modal.component';
-import { VedraxTableComponent } from '../../vedrax-table/vedrax-table.component';
+import { VedraxTableComponent } from '../../data-table/vedrax-table/vedrax-table.component';
 
 const searchDescriptor: DescriptorFormControl = {
   controlName: 'productId',

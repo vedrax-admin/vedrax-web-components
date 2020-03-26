@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { VedraxFormCardComponent } from './vedrax-form-card.component';
@@ -12,8 +12,7 @@ import { ControlType } from '../../enum/control-types';
 import { DescriptorForm } from '../../descriptor';
 import { ApiMethod } from '../../enum';
 
-
-const descriptor: DescriptorForm = {
+const descriptorForm: DescriptorForm = {
   controls: [
     {
       controlName: 'men',
@@ -25,13 +24,12 @@ const descriptor: DescriptorForm = {
       controlName: 'birthdate',
       controlProperties: [],
       controlLabel: 'Birth date',
-      controlType: ControlType.datepicker,
-      controlValidations: []
+      controlType: ControlType.datepicker
     }
   ],
   endpoint: '/api/test',
   method: ApiMethod.POST,
-}
+};
 
 class FormServiceMock {
 
@@ -53,10 +51,10 @@ class LocationMock {
   back() { }
 }
 
-describe('VedraxFormComponent', () => {
+describe('VedraxFormCardComponent', () => {
   let component: VedraxFormCardComponent;
   let fixture: ComponentFixture<VedraxFormCardComponent>;
-  let formService:FormService;
+  let formService: FormService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -78,7 +76,7 @@ describe('VedraxFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VedraxFormCardComponent);
     component = fixture.componentInstance;
-    component.descriptor = descriptor;
+    component.descriptor = descriptorForm;
     formService = TestBed.get(FormService);
     fixture.detectChanges();
   });
@@ -88,9 +86,8 @@ describe('VedraxFormComponent', () => {
   });
 
   it('form should be defined', () => {
-    let spy = spyOn(formService,"createFormGroup");
     component.ngOnInit();
     expect(component.formCard).toBeDefined();
-    expect(spy).toHaveBeenCalledWith(descriptor.controls);
   });
+
 });

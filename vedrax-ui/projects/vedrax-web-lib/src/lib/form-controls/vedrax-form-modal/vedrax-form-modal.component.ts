@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
-
 import { FormService } from '../../services/form.service';
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorModal } from '../../descriptor/descriptor-modal';
@@ -55,7 +54,7 @@ export class VedraxFormModalComponent implements OnInit {
     if (this.formModal.valid) {
       this.submitted = true;
       this.subscription.add(
-        this.apiService.callEndpoint(this.data.formDescriptor.endpoint, dto, this.data.formDescriptor.method)
+        this.apiService.callEndpoint(this.data.formDescriptor, dto)
           .pipe(
             catchError(err => this.handleError(err)),
             finalize(() => {

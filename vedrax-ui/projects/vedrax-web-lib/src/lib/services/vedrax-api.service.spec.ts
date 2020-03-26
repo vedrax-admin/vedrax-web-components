@@ -1,7 +1,27 @@
 import { TestBed } from '@angular/core/testing';
 import { VedraxApiService } from './vedrax-api.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ApiMethod } from '../enum';
+import { ApiMethod, ControlType } from '../enum';
+import { DescriptorForm } from '../descriptor/descriptor-form';
+
+const descriptorForm: DescriptorForm = {
+    controls: [
+      {
+        controlName: 'men',
+        controlProperties: [],
+        controlLabel: 'Are you a men ?',
+        controlType: ControlType.checkbox,
+      },
+      {
+        controlName: 'birthdate',
+        controlProperties: [],
+        controlLabel: 'Birth date',
+        controlType: ControlType.datepicker
+      }
+    ],
+    endpoint: '/api/test',
+    method: ApiMethod.POST,
+  };
 
 describe('VedraxApiService', () => {
     let httpTestingController: HttpTestingController;
@@ -50,7 +70,7 @@ describe('VedraxApiService', () => {
             date: new Date(2020, 11, 5, 0, 0, 0)
         };
 
-        service.callEndpoint('api/test', data, ApiMethod.POST)
+        service.callEndpoint(descriptorForm, data)
             .subscribe(data => {
                 expect(data.id).toEqual('test');
                 expect(data.date).toEqual('2020-12-04T22:00:00.000Z');
