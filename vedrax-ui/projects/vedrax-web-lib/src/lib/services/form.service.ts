@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators, FormBuilder } from '@angular/forms';
 import { DescriptorFormControl, DescriptorProperty } from '../descriptor';
 import { ControlType } from '../enum';
 import { Validate } from '../util/validate';
+import { MatrixColumn } from '../shared/matrixColumn';
+import { NVP } from '../shared/nvp';
 
 /**
  * Service that provides methods for creating reactive form.
@@ -12,7 +14,7 @@ import { Validate } from '../util/validate';
 })
 export class FormService {
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) { }
 
   /**
    * Method for creating a group of controls as a {@link FormGroup} by passing 
@@ -43,6 +45,10 @@ export class FormService {
 
     if (descriptor.controlType === ControlType.arrayOfControls) {
       return this.createControlWithChildren(descriptor);
+    }
+
+    if (descriptor.controlType === ControlType.matrix) {
+      return this.createControlWithMatrix(descriptor);
     }
 
     return this.createControl(descriptor);
@@ -84,6 +90,39 @@ export class FormService {
     });
 
     return new FormArray([new FormGroup(children)], validations);
+  }
+
+  private createControlWithMatrix(descriptor: DescriptorFormControl): FormArray {
+    const matrices: MatrixColumn[] = descriptor.controlValue || [];
+
+    const matrix: FormGroup[] = [];
+
+    for (let entry of matrices) {
+      matrix.push(this.addMatrix(entry));
+    }
+
+    return this.formBuilder.array(matrix);
+
+  }
+
+  getMatrix(form: FormGroup): FormArray {
+    return form.get('matrix') as FormArray;
+  }
+
+  private addMatrix(matrixColumn: MatrixColumn): FormGroup {
+    return this.formBuilder.group({
+      key: matrixColumn.key,
+      entries: this.formBuilder.array(this.addEntries(matrixColumn.entries))
+    });
+  }
+
+  private addEntries(entries: NVP[]): FormGroup[] {
+    let elements: FormGroup[] = [];
+
+    for (let entry of entries) {
+      elements.push(this.formBuilder.group(entry));
+    }
+    return elements;
   }
 
   /**

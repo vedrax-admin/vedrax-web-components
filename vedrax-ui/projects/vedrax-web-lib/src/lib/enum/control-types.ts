@@ -7,7 +7,8 @@ export enum ControlType {
     input = "input",
     radioButton = "radioButton",
     select = "select",
-    slider = "slider",
+    //slider = "slider",
     arrayOfControls = "arrayOfControls",
-    search = "search"
+    search = "search",
+    matrix = "matrix"
 }

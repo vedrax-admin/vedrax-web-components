@@ -19,7 +19,7 @@ const descriptorForm: DescriptorForm = {
         controlType: ControlType.datepicker
       }
     ],
-    endpoint: '/api/test',
+    endpoint: 'api/test',
     method: ApiMethod.POST,
   };
 

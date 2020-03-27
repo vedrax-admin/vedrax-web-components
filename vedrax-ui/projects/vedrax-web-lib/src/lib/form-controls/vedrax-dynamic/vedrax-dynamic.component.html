@@ -1,4 +1,4 @@
-<div class="vedrax-dynamic-m-b-15" [formGroup]="form">
+<div *ngIf="descriptor" class="vedrax-dynamic-m-b-15" [formGroup]="form">
 
     <div fxLayout="column" [formArrayName]="descriptor.controlName">
 

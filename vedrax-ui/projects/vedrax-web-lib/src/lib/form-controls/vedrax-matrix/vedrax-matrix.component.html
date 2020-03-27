@@ -1,0 +1,33 @@
+<div *ngIf="descriptor" [formGroup]="form">
+
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px grid" [formArrayName]="descriptor.controlName">
+
+        <div fxFlex="50" fxFlex.xs="100" *ngFor="let control of formArray.controls; let i = index;">
+
+            <mat-card [formGroupName]="i">
+
+                <mat-card-title>{{control.get('key').value}}</mat-card-title>
+                <mat-card-content formArrayName="entries">
+
+                    <div *ngFor="let entry of control.get('entries').controls; let y = index;">
+
+                        <div fxFlex fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="start center" [formGroupName]="y">
+                            <div fxFlex="30">{{entry.get('key').value}}</div>
+                            <div fxFlex>
+                                <mat-form-field appearance="outline">
+                                    <input type="number" required matInput formControlName="value">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </mat-card-content>
+
+            </mat-card>
+
+        </div>
+
+    </div>
+
+</div>

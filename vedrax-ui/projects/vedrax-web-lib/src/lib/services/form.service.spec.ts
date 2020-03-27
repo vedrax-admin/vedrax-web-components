@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { FormService } from './form.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { DescriptorFormControl } from '../descriptor';
 import { ControlType } from '../enum';
 
@@ -43,7 +43,11 @@ describe('FormService', () => {
     }
   ];
 
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [FormBuilder]
+    });
+  });
 
   beforeEach(() => {
     service = TestBed.get(FormService);
@@ -76,6 +80,51 @@ describe('FormService', () => {
   it('createFormControl with undefined descriptor throws Error', () => {
 
     //for checking error we pass the method in a function
-    expect(function(){service.createFormControl(null)}).toThrowError();
+    expect(function () { service.createFormControl(null) }).toThrowError();
+  });
+
+  it('check when matrix', () => {
+
+    const descriptorMatrix: DescriptorFormControl = {
+      controlName: 'matrix',
+      controlProperties: [],
+      controlLabel: 'Matrix',
+      controlType: ControlType.matrix,
+      controlValidations: [],
+      controlValue: [
+        {
+          key: 'k1',
+          entries: [
+            { key: 'e1', value: 0.005 },
+            { key: 'e3', value: 0.076 },
+            { key: 'e4', value: 0.0008 },
+            { key: 'e5', value: 0.005456 }
+          ]
+        },
+        {
+          key: 'k2',
+          entries: [
+            { key: 'e1', value: 0.005 },
+            { key: 'e3', value: 0.076 },
+            { key: 'e4', value: 0.0008 },
+            { key: 'e5', value: 0.005456 }
+          ]
+        },
+        {
+          key: 'k3',
+          entries: [
+            { key: 'e1', value: 0.005 },
+            { key: 'e3', value: 0.076 },
+            { key: 'e4', value: 0.0008 },
+            { key: 'e5', value: 0.005456 }
+          ]
+        }
+      ]
+    }
+
+    let formControl = service.createFormControl(descriptorMatrix);
+
+    expect(formControl).toBeDefined();
+    expect(formControl.value.length).toBe(3);
   });
 });

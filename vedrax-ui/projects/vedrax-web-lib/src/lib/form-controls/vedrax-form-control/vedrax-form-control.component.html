@@ -6,7 +6,10 @@
     <!-- handling dynamic form creation -->
     <vedrax-dynamic *ngSwitchCase="'arrayOfControls'" [descriptor]="descriptor" [form]="form"></vedrax-dynamic>
 
-    <!-- add other custom components here -->
+    <!-- handling search component -->
     <vedrax-search *ngSwitchCase="'search'" [descriptor]="descriptor" [control]="form.get(descriptor.controlName)"></vedrax-search>
+
+    <!-- handling matrix component -->
+    <vedrax-matrix *ngSwitchCase="'matrix'" [descriptor]="descriptor" [form]="form"></vedrax-matrix>
 
 </div>
