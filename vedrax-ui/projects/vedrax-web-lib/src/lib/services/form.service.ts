@@ -40,7 +40,7 @@ export class FormService {
    * 
    * @param descriptor
    */
-  createFormControl(descriptor: DescriptorFormControl) {
+  createFormControl(descriptor: DescriptorFormControl): FormControl | FormArray {
     Validate.isNotNull(descriptor, 'Descriptor must be provided');
 
     if (descriptor.controlType === ControlType.arrayOfControls) {
@@ -49,6 +49,10 @@ export class FormService {
 
     if (descriptor.controlType === ControlType.matrix) {
       return this.createControlWithMatrix(descriptor);
+    }
+
+    if (descriptor.controlType === ControlType.nvp) {
+      return this.createControlWithNvp(descriptor);
     }
 
     return this.createControl(descriptor);
@@ -102,11 +106,19 @@ export class FormService {
     }
 
     return this.formBuilder.array(matrix);
-
   }
 
-  getMatrix(form: FormGroup): FormArray {
-    return form.get('matrix') as FormArray;
+  private createControlWithNvp(descriptor: DescriptorFormControl): FormArray {
+    const nvps: NVP[] = descriptor.controlValue || [];
+
+    return this.formBuilder.array(this.addEntries(nvps));
+  }
+
+  getFormArray(form: FormGroup, fieldName: string): FormArray {
+    Validate.isNotNull(form, 'form must be provided');
+    Validate.isNotNull(fieldName, 'fieldName must be provided');
+
+    return form.get(fieldName) as FormArray;
   }
 
   private addMatrix(matrixColumn: MatrixColumn): FormGroup {

@@ -10,5 +10,6 @@ export enum ControlType {
     //slider = "slider",
     arrayOfControls = "arrayOfControls",
     search = "search",
-    matrix = "matrix"
+    matrix = "matrix",
+    nvp = "nvp"
 }

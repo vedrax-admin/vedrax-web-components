@@ -1,0 +1,21 @@
+<div *ngIf="descriptor" [formGroup]="form">
+
+    <div fxLayout="column" [formArrayName]="descriptor.controlName">
+
+        <div *ngFor="let control of formArray.controls; let i = index;"
+            [formGroupName]="i">
+
+            <div fxFlex fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="start center">
+                <div fxFlex="30">{{control.get('key').value}}</div>
+                <div fxFlex>
+                    <mat-form-field appearance="outline">
+                        <input type="number" required matInput formControlName="value">
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
