@@ -3,7 +3,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 
 @Component({
-  selector: 'app-vedrax-nvp',
+  selector: 'vedrax-nvp',
   templateUrl: './vedrax-nvp.component.html',
   styleUrls: ['./vedrax-nvp.component.scss']
 })

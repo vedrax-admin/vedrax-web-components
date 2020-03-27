@@ -1,3 +1,5 @@
+import { ActionType } from '../enum/action-types';
+
 /**
  * A class that describes the available actions for a column
  */
@@ -12,7 +14,7 @@ export class DescriptorAction {
      * when set to true the action redirect to the given url, 
      * otherwise the action call an API with the URL
      */
-    redirect: boolean;
+    action: ActionType;
 
     /**
      * Base url used for redirection or for API call

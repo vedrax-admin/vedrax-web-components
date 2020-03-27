@@ -6,9 +6,11 @@ import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { VedraxTableDataSource } from './vedrax-table.datasource';
-
 import { VedraxDataService } from '../../services/vedrax-data.service';
 import { DescriptorTable, DescriptorAction } from '../../descriptor';
+import { Validate } from '../../util/validate';
+import { ActionType } from '../../enum';
+import { DialogFormService } from '../../services/dialog-form.service';
 
 /**
  * Class that defines a table component with its search box
@@ -67,7 +69,9 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   datasource: VedraxTableDataSource;
 
-  constructor(public vedraxDataService: VedraxDataService,
+  constructor(
+    private dialogFormService: DialogFormService,
+    public vedraxDataService: VedraxDataService,
     private router: Router) { }
 
   ngOnInit() {
@@ -99,6 +103,7 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.dialogFormService.complete();
   }
 
   /**
@@ -136,12 +141,12 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-/**
- * Helper method for setting a query param
- * 
- * @param key the query parameter key
- * @param value the query parameter value
- */
+  /**
+   * Helper method for setting a query param
+   * 
+   * @param key the query parameter key
+   * @param value the query parameter value
+   */
   private setQueryParam(key: string, value: any) {
     this.params = this.params.set(key, String(value));
   }
@@ -168,13 +173,29 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    * @param element the selected element
    */
   select(action: DescriptorAction, item: any): void {
+    Validate.isNotNull(action, 'action must be provided');
+    Validate.isNotNull(item, 'Item must be provided');
 
-    if (action && action.redirect) {
-      this.router.navigate([action.url, item['id'], action.fragment]);
+    if (action.action === ActionType.redirect) {
+      this.redirectToUrl(action, item);
+      return;
+    }
+
+    if (action.action === ActionType.form) {
+      this.dialogFormService.openFormDialogFromApi(action, item, this.updateItem);
       return;
     }
 
     this.onSelect.emit({ action, item });
+  }
+
+  /**
+   * Method for returning to the providing URL
+   * @param action the provided action object for which the URL is constructed
+   * @param item the provided selected item
+   */
+  private redirectToUrl(action: DescriptorAction, item: any): void {
+    this.router.navigate([action.url, item['id'], action.fragment]);
   }
 
 }

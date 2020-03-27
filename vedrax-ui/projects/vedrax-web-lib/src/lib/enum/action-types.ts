@@ -2,6 +2,7 @@
  * Enum that describes the available table's column action
  */
 export enum ActionType {
-    select = 'select',
-    redirect = 'redirect'
+    select = 'select', //emit selected value
+    redirect = 'redirect', //redirect to the provided url
+    form = 'form' //open form in a modal
 }

@@ -10,6 +10,8 @@ import { DescriptorTable } from '../../descriptor/descriptor-table';
 import { ControlType } from '../../enum/control-types';
 import { VedraxDataService } from '../../services/vedrax-data.service';
 import { DescriptorAction } from '../../descriptor/descriptor-action';
+import { DialogFormService, DataTableCallback } from '../../services/dialog-form.service';
+import { ActionType } from '../../enum';
 
 
 const tableDescriptor: DescriptorTable = {
@@ -64,11 +66,18 @@ class VedraxDataServiceMock {
 
 }
 
+class DialogFormServiceMock {
+
+  openFormDialogFromApi(action: DescriptorAction, item: any, callback: DataTableCallback): void { }
+
+}
+
 const mock = { id: 2, name: 'test' };
 
 describe('VedraxTableComponent', () => {
   let component: VedraxTableComponent;
   let fixture: ComponentFixture<VedraxTableComponent>;
+  let dialogFormService: DialogFormService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -78,6 +87,7 @@ describe('VedraxTableComponent', () => {
       ],
       providers: [
         { provide: VedraxDataService, useClass: VedraxDataServiceMock },
+        { provide: DialogFormService, useClass: DialogFormServiceMock },
         { provide: Router, useValue: router }
       ],
       declarations: [VedraxTableComponent],
@@ -90,6 +100,7 @@ describe('VedraxTableComponent', () => {
     fixture = TestBed.createComponent(VedraxTableComponent);
     component = fixture.componentInstance;
     component.descriptor = tableDescriptor;
+    dialogFormService = TestBed.get(DialogFormService);
     fixture.detectChanges();
   });
 
@@ -140,7 +151,7 @@ describe('VedraxTableComponent', () => {
 
   it('when select with redirection', () => {
 
-    const descriptor: DescriptorAction = { label: 'test', url: '/api', fragment: 'detail', redirect: true };
+    const descriptor: DescriptorAction = { label: 'test', url: '/api', fragment: 'detail', action: ActionType.redirect };
 
     component.select(descriptor, mock);
 
@@ -148,15 +159,27 @@ describe('VedraxTableComponent', () => {
 
   });
 
-  it('when select with no redirection ', () => {
+  it('when select with action equals to select', () => {
 
     const spy = spyOn(component.onSelect, 'emit');
 
-    const descriptor: DescriptorAction = { label: 'test', redirect: false };
+    const descriptor: DescriptorAction = { label: 'test', action: ActionType.select };
 
     component.select(descriptor, mock);
 
     expect(spy).toHaveBeenCalledWith({ action: descriptor, item: mock });
+
+  });
+
+  it('when select with action equals to form', () => {
+
+    const spy = spyOn(dialogFormService, 'openFormDialogFromApi');
+
+    const descriptor: DescriptorAction = { label: 'test', action: ActionType.form };
+
+    component.select(descriptor, mock);
+
+    expect(spy).toHaveBeenCalledWith(descriptor, mock, component.updateItem);
 
   });
 

@@ -1,11 +1,11 @@
-<form [formGroup]="formModal" novalidate (ngSubmit)="submit(formModal.value)">
+<form *ngIf="data" [formGroup]="formModal" novalidate (ngSubmit)="submit(formModal.value)">
 
     <h1 mat-dialog-title>{{data.title}}</h1>
     <div mat-dialog-content>
 
         <div class="alert alert-warning" *ngIf="error" role="alert">{{error}}</div>
 
-        <vedrax-controls [descriptor]="descriptor" [form]="formModal"></vedrax-controls>
+        <vedrax-controls [descriptor]="data.formDescriptor" [form]="formModal"></vedrax-controls>
 
     </div>
     <div mat-dialog-actions>
