@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { DialogFormService } from './dialog-form.service';
 import { DescriptorForm } from '../descriptor';
@@ -30,45 +31,43 @@ const descriptor: DescriptorForm = {
     method: ApiMethod.POST
 };
 
-const parameter:HttpParams = new HttpParams();
-
-
-class VedraxApiServiceMock {
-
-    get(path: string, params: HttpParams = parameter): Observable<DescriptorForm> {
-        return of(descriptor);
-    }
-
-};
+const parameter: HttpParams = new HttpParams();
 
 class MatDialogMock {
     open(component: any, config: any) {
         return {
-            afterClosed: () => of(true)
+            afterClosed: () => of('done')
         }
     }
 };
 
 describe('DialogFormService', () => {
 
+    let httpTestingController: HttpTestingController;
     let service: DialogFormService;
-    let apiService:VedraxApiService;
-    let matDialog:MatDialog;
+    let apiService: VedraxApiService;
+    let matDialog: MatDialog;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
             providers: [
                 UrlService,
-                { provide: VedraxApiService, useClass: VedraxApiServiceMock },
+                VedraxApiService,
                 { provide: MatDialog, useClass: MatDialogMock }
             ]
         });
     });
 
     beforeEach(() => {
+        httpTestingController = TestBed.get(HttpTestingController);
         service = TestBed.get(DialogFormService);
         apiService = TestBed.get(VedraxApiService);
         matDialog = TestBed.get(MatDialog);
+    });
+
+    afterEach(() => {
+        httpTestingController.verify();
     });
 
     it('should be created', () => {
@@ -77,19 +76,23 @@ describe('DialogFormService', () => {
 
     it('given valid params open dialog', () => {
 
-        let spyApiService = spyOn(apiService,'get');
+        let test: any;
 
-        let test:any;
-
-        let callback = (item: any) => { test = item;};
+        let callback = (item: any) => { test = item; };
         service.openFormDialogFromApi(
-            { label: 'label', url: '/api', fragment: '/detail', action: ActionType.form },
+            { label: 'label', url: 'api', fragment: 'detail', action: ActionType.form },
             { id: 1, name: 't1' },
             callback);
 
-        expect(spyApiService).toHaveBeenCalledWith('/api/1/detail',parameter);
+        const req = httpTestingController.expectOne('/api/1/detail');
+
+        expect(req.request.method).toEqual('GET');
+
+        req.flush(descriptor);
+
         expect(test).toBeDefined();
-        
+        expect(test).toBe('done');
+
 
     });
 
