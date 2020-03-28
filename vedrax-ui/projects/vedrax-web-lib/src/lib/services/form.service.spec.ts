@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { FormService } from './form.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { DescriptorFormControl } from '../descriptor';
 import { ControlType } from '../enum';
 

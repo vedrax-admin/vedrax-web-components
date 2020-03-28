@@ -10,6 +10,7 @@ import { DescriptorFormControl } from '../../descriptor/descriptor-form-control'
 import { ControlType } from '../../enum/control-types';
 import { VedraxModalComponent } from '../../vedrax-modal/vedrax-modal.component';
 import { VedraxTableComponent } from '../../data-table/vedrax-table/vedrax-table.component';
+import { ActionType } from '../../enum';
 
 const searchDescriptor: DescriptorFormControl = {
   controlName: 'productId',
@@ -43,7 +44,7 @@ const searchDescriptor: DescriptorFormControl = {
         label: 'Action',
         actions: [{
           label: 'Select',
-          redirect: false
+          action: ActionType.redirect
         }]
       }
     ]

@@ -1,4 +1,3 @@
-import { DescriptorAction } from './descriptor-action';
 import { DescriptorFormControl } from './descriptor-form-control';
 import { DescriptorColumn } from './descriptor-column';
 
@@ -11,11 +10,6 @@ export class DescriptorTable {
      * The title / object of the table
      */
     title: string;
-
-    /**
-     * action descriptor for describing creation action
-     */
-    onCreate?: DescriptorAction;
 
     /**
      * Is the result paginated

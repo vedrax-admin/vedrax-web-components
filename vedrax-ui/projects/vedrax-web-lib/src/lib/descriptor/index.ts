@@ -1,5 +1,4 @@
 export * from './descriptor-action';
-export * from './descriptor-audit';
 export * from './descriptor-column';
 export * from './descriptor-form-control';
 export * from './descriptor-form-group';

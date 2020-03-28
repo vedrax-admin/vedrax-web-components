@@ -8,7 +8,6 @@ import { FormService } from '../../services/form.service';
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorModal } from '../../descriptor/descriptor-modal';
 
-
 @Component({
   selector: 'vedrax-form-modal',
   templateUrl: './vedrax-form-modal.component.html',

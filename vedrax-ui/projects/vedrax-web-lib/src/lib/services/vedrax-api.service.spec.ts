@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { VedraxApiService } from './vedrax-api.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+import { VedraxApiService } from './vedrax-api.service';
 import { ApiMethod, ControlType } from '../enum';
 import { DescriptorForm } from '../descriptor/descriptor-form';
 
