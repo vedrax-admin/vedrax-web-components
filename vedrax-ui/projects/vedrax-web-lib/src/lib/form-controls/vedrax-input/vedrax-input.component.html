@@ -1,4 +1,4 @@
-<mat-form-field>
+<mat-form-field *ngIf="descriptor">
     <input matInput [id]="descriptor.controlName" 
         [hidden]="hasProperty('hidden')"
         [type]="hasProperty('type')" 

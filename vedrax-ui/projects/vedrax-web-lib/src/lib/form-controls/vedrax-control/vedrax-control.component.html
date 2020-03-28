@@ -1,4 +1,4 @@
-<div [ngSwitch]="descriptor.controlType">
+<div *ngIf="descriptor" [ngSwitch]="descriptor.controlType">
 
     <!-- handling text input -->
     <vedrax-input *ngSwitchCase="'input'" [descriptor]="descriptor" [control]="control"></vedrax-input>

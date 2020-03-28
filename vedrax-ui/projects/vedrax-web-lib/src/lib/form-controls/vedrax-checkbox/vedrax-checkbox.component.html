@@ -1,2 +1,2 @@
-<mat-checkbox [id]="descriptor.controlName" [formControl]="control">{{descriptor.controlLabel}}
+<mat-checkbox *ngIf="descriptor" [id]="descriptor.controlName" [formControl]="control">{{descriptor.controlLabel}}
 </mat-checkbox>
