@@ -3,38 +3,38 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vedrax-web-lib": {
+    "vedrax-common": {
       "projectType": "library",
-      "root": "projects/vedrax-web-lib",
-      "sourceRoot": "projects/vedrax-web-lib/src",
+      "root": "projects/vedrax-common",
+      "sourceRoot": "projects/vedrax-common/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/vedrax-web-lib/tsconfig.lib.json",
-            "project": "projects/vedrax-web-lib/ng-package.json"
+            "tsConfig": "projects/vedrax-common/tsconfig.lib.json",
+            "project": "projects/vedrax-common/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/vedrax-web-lib/tsconfig.lib.prod.json"
+              "tsConfig": "projects/vedrax-common/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/vedrax-web-lib/src/test.ts",
-            "tsConfig": "projects/vedrax-web-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/vedrax-web-lib/karma.conf.js"
+            "main": "projects/vedrax-common/src/test.ts",
+            "tsConfig": "projects/vedrax-common/tsconfig.spec.json",
+            "karmaConfig": "projects/vedrax-common/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/vedrax-web-lib/tsconfig.lib.json",
-              "projects/vedrax-web-lib/tsconfig.spec.json"
+              "projects/vedrax-common/tsconfig.lib.json",
+              "projects/vedrax-common/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -84,7 +84,7 @@
       }
     }
   },
-  "defaultProject": "vedrax-web-lib",
+  "defaultProject": "vedrax-common",
   "cli": {
     "analytics": false
   }

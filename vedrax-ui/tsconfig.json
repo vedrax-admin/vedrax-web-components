@@ -19,21 +19,23 @@
       "dom"
     ],
     "paths": {
-      "vedrax-web-lib": [
-        "dist/vedrax-web-lib"
+      "vedrax-common": [
+        "dist/vedrax-common"
       ],
-      "vedrax-web-lib/*": [
-        "dist/vedrax-web-lib/*"
+      "vedrax-common/*": [
+        "dist/vedrax-common/*"
       ],
       "vedrax-material": [
-        "dist/vedrax-material/vedrax-material",
         "dist/vedrax-material"
+      ],
+      "vedrax-material/*": [
+        "dist/vedrax-material/*"
       ]
     }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "enableIvy":false
+    "enableIvy": false
   }
 }

@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "vedrax-descriptor:build": "ng build vedrax-descriptor && npm i dist/vedrax-descriptor --save-optional",
     "vedrax-material:build": "ng build vedrax-material && npm i dist/vedrax-material --save-optional",
     "vedrax-web:build": "ng build vedrax-web-lib && npm i dist/vedrax-web-lib --save-optional",
     "library:build": "npm run vedrax-material:build && npm run vedrax-web:build"
@@ -53,6 +54,7 @@
     "typescript": "~3.7.5"
   },
   "optionalDependencies": {
-    "@vedrax/material": "file:dist/vedrax-material"
+    "@vedrax/material": "file:dist/vedrax-material",
+    "vedrax-descriptor": "file:dist/vedrax-descriptor"
   }
 }
