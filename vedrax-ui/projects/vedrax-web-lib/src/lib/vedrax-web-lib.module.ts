@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { VedraxMaterialModule } from '@vedrax/material';
 
-import { AngularMaterialModule } from './angular-material';
 import { VedraxFilterComponent } from './data-table/vedrax-filter/vedrax-filter.component';
 import { VedraxTableComponent } from './data-table/vedrax-table/vedrax-table.component';
 import { VedraxCheckboxComponent } from './form-controls/vedrax-checkbox/vedrax-checkbox.component';
@@ -28,7 +28,7 @@ import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMaterialModule,
+    VedraxMaterialModule,
     RouterModule
   ],
   declarations: [
