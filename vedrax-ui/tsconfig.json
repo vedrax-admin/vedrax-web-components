@@ -24,11 +24,16 @@
       ],
       "vedrax-web-lib/*": [
         "dist/vedrax-web-lib/*"
+      ],
+      "vedrax-material": [
+        "dist/vedrax-material/vedrax-material",
+        "dist/vedrax-material"
       ]
     }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "enableIvy":false
   }
 }

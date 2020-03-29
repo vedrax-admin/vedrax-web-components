@@ -42,6 +42,46 @@
           }
         }
       }
+    },
+    "vedrax-material": {
+      "projectType": "library",
+      "root": "projects/vedrax-material",
+      "sourceRoot": "projects/vedrax-material/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/vedrax-material/tsconfig.lib.json",
+            "project": "projects/vedrax-material/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/vedrax-material/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/vedrax-material/src/test.ts",
+            "tsConfig": "projects/vedrax-material/tsconfig.spec.json",
+            "karmaConfig": "projects/vedrax-material/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/vedrax-material/tsconfig.lib.json",
+              "projects/vedrax-material/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "vedrax-web-lib",
