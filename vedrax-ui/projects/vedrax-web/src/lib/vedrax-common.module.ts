@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { VedraxMaterialModule } from '@vedrax/material';
+import { VedraxMaterialModule } from './material/vedrax-material.module';
 
 import { VedraxFilterComponent } from './data-table/vedrax-filter/vedrax-filter.component';
 import { VedraxTableComponent } from './data-table/vedrax-table/vedrax-table.component';
@@ -52,9 +52,23 @@ import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
     VedraxModalComponent
   ],
   exports: [
+    VedraxFilterComponent,
     VedraxTableComponent,
+    VedraxCheckboxComponent,
+    VedraxControlComponent,
+    VedraxControlsComponent,
+    VedraxDatepickerComponent,
+    VedraxDynamicComponent,
     VedraxFormCardComponent,
+    VedraxFormControlComponent,
     VedraxFormModalComponent,
+    VedraxInputComponent,
+    VedraxMatrixComponent,
+    VedraxNvpComponent,
+    VedraxRadioComponent,
+    VedraxSearchComponent,
+    VedraxSelectComponent,
+    VedraxValidationComponent,
     VedraxModalComponent
   ],
   entryComponents: [
@@ -63,4 +77,4 @@ import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
     VedraxModalComponent
   ]
 })
-export class VedraxWebLibModule { }
+export class VedraxCommonModule { }

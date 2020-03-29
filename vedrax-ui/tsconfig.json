@@ -19,17 +19,11 @@
       "dom"
     ],
     "paths": {
-      "vedrax-common": [
-        "dist/vedrax-common"
+      "vedrax-web": [
+        "dist/vedrax-web"
       ],
-      "vedrax-common/*": [
-        "dist/vedrax-common/*"
-      ],
-      "vedrax-material": [
-        "dist/vedrax-material"
-      ],
-      "vedrax-material/*": [
-        "dist/vedrax-material/*"
+      "vedrax-web/*": [
+        "dist/vedrax-web/*"
       ]
     }
   },
