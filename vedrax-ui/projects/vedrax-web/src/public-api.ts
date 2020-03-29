@@ -9,4 +9,4 @@ export * from './lib/services';
 export * from './lib/shared';
 export * from './lib/util';
 export * from './lib/vedrax-modal/vedrax-modal.component';
-export * from './lib/vedrax-common.module';
+export * from './lib/vedrax-web.module';

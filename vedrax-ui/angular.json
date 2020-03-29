@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vedrax-common": {
+    "vedrax-web": {
       "projectType": "library",
       "root": "projects/vedrax-web",
       "sourceRoot": "projects/vedrax-web/src",

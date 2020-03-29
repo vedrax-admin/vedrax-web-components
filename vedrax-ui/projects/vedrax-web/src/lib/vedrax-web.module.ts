@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { VedraxMaterialModule } from './material/vedrax-material.module';
 
+import {VedraxBaseComponent} from './shared/vedrax-base.component';
 import { VedraxFilterComponent } from './data-table/vedrax-filter/vedrax-filter.component';
 import { VedraxTableComponent } from './data-table/vedrax-table/vedrax-table.component';
 import { VedraxCheckboxComponent } from './form-controls/vedrax-checkbox/vedrax-checkbox.component';
@@ -32,6 +33,7 @@ import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
     RouterModule
   ],
   declarations: [
+    VedraxBaseComponent,
     VedraxFilterComponent,
     VedraxTableComponent,
     VedraxCheckboxComponent,
@@ -77,4 +79,4 @@ import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
     VedraxModalComponent
   ]
 })
-export class VedraxCommonModule { }
+export class VedraxWebModule { }
