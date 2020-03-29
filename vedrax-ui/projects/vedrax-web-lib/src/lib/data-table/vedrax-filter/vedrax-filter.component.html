@@ -1,4 +1,4 @@
-<form *ngIf="descriptor" [formGroup]="formSearch" novalidate (ngSubmit)="submit(formSearch.value)">
+<form [formGroup]="formSearch" novalidate (ngSubmit)="submit(formSearch.value)">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
             Search
