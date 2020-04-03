@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { VedraxFormModalComponent } from './vedrax-form-modal.component';
 import { DescriptorModal, DescriptorFormControl } from '../../descriptor';
@@ -8,6 +9,7 @@ import { ControlType } from '../../enum/control-types';
 import { ApiMethod } from '../../enum/api-methods';
 import { FormService } from '../../services/form.service';
 import { VedraxApiService } from '../../services/vedrax-api.service';
+
 
 
 const MAT_DIALOG_DATA_MOCK: DescriptorModal = {
@@ -51,13 +53,15 @@ describe('VedraxFormModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports:[ReactiveFormsModule],
       declarations: [VedraxFormModalComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: MAT_DIALOG_DATA_MOCK },
         { provide: MatDialogRef, useValue: {} },
         { provide: FormService, useClass: FormServiceMock },
         { provide: VedraxApiService, useClass: VedraxApiServiceMock }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));

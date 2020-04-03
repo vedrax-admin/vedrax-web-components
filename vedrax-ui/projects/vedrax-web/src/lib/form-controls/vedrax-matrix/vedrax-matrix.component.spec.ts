@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { VedraxMatrixComponent } from './vedrax-matrix.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 describe('VedraxMatrixComponent', () => {
   let component: VedraxMatrixComponent;
@@ -10,7 +11,8 @@ describe('VedraxMatrixComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports:[ReactiveFormsModule],
-      declarations: [ VedraxMatrixComponent ]
+      declarations: [ VedraxMatrixComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

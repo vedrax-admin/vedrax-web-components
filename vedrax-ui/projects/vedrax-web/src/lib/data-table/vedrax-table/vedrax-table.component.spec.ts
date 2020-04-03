@@ -12,6 +12,8 @@ import { VedraxDataService } from '../../services/vedrax-data.service';
 import { DescriptorAction } from '../../descriptor/descriptor-action';
 import { DialogFormService, DataTableCallback } from '../../services/dialog-form.service';
 import { ActionType } from '../../enum';
+import { VedraxMaterialModule } from '../../material/vedrax-material.module';
+import { of, Observable } from 'rxjs';
 
 
 const tableDescriptor: DescriptorTable = {
@@ -64,6 +66,12 @@ class VedraxDataServiceMock {
 
   updateItem(item: any): void { }
 
+  get dataAsObservable(): Observable<any[]> {
+    return of([]);
+  }
+
+  complete(){}
+
 }
 
 class DialogFormServiceMock {
@@ -83,7 +91,8 @@ describe('VedraxTableComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        VedraxMaterialModule
       ],
       providers: [
         { provide: VedraxDataService, useClass: VedraxDataServiceMock },
@@ -95,6 +104,7 @@ describe('VedraxTableComponent', () => {
     })
       .compileComponents();
   }));
+
 
   beforeEach(() => {
     fixture = TestBed.createComponent(VedraxTableComponent);
@@ -111,6 +121,8 @@ describe('VedraxTableComponent', () => {
   });
 
   it('should call API with correct params', () => {
+
+    component.ngOnInit();
 
     //DTO from search form
     const search = {
@@ -131,6 +143,8 @@ describe('VedraxTableComponent', () => {
 
   it('when add item call service method addItem', () => {
 
+    component.ngOnInit();
+
     const spy = spyOn(component.vedraxDataService, 'addItem');
 
     component.addItem('test');
@@ -140,6 +154,8 @@ describe('VedraxTableComponent', () => {
   });
 
   it('when update item call service method updateItem', () => {
+
+    component.ngOnInit();
 
     const spy = spyOn(component.vedraxDataService, 'updateItem');
 
@@ -151,6 +167,8 @@ describe('VedraxTableComponent', () => {
 
   it('when select with redirection', () => {
 
+    component.ngOnInit();
+
     const descriptor: DescriptorAction = { label: 'test', url: '/api', fragment: 'detail', action: ActionType.redirect };
 
     component.select(descriptor, mock);
@@ -160,6 +178,8 @@ describe('VedraxTableComponent', () => {
   });
 
   it('when select with action equals to select', () => {
+
+    component.ngOnInit();
 
     const spy = spyOn(component.onSelect, 'emit');
 
@@ -172,6 +192,8 @@ describe('VedraxTableComponent', () => {
   });
 
   it('when select with action equals to form', () => {
+
+    component.ngOnInit();
 
     const spy = spyOn(dialogFormService, 'openFormDialogFromApi');
 

@@ -11,6 +11,7 @@ import { ControlType } from '../../enum/control-types';
 import { VedraxModalComponent } from '../../vedrax-modal/vedrax-modal.component';
 import { VedraxTableComponent } from '../../data-table/vedrax-table/vedrax-table.component';
 import { ActionType } from '../../enum';
+import { VedraxMaterialModule } from '../../material/vedrax-material.module';
 
 const searchDescriptor: DescriptorFormControl = {
   controlName: 'productId',
@@ -72,7 +73,8 @@ describe('VedraxSearchComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatDialogModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        VedraxMaterialModule
       ],
       providers: [
         //{ provide: MatDialog, useClass: MatDialogMock }
