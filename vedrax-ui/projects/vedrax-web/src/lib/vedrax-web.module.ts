@@ -23,6 +23,7 @@ import { VedraxSearchComponent } from './form-controls/vedrax-search/vedrax-sear
 import { VedraxSelectComponent } from './form-controls/vedrax-select/vedrax-select.component';
 import { VedraxValidationComponent } from './form-controls/vedrax-validation/vedrax-validation.component';
 import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
+import { VedraxLoginComponent } from './security/login/login.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
     VedraxSearchComponent,
     VedraxSelectComponent,
     VedraxValidationComponent,
-    VedraxModalComponent
+    VedraxModalComponent,
+    VedraxLoginComponent
   ],
   exports: [
     VedraxFilterComponent,
@@ -71,7 +73,8 @@ import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
     VedraxSearchComponent,
     VedraxSelectComponent,
     VedraxValidationComponent,
-    VedraxModalComponent
+    VedraxModalComponent,
+    VedraxLoginComponent
   ],
   entryComponents: [
     VedraxTableComponent,
