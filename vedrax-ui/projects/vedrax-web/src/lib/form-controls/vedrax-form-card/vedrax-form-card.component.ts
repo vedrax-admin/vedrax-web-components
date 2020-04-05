@@ -3,11 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription, throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 
 import { FormService } from '../../services/form.service';
 import { DescriptorForm } from '../../descriptor';
 import { VedraxApiService } from '../../services/vedrax-api.service';
+import { DateUtil } from '../../util/date-util';
 
 
 /**
@@ -67,6 +68,7 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.apiService.callEndpoint(this.descriptor, dto)
           .pipe(
+            map(data => DateUtil.transformToISODate(data)),
             catchError(err => this.handleError(err)),
             finalize(() => {
               this.submitted = false;

@@ -13,7 +13,7 @@ Run `ng build vedrax-web --prod` to build the project. The build artifacts will 
 
 ## Publishing
 
-After building your library with `ng build vedrax-web`, go to the dist folder `cd dist/vedrax-common` and run `npm publish`.
+After building your library with `ng build vedrax-web`, go to the dist folder `cd dist/vedrax-web` and run `npm publish`.
 
 ## Running unit tests
 

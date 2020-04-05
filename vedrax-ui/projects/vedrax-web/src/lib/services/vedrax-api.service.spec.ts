@@ -64,26 +64,6 @@ describe('VedraxApiService', () => {
         expect(function () { service.get<string>(null).subscribe() }).toThrowError();
     });
 
-    it('given path when callEndpoint then returns string', () => {
-
-        const data: { id: string, date: Date } = {
-            id: 'test',
-            date: new Date(2020, 11, 5, 0, 0, 0)
-        };
-
-        service.callEndpoint(descriptorForm, data)
-            .subscribe(data => {
-                expect(data.id).toEqual('test');
-                expect(data.date).toEqual('2020-12-04T22:00:00.000Z');
-            });
-
-        const req = httpTestingController.expectOne('api/test');
-
-        expect(req.request.method).toEqual('POST');
-
-        req.flush(data);
-    });
-
     it('given no path when callEndpoint then throws Error', () => {
         expect(function () { service.callEndpoint(null).subscribe() }).toThrowError();
     });

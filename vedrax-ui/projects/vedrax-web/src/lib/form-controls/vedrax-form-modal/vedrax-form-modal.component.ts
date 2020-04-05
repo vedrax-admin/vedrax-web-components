@@ -2,11 +2,12 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription, throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 
 import { FormService } from '../../services/form.service';
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorModal } from '../../descriptor/descriptor-modal';
+import { DateUtil } from '../../util/date-util';
 
 @Component({
   selector: 'vedrax-form-modal',
@@ -55,6 +56,7 @@ export class VedraxFormModalComponent implements OnInit {
       this.subscription.add(
         this.apiService.callEndpoint(this.data.formDescriptor, dto)
           .pipe(
+            map(data => DateUtil.transformToISODate(data)),
             catchError(err => this.handleError(err)),
             finalize(() => {
               this.submitted = false;

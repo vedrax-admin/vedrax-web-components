@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { ApiMethod } from '../enum/api-methods';
 import { Validate } from '../util/validate';
@@ -44,12 +43,11 @@ export class VedraxApiService {
      * @param path the endpoint
      * @param body the body of the request
      */
-    private put(path: string, body: object = {}): Observable<any> {
+    put<T>(path: string, body: object = {}): Observable<any> {
         Validate.isNotNull(path, 'Path must be provided');
 
         return this.httpClient
-            .put(path, JSON.stringify(body), this.options)
-            .pipe(map(data => this.transformToISODate(data)));
+            .put(path, JSON.stringify(body), this.options);
     }
 
     /**
@@ -57,26 +55,11 @@ export class VedraxApiService {
      * @param path the endpoint
      * @param body the body of the request
      */
-    private post(path: string, body: object = {}): Observable<any> {
+    post<T>(path: string, body: object = {}): Observable<any> {
         Validate.isNotNull(path, 'Path must be provided');
 
         return this.httpClient
-            .post(path, JSON.stringify(body), this.options)
-            .pipe(map(data => this.transformToISODate(data)));;
-    }
-
-    /**
-     * Helper method for transforming date to ISO format
-     * @param body the body of the request
-     */
-    private transformToISODate(body: object = {}): void {
-        for (const key in body) {
-            const attribute = body[key];
-
-            if (attribute instanceof Date) {
-                body[key] = attribute.toISOString();
-            }
-        }
+            .post(path, JSON.stringify(body), this.options);
     }
 
 }
