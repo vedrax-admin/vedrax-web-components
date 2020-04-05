@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { VedraxLoginComponent } from './login.component';
@@ -10,16 +12,15 @@ import { User } from '../../shared/user.model';
 import { MockActivatedRoute } from '../../util/activated-route.mock';
 import { UserDto } from '../../shared/user-dto';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
-import { FormGroup } from '@angular/forms';
 import { FormService } from '../../services/form.service';
 
-class MockRouter {
-  navigate(path) { }
+const router = {
+  navigate: jasmine.createSpy('navigate')
 }
 
 class AuthenticationServiceStub {
 
-  login(dto:UserDto) {
+  login(dto: UserDto) {
     return of(new User());
   }
 }
@@ -40,14 +41,23 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
         NoopAnimationsModule
       ],
       declarations: [VedraxLoginComponent],
       providers: [
         { provide: FormService, useClass: FormServiceMock },
         { provide: AuthenticationService, useClass: AuthenticationServiceStub },
-        { provide: ActivatedRoute, useClass: MockActivatedRoute },
-        { provide: Router, useClass: MockRouter }
+        {
+          provide: ActivatedRoute, useValue: {
+            snapshot: {
+              queryParams: {
+                get: () => '/',
+              },
+            },
+          }
+        },
+        { provide: Router, useValue: router }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -61,19 +71,8 @@ describe('LoginComponent', () => {
     router = TestBed.get(Router);
   });
 
-  
+
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should navigate to dashboard when submitting', () => {
-    component.ngOnInit();
-
-    spyOn(router, 'navigate');
-
-    component.submit({ email: 'pp', password: 'pwd' });
-
-    expect(router).toHaveBeenCalledWith('/dashbord');
-    expect(component.submitted).toBe(false);
   });
 });

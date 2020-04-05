@@ -21,7 +21,7 @@ export class MockActivatedRoute {
 
     get snapshot() {
         return {
-            queryParams: {returnUrl:'/'}
+            queryParams: { returnUrl: '/' }
         }
     }
 

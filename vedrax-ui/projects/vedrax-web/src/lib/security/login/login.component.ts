@@ -66,16 +66,19 @@ export class VedraxLoginComponent implements OnInit, OnDestroy {
   }
 
   submit(dto: UserDto) {
-    this.submitted = true;
-    this.subscription.add(this.authenticationService.login(dto)
-      .pipe(
-        catchError(err => this.error = err && err.message),
-        finalize(() => {
-          this.submitted = false;
-        }))
-      .subscribe(() => {
-        this.router.navigate([this.returnUrl]);
-      }));
+    if (this.formLogin.valid) {
+      this.submitted = true;
+
+      this.subscription.add(this.authenticationService.login(dto)
+        .pipe(
+          catchError(err => this.error = err && err.message),
+          finalize(() => {
+            this.submitted = false;
+          }))
+        .subscribe(() => {
+          this.router.navigate([this.returnUrl]);
+        }));
+    }
   }
 
 }

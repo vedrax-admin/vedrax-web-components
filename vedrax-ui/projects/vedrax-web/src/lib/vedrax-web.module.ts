@@ -24,6 +24,8 @@ import { VedraxSelectComponent } from './form-controls/vedrax-select/vedrax-sele
 import { VedraxValidationComponent } from './form-controls/vedrax-validation/vedrax-validation.component';
 import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
 import { VedraxLoginComponent } from './security/login/login.component';
+import { errorInterceptorProvider } from './security/interceptors/error.interceptor';
+import { jwtInterceptorProvider } from './security/interceptors/jwt.interceptor';
 
 @NgModule({
   imports: [
@@ -80,6 +82,10 @@ import { VedraxLoginComponent } from './security/login/login.component';
     VedraxTableComponent,
     VedraxFormModalComponent,
     VedraxModalComponent
+  ],
+  providers:[
+    errorInterceptorProvider,
+    jwtInterceptorProvider 
   ]
 })
 export class VedraxWebModule { }

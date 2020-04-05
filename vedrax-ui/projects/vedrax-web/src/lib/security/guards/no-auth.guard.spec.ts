@@ -14,25 +14,23 @@ const ADMINISTRATOR: User = {
     token: 'token'
 }
 
-class MockRouter {
-    navigate(path) { }
-}
+const router = {
+    navigate: jasmine.createSpy('navigate')
+  }
 
 describe('NoAuthGuard', () => {
     describe('canActivate', () => {
         let noAuthGuard: NoAuthGuard;
         let authService: AuthenticationService;
-        let router: Router;
-
+        
         beforeEach(() => {
             TestBed.configureTestingModule({
                 providers: [NoAuthGuard,
-                    { provide: Router, useClass: MockRouter },
+                    { provide: Router, useValue: router },
                     { provide: AuthenticationService, useClass: AuthenticationServiceStub }
                 ]
             });
-            router = TestBed.get(Router);
-            spyOn(router, 'navigate');
+            
             authService = TestBed.get(AuthenticationService);
             //set logged in administrator by default
             authService.setAuthentication(ADMINISTRATOR);
@@ -43,7 +41,7 @@ describe('NoAuthGuard', () => {
 
             expect(noAuthGuard.canActivate()).toEqual(false);
             //redirect to home page
-            expect(router.navigate).toHaveBeenCalledWith(['/']);
+            expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
         });
 
         it('When user is NOT logged in returns true', () => {

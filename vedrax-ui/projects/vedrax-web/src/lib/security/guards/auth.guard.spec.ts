@@ -33,28 +33,28 @@ class MockRouterStateSnapshot {
     url: string = '/';
 }
 
+const router = {
+    navigate: jasmine.createSpy('navigate')
+  }
+
 describe('AuthGuard', () => {
     let authGuard: AuthGuard;
     let authService: AuthenticationService;
     let routeMock: any = { url: '/users', data: { roles: [Role.ADMIN] } };
     let routeStateMock: any = { url: '/users' };
-    let routerMock = { navigate: jasmine.createSpy('navigate') };
-    let router: Router;
-
 
     describe('canActivate', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 providers: [AuthGuard,
-                    { provide: Router, useValue: routerMock },
+                    { provide: Router, useValue: router},
                     { provide: ActivatedRouteSnapshot, useValue: routeMock },
                     { provide: AuthenticationService, useClass: AuthenticationServiceStub },
                     { provide: RouterStateSnapshot, useValue: routeStateMock }
                 ],
                 imports: [HttpClientTestingModule]
             });
-            router = TestBed.get(Router);
             authService = TestBed.get(AuthenticationService);
             authGuard = TestBed.get(AuthGuard);
 
@@ -97,7 +97,7 @@ describe('AuthGuard', () => {
 
             expect(authGuard.canActivate(routeMock, routeStateMock)).toEqual(false);
             //redirect to home page
-            expect(router.navigate).toHaveBeenCalledWith(['/'], { queryParams: { returnUrl: '/users' } });
+            expect(router.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: '/users' } });
         });
 
     });
