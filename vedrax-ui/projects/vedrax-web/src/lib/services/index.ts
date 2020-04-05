@@ -1,3 +1,4 @@
+export * from './authentication.service';
 export * from './dialog-form.service';
 export * from './form.service';
 export * from './url.service';
