@@ -6,7 +6,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 /**
  * Authentication and authorization guard
  */
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class NoAuthGuard implements CanActivate {
 
     constructor(

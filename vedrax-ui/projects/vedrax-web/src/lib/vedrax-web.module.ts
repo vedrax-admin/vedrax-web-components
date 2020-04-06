@@ -26,6 +26,8 @@ import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
 import { VedraxLoginComponent } from './security/login/login.component';
 import { errorInterceptorProvider } from './security/interceptors/error.interceptor';
 import { jwtInterceptorProvider } from './security/interceptors/jwt.interceptor';
+import { loaderInterceptorProvider } from './loader/interceptors/loader.interceptor';
+import { VedraxLoaderComponent } from './loader/loader.component';
 
 @NgModule({
   imports: [
@@ -55,7 +57,8 @@ import { jwtInterceptorProvider } from './security/interceptors/jwt.interceptor'
     VedraxSelectComponent,
     VedraxValidationComponent,
     VedraxModalComponent,
-    VedraxLoginComponent
+    VedraxLoginComponent,
+    VedraxLoaderComponent,
   ],
   exports: [
     VedraxFilterComponent,
@@ -76,7 +79,8 @@ import { jwtInterceptorProvider } from './security/interceptors/jwt.interceptor'
     VedraxSelectComponent,
     VedraxValidationComponent,
     VedraxModalComponent,
-    VedraxLoginComponent
+    VedraxLoginComponent,
+    VedraxLoaderComponent
   ],
   entryComponents: [
     VedraxTableComponent,
@@ -85,7 +89,8 @@ import { jwtInterceptorProvider } from './security/interceptors/jwt.interceptor'
   ],
   providers:[
     errorInterceptorProvider,
-    jwtInterceptorProvider 
+    jwtInterceptorProvider,
+    loaderInterceptorProvider
   ]
 })
 export class VedraxWebModule { }

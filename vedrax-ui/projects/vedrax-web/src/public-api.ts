@@ -5,6 +5,7 @@ export * from './lib/data-table';
 export * from './lib/descriptor';
 export * from './lib/enum';
 export * from './lib/form-controls';
+export * from './lib/loader';
 export * from './lib/security';
 export * from './lib/services';
 export * from './lib/shared';

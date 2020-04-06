@@ -7,9 +7,7 @@ import { Role } from '../../shared/role.enum';
 /**
  * Authentication and authorization guard
  */
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class AuthGuard implements CanActivate, CanLoad {
 
     constructor(
