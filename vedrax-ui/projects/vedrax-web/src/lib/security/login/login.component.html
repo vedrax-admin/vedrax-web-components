@@ -1,6 +1,6 @@
 <form [formGroup]="formLogin" novalidate (ngSubmit)="submit(formLogin.value)">
 
-    <mat-card>
+    <mat-card class="login-card">
         <mat-card-title>Login</mat-card-title>
         <mat-card-content>
             <vedrax-form-control *ngFor="let control of controls" [descriptor]="control" [form]="formLogin">
