@@ -1,4 +1,4 @@
-<div *ngIf="descriptor" [ngSwitch]="descriptor.controlType">
+<div fxFlex *ngIf="descriptor" [ngSwitch]="descriptor.controlType">
 
     <!-- common form controls -->
     <vedrax-control [descriptor]="descriptor" [control]="form.get(descriptor.controlName)"></vedrax-control>
