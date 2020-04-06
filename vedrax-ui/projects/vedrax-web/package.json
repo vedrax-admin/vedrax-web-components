@@ -7,5 +7,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "author": {
+    "name": "Remy Penchenat",
+    "email": "finance@vedrax.com",
+    "url": "https://www.vedrax.com"
   }
 }
