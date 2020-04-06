@@ -6,7 +6,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 /**
  * Authentication and authorization guard
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class NoAuthGuard implements CanActivate {
 
     constructor(
@@ -21,7 +23,7 @@ export class NoAuthGuard implements CanActivate {
      */
     canActivate() {
         const currentUser = this.authenticationService.currentUserValue;
-        if (currentUser) {  
+        if (currentUser) {
             // returns to home page
             this.router.navigate(['/dashboard']);
             return false;
