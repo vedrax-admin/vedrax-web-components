@@ -1,17 +1,18 @@
 <form [formGroup]="formLogin" novalidate (ngSubmit)="submit(formLogin.value)">
-
-    <mat-card class="login-card">
-        <mat-card-title>Login</mat-card-title>
-        <mat-card-content class="login-card-content">
-            <vedrax-form-control *ngFor="let control of controls" [descriptor]="control" [form]="formLogin">
-            </vedrax-form-control>
-        </mat-card-content>
-        <mat-card-actions>
-            <button *ngIf="registerPage" type="button" mat-button [routerLink]="registerPage">Register
-                Now</button>
-            <button type="submit" [disabled]="formLogin.invalid || submitted" mat-raised-button
-                color="primary">Login</button>
-        </mat-card-actions>
-    </mat-card>
+    <div class="login-card">
+        <mat-card>
+            <mat-card-title>Login</mat-card-title>
+            <mat-card-content class="login-card-content">
+                <vedrax-form-control *ngFor="let control of controls" [descriptor]="control" [form]="formLogin">
+                </vedrax-form-control>
+            </mat-card-content>
+            <mat-card-actions>
+                <button *ngIf="registerPage" type="button" mat-button [routerLink]="registerPage">Register
+                    Now</button>
+                <button type="submit" [disabled]="formLogin.invalid || submitted" mat-raised-button
+                    color="primary">Login</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
 
 </form>
