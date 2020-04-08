@@ -58,7 +58,7 @@ import { VedraxLoaderComponent } from './loader/loader.component';
     VedraxValidationComponent,
     VedraxModalComponent,
     VedraxLoginComponent,
-    VedraxLoaderComponent,
+    VedraxLoaderComponent
   ],
   exports: [
     VedraxFilterComponent,
