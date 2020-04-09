@@ -45,9 +45,9 @@ export class AuthenticationService {
      * @param email 
      * @param password 
      */
-    login(dto: UserDto) {
+    login(dto: UserDto, path:string) {
 
-        return this.apiService.post<User>('/um/public/auth', dto)
+        return this.apiService.post<User>(path, dto)
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {

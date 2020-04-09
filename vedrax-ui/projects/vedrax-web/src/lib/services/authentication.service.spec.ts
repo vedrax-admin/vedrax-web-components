@@ -39,7 +39,7 @@ describe('AuthenticationService', () => {
         spyOn(localStorage, 'setItem');
         spyOn(authenticationService, 'setAuthentication');
 
-        authenticationService.login({ email: 'username', password: 'password' })
+        authenticationService.login({ email: 'username', password: 'password' },'/um/public/auth')
             .subscribe((user: User) => {
                 testUser(user);
                 expect(localStorage.setItem).toHaveBeenCalledTimes(1);

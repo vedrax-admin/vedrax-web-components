@@ -10,8 +10,6 @@ import { VedraxLoginComponent } from './login.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import { User } from '../../shared/user.model';
 import { UserDto } from '../../shared/user-dto';
-import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
-import { FormService } from '../../services/form.service';
 
 const router = {
   navigate: jasmine.createSpy('navigate')

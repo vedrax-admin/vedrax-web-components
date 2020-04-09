@@ -5,7 +5,6 @@ import { catchError, finalize } from 'rxjs/operators';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserDto } from '../../shared/user-dto';
-import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { VedraxFormComponent } from '../../form-controls/vedrax-form/vedrax-form.component';
 import { MsgLevel } from '../../enum/msg-level';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
@@ -63,7 +62,7 @@ export class VedraxLoginComponent implements OnInit, OnDestroy {
   }
 
   submit(dto: UserDto) {
-    this.subscription.add(this.authenticationService.login(dto)
+    this.subscription.add(this.authenticationService.login(dto, this.descriptor.endpoint)
       .pipe(
         catchError(err => this.handleError(err)),
         finalize(() => {
