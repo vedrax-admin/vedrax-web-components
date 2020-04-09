@@ -142,6 +142,14 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   /**
+   * Used for adding manually items to table
+   * @param items 
+   */
+  addItemsToTable(items: any[]) {
+    this.vedraxDataService.addItems(items);
+  }
+
+  /**
    * Helper method for setting a query param
    * 
    * @param key the query parameter key
