@@ -1,18 +1,8 @@
-<form [formGroup]="formCard" novalidate (ngSubmit)="submit(formCard.value)">
+<mat-card>
+    <mat-card-content>
 
-    <mat-card>
-        <mat-card-content>
+        <vedrax-form [descriptor]="descriptor" (onSubmit)="submit($event)" (onCancel)="cancel($event)">
+        </vedrax-form>
 
-            <div class="alert alert-warning" *ngIf="error" role="alert">{{error}}</div>
-
-            <vedrax-controls [descriptor]="descriptor" [form]="formCard"></vedrax-controls>
-
-        </mat-card-content>
-
-        <mat-card-actions>
-            <button type="submit" [disabled]="formCard.invalid || submitted" mat-raised-button color="primary">Submit</button>
-            <button type="button" mat-raised-button color="warn" (click)="cancel()">Cancel</button>
-        </mat-card-actions>
-    </mat-card>
-
-</form>
+    </mat-card-content>
+</mat-card>

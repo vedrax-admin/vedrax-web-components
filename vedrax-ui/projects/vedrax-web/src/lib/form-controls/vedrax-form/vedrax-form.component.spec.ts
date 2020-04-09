@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { VedraxFormCardComponent } from './vedrax-form-card.component';
 import { FormService } from '../../services/form.service';
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { ControlType } from '../../enum/control-types';
 import { DescriptorForm } from '../../descriptor';
 import { ApiMethod } from '../../enum';
+import { VedraxFormComponent } from './vedrax-form.component';
 
 const descriptorForm: DescriptorForm = {
   controls: [
@@ -31,42 +31,36 @@ const descriptorForm: DescriptorForm = {
   method: ApiMethod.POST,
 };
 
-class VedraxApiServiceMock {
+class FormServiceMock {
+
+  createFormGroup(descriptors: DescriptorFormControl[] = []): FormGroup {
+    return new FormGroup({});
+  }
 
 }
 
-const router = {
-  navigate: jasmine.createSpy('navigate')
-}
-
-class LocationMock {
-  back() { }
-}
-
-describe('VedraxFormCardComponent', () => {
-  let component: VedraxFormCardComponent;
-  let fixture: ComponentFixture<VedraxFormCardComponent>;
+describe('VedraxFormComponent', () => {
+  let component: VedraxFormComponent;
+  let fixture: ComponentFixture<VedraxFormComponent>;
+  let formService: FormService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule
       ],
-      declarations: [VedraxFormCardComponent],
+      declarations: [ VedraxFormComponent ],
       providers: [
-        { provide: VedraxApiService, useClass: VedraxApiServiceMock },
-        { provide: Router, useValue: router },
-        { provide: Location, useClass: LocationMock }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
+        { provide: FormService, useClass: FormServiceMock }
+      ]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VedraxFormCardComponent);
+    fixture = TestBed.createComponent(VedraxFormComponent);
     component = fixture.componentInstance;
-    component.descriptor = descriptorForm;
+    formService = TestBed.get(FormService);
     fixture.detectChanges();
   });
 
@@ -74,4 +68,10 @@ describe('VedraxFormCardComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('form should be defined', () => {
+    component.ngOnInit();
+    expect(component.formCard).toBeDefined();
+  });
+
+  
 });

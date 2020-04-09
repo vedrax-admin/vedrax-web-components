@@ -1,14 +1,14 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription, throwError } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 
-import { FormService } from '../../services/form.service';
 import { DescriptorForm } from '../../descriptor';
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DateUtil } from '../../util/date-util';
+import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
+import { MsgLevel } from '../../enum';
 
 
 /**
@@ -21,36 +21,25 @@ import { DateUtil } from '../../util/date-util';
 })
 export class VedraxFormCardComponent implements OnInit, OnDestroy {
 
+  /**
+   * The form descriptor
+   */
   @Input() descriptor: DescriptorForm;
 
   /**
-  * State describing if form has been submitted
-  */
-  submitted: boolean = false;
-
-  /**
-   * The returned API error message if any
+   * The form component
    */
-  error: string;
+  @ViewChild(VedraxFormComponent) formComponent: VedraxFormComponent;
 
   private subscription: Subscription = new Subscription();
 
-  /**
-   * The form object
-   */
-  formCard: FormGroup;
-
   constructor(
-    private formService: FormService,
     private apiService: VedraxApiService,
     private router: Router,
     private location: Location
   ) { }
 
   ngOnInit() {
-    if (this.descriptor) {
-      this.formCard = this.formService.createFormGroup(this.descriptor.controls);
-    }
   }
 
   ngOnDestroy(): void {
@@ -63,35 +52,40 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
    * @param dto 
    */
   submit(dto: any) {
-    if (this.formCard.valid) {
-      this.submitted = true;
-      this.subscription.add(
-        this.apiService.callEndpoint(this.descriptor, dto)
-          .pipe(
-            map(data => DateUtil.transformToISODate(data)),
-            catchError(err => this.handleError(err)),
-            finalize(() => {
-              this.submitted = false;
-            }))
-          .subscribe(data => {
-            this.redirectToSuccessIfProvided();
-          }));
-    }
+    this.subscription.add(
+      this.apiService.callEndpoint(this.descriptor, dto)
+        .pipe(
+          map(data => DateUtil.transformToISODate(data)),
+          catchError(err => this.handleError(err)),
+          finalize(() => {
+            this.formComponent.end();
+            this.formComponent.reset();
+          }))
+        .subscribe(data => {
+          this.formComponent.setMsg('Success');
+          this.redirectToSuccessIfProvided();
+        }));
   }
 
   private handleError(err) {
-    this.error = err.error && err.error.message;
+    const error = err.error && err.error.message;
+    this.formComponent.setMsg(error, MsgLevel.error);
     return throwError(err);
   }
 
   private redirectToSuccessIfProvided(): void {
     if (this.descriptor.successUrl) {
-      this.router.navigate([this.descriptor.successUrl]);
+      //we delay the redirection for letting the user read the message
+      setTimeout(() => {
+        this.router.navigate([this.descriptor.successUrl]);
+      }, 3000);//3s
     }
   }
 
-  cancel() {
-    this.location.back();
+  cancel(event: boolean) {
+    if (event) {
+      this.location.back();
+    }
   }
 
 }

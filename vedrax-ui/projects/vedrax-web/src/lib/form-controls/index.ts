@@ -3,6 +3,7 @@ export * from './vedrax-control/vedrax-control.component';
 export * from './vedrax-controls/vedrax-controls.component';
 export * from './vedrax-datepicker/vedrax-datepicker.component';
 export * from './vedrax-dynamic/vedrax-dynamic.component';
+export * from './vedrax-form/vedrax-form.component';
 export * from './vedrax-form-card/vedrax-form-card.component';
 export * from './vedrax-form-control/vedrax-form-control.component';
 export * from './vedrax-form-modal/vedrax-form-modal.component';

@@ -28,6 +28,7 @@ import { errorInterceptorProvider } from './security/interceptors/error.intercep
 import { jwtInterceptorProvider } from './security/interceptors/jwt.interceptor';
 import { loaderInterceptorProvider } from './loader/interceptors/loader.interceptor';
 import { VedraxLoaderComponent } from './loader/loader.component';
+import { VedraxFormComponent } from './form-controls/vedrax-form/vedrax-form.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { VedraxLoaderComponent } from './loader/loader.component';
     VedraxValidationComponent,
     VedraxModalComponent,
     VedraxLoginComponent,
-    VedraxLoaderComponent
+    VedraxLoaderComponent,
+    VedraxFormComponent
   ],
   exports: [
     VedraxFilterComponent,
@@ -80,7 +82,8 @@ import { VedraxLoaderComponent } from './loader/loader.component';
     VedraxValidationComponent,
     VedraxModalComponent,
     VedraxLoginComponent,
-    VedraxLoaderComponent
+    VedraxLoaderComponent,
+    VedraxFormComponent
   ],
   entryComponents: [
     VedraxTableComponent,

@@ -1,0 +1,18 @@
+<form [formGroup]="formCard" novalidate (ngSubmit)="submit(formCard.value)">
+
+    <div [ngClass]="setAlert()" *ngIf="msg" role="alert">
+        <i class="material-icons">{{msg.level}}</i>
+        {{msg.message}}
+    </div>
+
+    <div [ngClass]="msg.level" *ngIf="msg" role="alert">{{msg.message}}</div>
+
+    <vedrax-controls [descriptor]="descriptor" [form]="formCard"></vedrax-controls>
+
+    <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
+        <button type="button" mat-raised-button (click)="cancel()">{{cancelLabel}}</button>
+        <button type="submit" [disabled]="formCard.invalid || submitted" mat-raised-button
+            color="primary">{{submitLabel}}</button>
+    </div>
+
+</form>
