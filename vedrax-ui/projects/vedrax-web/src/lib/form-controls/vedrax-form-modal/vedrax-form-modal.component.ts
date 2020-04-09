@@ -1,13 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription, throwError } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 
-import { FormService } from '../../services/form.service';
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorModal } from '../../descriptor/descriptor-modal';
 import { DateUtil } from '../../util/date-util';
+import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
+import { MsgLevel } from '../../enum/msg-level';
 
 @Component({
   selector: 'vedrax-form-modal',
@@ -17,32 +17,18 @@ import { DateUtil } from '../../util/date-util';
 export class VedraxFormModalComponent implements OnInit {
 
   /**
-   * The form object
+   * The form component
    */
-  formModal: FormGroup;
-
-  /**
-   * The returned API error message if any
-   */
-  error: string;
-
-  /**
-   * State describing if form has been submitted
-   */
-  submitted: boolean = false;
+  @ViewChild(VedraxFormComponent) formComponent: VedraxFormComponent;
 
   private subscription: Subscription = new Subscription();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DescriptorModal,
     public dialogRef: MatDialogRef<VedraxFormModalComponent>,
-    private formService: FormService,
     private apiService: VedraxApiService) { }
 
   ngOnInit() {
-    if (this.data.formDescriptor) {
-      this.formModal = this.formService.createFormGroup(this.data.formDescriptor.controls);
-    }
   }
 
   /**
@@ -51,28 +37,37 @@ export class VedraxFormModalComponent implements OnInit {
    * @param dto 
    */
   submit(dto: any) {
-    if (this.formModal.valid) {
-      this.submitted = true;
-      this.subscription.add(
-        this.apiService.callEndpoint(this.data.formDescriptor, dto)
-          .pipe(
-            map(data => DateUtil.transformToISODate(data)),
-            catchError(err => this.handleError(err)),
-            finalize(() => {
-              this.submitted = false;
-            }))
-          .subscribe(data => {
-            this.dialogRef.close(data);
-          }));
-    }
+
+    this.subscription.add(
+      this.apiService.callEndpoint(this.data.formDescriptor, dto)
+        .pipe(
+          map(data => DateUtil.transformToISODate(data)),
+          catchError(err => this.handleError(err)),
+          finalize(() => {
+            this.formComponent.end();
+            this.formComponent.reset();
+          }))
+        .subscribe(data => {
+          this.formComponent.setMsg('Success');
+          this.close(data);
+        }));
+
   }
 
   private handleError(err) {
-    this.error = err.error && err.error.message;
+    const error = err.error && err.error.message;
+    this.formComponent.setMsg(error, MsgLevel.error);
     return throwError(err);
   }
 
-  cancel() {
+  private close(data: any) {
+    //we delay the closing of the modal for letting the user read the message
+    setTimeout(() => {
+      this.dialogRef.close(data);
+    }, 3000);
+  }
+
+  cancel(event: boolean) {
     this.dialogRef.close();
   }
 

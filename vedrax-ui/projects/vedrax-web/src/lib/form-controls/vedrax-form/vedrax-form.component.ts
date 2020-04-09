@@ -19,11 +19,20 @@ export class VedraxFormComponent implements OnInit {
    */
   @Input() descriptor: DescriptorForm;
 
+  @Input() submitLabel?: string = 'Submit';
+
+  @Input() cancelLabel?: string = 'Cancel';
+
   /**
   * 
   * The returned API message if any
   */
-  msg?: Msg;
+  msg: Msg;
+
+  /**
+   * The message style class
+   */
+  msgStyleClass: string;
 
   /**
   * State describing if form has been submitted
@@ -91,22 +100,13 @@ export class VedraxFormComponent implements OnInit {
    * @param msg 
    */
   setMsg(message: string, level: MsgLevel = MsgLevel.info) {
-    Validate.isNotNull(message,'message must be provided');
+    Validate.isNotNull(message, 'message must be provided');
 
     const alert = new Msg();
     alert.message = message;
     alert.level = level;
     this.msg = alert;
-  }
-
-  /**
-   * Set alert class
-   */
-  setAlert() {
-    if (this.msg) {
-      return `alert alert-${this.msg.level}`;
-    }
-    return 'alert';
+    this.msgStyleClass = `alert alert-${alert.level}`;
   }
 
 }

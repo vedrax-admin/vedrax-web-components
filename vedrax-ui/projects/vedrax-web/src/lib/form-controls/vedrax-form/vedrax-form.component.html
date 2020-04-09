@@ -1,6 +1,6 @@
-<form [formGroup]="formCard" novalidate (ngSubmit)="submit(formCard.value)">
+<form *ngIf="descriptor" [formGroup]="formCard" novalidate (ngSubmit)="submit(formCard.value)">
 
-    <div [ngClass]="setAlert()" *ngIf="msg" role="alert">
+    <div [ngClass]="msgStyleClass" *ngIf="msg" role="alert">
         <i class="material-icons">{{msg.level}}</i>
         {{msg.message}}
     </div>
