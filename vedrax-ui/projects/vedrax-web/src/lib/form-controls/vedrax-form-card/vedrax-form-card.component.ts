@@ -27,6 +27,11 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
   @Input() descriptor: DescriptorForm;
 
   /**
+   * Provide optionnaly a card title
+   */
+  @Input() title?: string;
+
+  /**
    * The form component
    */
   @ViewChild(VedraxFormComponent) formComponent: VedraxFormComponent;

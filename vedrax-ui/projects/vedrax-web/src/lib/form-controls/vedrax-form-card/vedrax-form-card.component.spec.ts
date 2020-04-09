@@ -1,13 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { VedraxFormCardComponent } from './vedrax-form-card.component';
-import { FormService } from '../../services/form.service';
 import { VedraxApiService } from '../../services/vedrax-api.service';
-import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { ControlType } from '../../enum/control-types';
 import { DescriptorForm } from '../../descriptor';
 import { ApiMethod } from '../../enum';

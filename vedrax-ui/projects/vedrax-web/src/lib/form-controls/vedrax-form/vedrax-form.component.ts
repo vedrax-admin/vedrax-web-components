@@ -23,6 +23,8 @@ export class VedraxFormComponent implements OnInit {
 
   @Input() cancelLabel?: string = 'Cancel';
 
+  @Input() enableCancel?: boolean = true;
+
   /**
   * 
   * The returned API message if any

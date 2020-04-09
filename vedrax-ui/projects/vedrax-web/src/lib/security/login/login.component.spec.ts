@@ -9,7 +9,6 @@ import { of } from 'rxjs';
 import { VedraxLoginComponent } from './login.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import { User } from '../../shared/user.model';
-import { MockActivatedRoute } from '../../util/activated-route.mock';
 import { UserDto } from '../../shared/user-dto';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { FormService } from '../../services/form.service';
@@ -25,14 +24,6 @@ class AuthenticationServiceStub {
   }
 }
 
-class FormServiceMock {
-
-  createFormGroup(descriptors: DescriptorFormControl[] = []): FormGroup {
-    return new FormGroup({});
-  }
-
-}
-
 describe('LoginComponent', () => {
   let component: VedraxLoginComponent;
   let fixture: ComponentFixture<VedraxLoginComponent>;
@@ -46,7 +37,6 @@ describe('LoginComponent', () => {
       ],
       declarations: [VedraxLoginComponent],
       providers: [
-        { provide: FormService, useClass: FormServiceMock },
         { provide: AuthenticationService, useClass: AuthenticationServiceStub },
         {
           provide: ActivatedRoute, useValue: {

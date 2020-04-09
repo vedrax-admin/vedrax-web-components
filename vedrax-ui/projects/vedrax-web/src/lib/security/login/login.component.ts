@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserDto } from '../../shared/user-dto';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
-import { FormService } from '../../services/form.service';
+import { VedraxFormComponent } from '../../form-controls/vedrax-form/vedrax-form.component';
+import { MsgLevel } from '../../enum/msg-level';
 
 @Component({
   selector: 'vedrax-login',
@@ -24,6 +24,11 @@ export class VedraxLoginComponent implements OnInit, OnDestroy {
   @Input() controls: DescriptorFormControl[] = [];
 
   /**
+   * When true can redirect to register page
+   */
+  enableCancel?: boolean = false;
+
+  /**
    * URL for accessing the register page if any
    */
   @Input() registerPage?: string;
@@ -34,29 +39,20 @@ export class VedraxLoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
 
   /**
-   * login state
+   * The form component
    */
-  submitted: boolean = false;
-
-  /**
-   * error message
-   */
-  error: string;
-
-  /**
-   * The form object
-   */
-  formLogin: FormGroup;
+  @ViewChild(VedraxFormComponent) formComponent: VedraxFormComponent;
 
   constructor(
-    private formService: FormService,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.formLogin = this.formService.createFormGroup(this.controls);
+    if (this.registerPage) {
+      this.enableCancel = true;
+    }
     // get return url from route parameters or default to '/dashboard' when authenticated
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
@@ -66,18 +62,28 @@ export class VedraxLoginComponent implements OnInit, OnDestroy {
   }
 
   submit(dto: UserDto) {
-    if (this.formLogin.valid) {
-      this.submitted = true;
+    this.subscription.add(this.authenticationService.login(dto)
+      .pipe(
+        catchError(err => this.handleError(err)),
+        finalize(() => {
+          this.formComponent.end();
+          this.formComponent.reset();
+        }))
+      .subscribe(() => {
+        this.router.navigate([this.returnUrl]);
+      }));
 
-      this.subscription.add(this.authenticationService.login(dto)
-        .pipe(
-          catchError(err => this.error = err && err.message),
-          finalize(() => {
-            this.submitted = false;
-          }))
-        .subscribe(() => {
-          this.router.navigate([this.returnUrl]);
-        }));
+  }
+
+  private handleError(err) {
+    const error = err.error && err.error.message;
+    this.formComponent.setMsg(error, MsgLevel.error);
+    return throwError(err);
+  }
+
+  redirectToRegister(event: boolean) {
+    if (event) {
+      this.router.navigate([this.registerPage]);
     }
   }
 

@@ -10,7 +10,7 @@
     <vedrax-controls [descriptor]="descriptor" [form]="formCard"></vedrax-controls>
 
     <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
-        <button type="button" mat-raised-button (click)="cancel()">{{cancelLabel}}</button>
+        <button *ngIf="enableCancel" type="button" mat-raised-button (click)="cancel()">{{cancelLabel}}</button>
         <button type="submit" [disabled]="formCard.invalid || submitted" mat-raised-button
             color="primary">{{submitLabel}}</button>
     </div>
