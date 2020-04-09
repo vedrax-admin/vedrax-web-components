@@ -77,11 +77,6 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnInit() {
     this.displayedColumns = this.descriptor.columns.map(col => col.id);
     this.datasource = new VedraxTableDataSource(this.vedraxDataService);
-
-    //load on init
-    if (this.descriptor.loadOnInit) {
-      this.load();
-    }
   }
 
   /**
