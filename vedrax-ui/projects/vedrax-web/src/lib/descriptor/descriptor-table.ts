@@ -17,11 +17,6 @@ export class DescriptorTable {
     paginated?: boolean = false;
 
     /**
-     * Should load data on component initialization
-     */
-    loadOnInit?: boolean = false;
-
-    /**
      * The endpoint for getting the data
      */
     path: string;
