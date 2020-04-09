@@ -8,6 +8,7 @@ import { UserDto } from '../../shared/user-dto';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { VedraxFormComponent } from '../../form-controls/vedrax-form/vedrax-form.component';
 import { MsgLevel } from '../../enum/msg-level';
+import { DescriptorForm } from '../../descriptor/descriptor-form';
 
 @Component({
   selector: 'vedrax-login',
@@ -21,7 +22,7 @@ export class VedraxLoginComponent implements OnInit, OnDestroy {
   /**
    * Login form control descriptor
    */
-  @Input() controls: DescriptorFormControl[] = [];
+  @Input() descriptor: DescriptorForm;
 
   /**
    * When true can redirect to register page

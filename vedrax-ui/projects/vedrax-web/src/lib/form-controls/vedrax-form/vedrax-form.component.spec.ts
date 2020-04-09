@@ -52,7 +52,8 @@ describe('VedraxFormComponent', () => {
       declarations: [ VedraxFormComponent ],
       providers: [
         { provide: FormService, useClass: FormServiceMock }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -61,6 +62,7 @@ describe('VedraxFormComponent', () => {
     fixture = TestBed.createComponent(VedraxFormComponent);
     component = fixture.componentInstance;
     formService = TestBed.get(FormService);
+    component.descriptor = descriptorForm;
     fixture.detectChanges();
   });
 
@@ -70,7 +72,7 @@ describe('VedraxFormComponent', () => {
 
   it('form should be defined', () => {
     component.ngOnInit();
-    expect(component.formCard).toBeDefined();
+    expect(component.form).toBeDefined();
   });
 
   

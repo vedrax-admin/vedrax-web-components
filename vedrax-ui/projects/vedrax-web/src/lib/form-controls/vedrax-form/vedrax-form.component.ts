@@ -54,13 +54,13 @@ export class VedraxFormComponent implements OnInit {
   /**
    * The form object
    */
-  formCard: FormGroup;
+  form: FormGroup;
 
   constructor(private formService: FormService) { }
 
   ngOnInit() {
     if (this.descriptor) {
-      this.formCard = this.formService.createFormGroup(this.descriptor.controls);
+      this.form = this.formService.createFormGroup(this.descriptor.controls);
     }
   }
 
@@ -70,7 +70,7 @@ export class VedraxFormComponent implements OnInit {
    * @param dto 
    */
   submit(dto: any) {
-    if (this.formCard.valid) {
+    if (this.form.valid) {
       this.submitted = true;
       this.onSubmit.emit(dto);
     }
@@ -87,7 +87,7 @@ export class VedraxFormComponent implements OnInit {
    * reset form
    */
   reset(): void {
-    this.formCard.reset();
+    this.form.reset();
   }
 
   /**
