@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, 
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { MatTable } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -63,6 +64,8 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatPaginator) set matPaginator(matPaginator: MatPaginator) {
     this.paginator = matPaginator;
   }
+
+  @ViewChild(MatTable) matTable: MatTable<any>;
 
   /**
    * The datasource
@@ -146,6 +149,7 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   addItemsToTable(items: any[]) {
     this.vedraxDataService.addItems(items);
+    this.matTable.renderRows();
   }
 
   /**
