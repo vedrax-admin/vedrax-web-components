@@ -7,6 +7,7 @@ describe('UrlService', () => {
 
     beforeEach(() => {
         service = TestBed.get(UrlService);
+        service.reset();
     });
 
     it('should be created', () => {
@@ -20,6 +21,20 @@ describe('UrlService', () => {
         service.insertFragment('api');
 
         expect(service.construct()).toBe('/test/api');
+
+        service.reset();
+
+        expect(service.construct()).toBe('/');
+
+    });
+
+    it('should add fragments for creating URL', () => {
+
+        service.insertFragment('um/descriptor/form/users');
+        service.insertFragment('finance@vedrax.com');
+        service.insertFragment('credentials');
+
+        expect(service.construct()).toBe('/um/descriptor/form/users/finance@vedrax.com/credentials');
 
         service.reset();
 

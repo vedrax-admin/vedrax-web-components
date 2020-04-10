@@ -44,6 +44,7 @@ export class DialogFormService {
 
         let title = `${action.label} - ${item['id']}`;
 
+        this.urlService.reset();//create empty array
         this.urlService.insertFragment(action.url);
         this.urlService.insertFragment(`${item['id']}`);
         this.urlService.insertFragment(action.fragment);
