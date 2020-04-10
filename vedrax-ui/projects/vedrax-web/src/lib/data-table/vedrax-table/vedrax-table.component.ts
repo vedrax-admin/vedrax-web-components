@@ -65,7 +65,7 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.paginator = matPaginator;
   }
 
-  @ViewChild(MatTable) matTable: MatTable<any>;
+  @ViewChild('table') matTable: MatTable<any>;
 
   /**
    * The datasource

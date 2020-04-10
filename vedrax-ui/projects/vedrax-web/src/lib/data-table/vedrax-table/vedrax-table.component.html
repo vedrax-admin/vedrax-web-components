@@ -4,7 +4,7 @@
     </vedrax-filter>
 
     <div class="vedrax-table-m-t-15 vedrax-table-box mat-elevation-z8">
-        <table mat-table [dataSource]="datasource">
+        <table #table mat-table [dataSource]="datasource">
             <ng-container *ngFor="let col of descriptor.columns" [matColumnDef]="col.id">
                 <th mat-header-cell *matHeaderCellDef> {{col.label}} </th>
                 <td mat-cell *matCellDef="let element">

@@ -38,7 +38,7 @@ export class VedraxControlsComponent implements OnInit {
 
       let ids = group.ids || [];
       ids.forEach(id => this.initControl(id, controlsPerGroup.controls));
-
+      this.controlsPerGroups.push(controlsPerGroup);
     });
 
   }
