@@ -1,3 +1,4 @@
+export * from './controlsPerGroup';
 export * from './matrixColumn';
 export * from './msg';
 export * from './nvp';

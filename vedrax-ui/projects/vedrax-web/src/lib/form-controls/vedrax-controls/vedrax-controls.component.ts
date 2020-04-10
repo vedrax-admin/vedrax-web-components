@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
+import { ControlsPerGroup } from '../../shared';
 
 @Component({
   selector: 'vedrax-controls',
@@ -16,6 +17,11 @@ export class VedraxControlsComponent implements OnInit {
   @Input() descriptor: DescriptorForm;
 
   /**
+   * Controls per group list
+   */
+  controlsPerGroups: ControlsPerGroup[] = [];
+
+  /**
    * The form object
    */
   @Input() form: FormGroup;
@@ -23,11 +29,25 @@ export class VedraxControlsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    const groups = this.descriptor.groups || [];
+
+    groups.forEach(group => {
+      let controlsPerGroup: ControlsPerGroup = new ControlsPerGroup();
+      controlsPerGroup.name = group.name;
+
+      let ids = group.ids || [];
+      ids.forEach(id => this.initControl(id, controlsPerGroup.controls));
+
+    });
+
   }
 
-  getControlDescriptor(controlId: string): DescriptorFormControl {
-    console.log(controlId);
-    return this.descriptor.controls.find(control => control.controlName === controlId );
+  initControl(controlId: string, controls: DescriptorFormControl[]): void {
+    const descriptor: DescriptorFormControl = this.descriptor.controls.find(control => control.controlName === controlId);
+    if (descriptor) {
+      controls.push(descriptor);
+    }
   }
 
 }
