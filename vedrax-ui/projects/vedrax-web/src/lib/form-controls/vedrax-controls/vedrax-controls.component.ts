@@ -26,7 +26,8 @@ export class VedraxControlsComponent implements OnInit {
   }
 
   getControlDescriptor(controlId: string): DescriptorFormControl {
-    return this.descriptor.controls.find(control => { control.controlName === controlId });
+    console.log(controlId);
+    return this.descriptor.controls.find(control => control.controlName === controlId );
   }
 
 }

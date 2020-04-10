@@ -8,4 +8,6 @@ import { VedraxBaseComponent } from '../../shared/vedrax-base.component';
   selector: 'vedrax-control',
   templateUrl: './vedrax-control.component.html'
 })
-export class VedraxControlComponent extends VedraxBaseComponent {}
+export class VedraxControlComponent extends VedraxBaseComponent {
+  
+}
