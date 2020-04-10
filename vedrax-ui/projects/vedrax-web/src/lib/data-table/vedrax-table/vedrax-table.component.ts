@@ -65,7 +65,11 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.paginator = matPaginator;
   }
 
-  @ViewChild('table') matTable: MatTable<any>;
+  private table: MatTable<any>;
+
+  @ViewChild(MatTable) set matTable(table: MatTable<any>) {
+    this.matTable = table;
+  }
 
   /**
    * The datasource
@@ -81,9 +85,7 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.displayedColumns = this.descriptor.columns.map(col => col.id);
     this.datasource = new VedraxTableDataSource(this.vedraxDataService);
 
-    if (this.descriptor.values) {
-      this.addItemsToTable(this.descriptor.values);
-    }
+    
   }
 
   /**
@@ -96,6 +98,10 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
           .pipe(
             tap(() => this.load())
           ).subscribe());
+      }
+
+      if (this.descriptor.values) {
+        this.addItemsToTable(this.descriptor.values);
       }
     }
   }
