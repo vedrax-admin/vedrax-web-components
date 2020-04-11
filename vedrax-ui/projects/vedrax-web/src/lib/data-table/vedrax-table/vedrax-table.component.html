@@ -25,7 +25,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator *ngIf="descriptor.paginated" [length]="vedraxDataService.totalElements" [pageSize]="30">
+        <mat-paginator *ngIf="descriptor.paginated" [length]="totalLength" [pageSize]="30">
         </mat-paginator>
     </div>
 </div>

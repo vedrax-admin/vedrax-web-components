@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, 
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { Subscription, of } from 'rxjs';
+import { Subscription, of, Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -38,6 +38,11 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    * The displayed column of the table
    */
   displayedColumns: string[] = [];
+
+  /**
+   * Total elements
+   */
+  totalLength: number = 0;
 
   /**
    * Put search form in an expansion panel by default
@@ -83,6 +88,9 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.descriptor.loadOnInit) {
       this.load();
     }
+
+    this.subscription.add(
+      this.datasource.totalItems$.subscribe(nb => this.totalLength));
 
   }
 
