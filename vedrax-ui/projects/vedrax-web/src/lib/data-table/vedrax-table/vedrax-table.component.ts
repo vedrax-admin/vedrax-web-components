@@ -7,12 +7,16 @@ import { tap, catchError } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
 import { VedraxTableDataSource } from './vedrax-table.datasource';
-import { DescriptorTable, DescriptorAction, DescriptorModal, DescriptorForm } from '../../descriptor';
+
 import { Validate } from '../../util/validate';
 import { ActionType } from '../../enum';
 import { VedraxApiService } from '../../services';
 import { VedraxFormModalComponent } from '../../form-controls';
 import { UrlConstructor } from '../../util';
+import { DescriptorTable } from '../../descriptor/descriptor-table';
+import { DescriptorAction } from '../../descriptor/descriptor-action';
+import { DescriptorForm } from '../../descriptor/descriptor-form';
+import { DescriptorModal } from '../../descriptor/descriptor-modal';
 
 /**
  * Class that defines a table component with its search box
