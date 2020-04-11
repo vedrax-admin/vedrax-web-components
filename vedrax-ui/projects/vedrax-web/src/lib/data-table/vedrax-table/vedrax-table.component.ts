@@ -2,21 +2,21 @@ import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, 
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { Subscription, of, Observable } from 'rxjs';
+import { Subscription, of} from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
 import { VedraxTableDataSource } from './vedrax-table.datasource';
 
 import { Validate } from '../../util/validate';
-import { ActionType } from '../../enum';
-import { VedraxApiService } from '../../services';
-import { VedraxFormModalComponent } from '../../form-controls';
-import { UrlConstructor } from '../../util';
 import { DescriptorTable } from '../../descriptor/descriptor-table';
 import { DescriptorAction } from '../../descriptor/descriptor-action';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { DescriptorModal } from '../../descriptor/descriptor-modal';
+import { VedraxApiService } from '../../services/vedrax-api.service';
+import { ActionType } from '../../enum/action-types';
+import { UrlConstructor } from '../../util/url-constructor';
+import { VedraxFormModalComponent } from '../../form-controls/vedrax-form-modal/vedrax-form-modal.component';
 
 /**
  * Class that defines a table component with its search box

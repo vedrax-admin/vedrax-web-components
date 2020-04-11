@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
-import { ControlsPerGroup } from '../../shared';
+import { ControlsPerGroup } from '../../shared/controlsPerGroup';
 
 @Component({
   selector: 'vedrax-controls',
