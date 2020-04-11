@@ -32,22 +32,22 @@ export class VedraxControlsComponent implements OnInit {
 
     const groups = this.descriptor.groups || [];
 
+    this.controlsPerGroups = [];
+
     groups.forEach(group => {
       let controlsPerGroup: ControlsPerGroup = new ControlsPerGroup();
       controlsPerGroup.name = group.name;
 
-      let ids = group.ids || [];
-      ids.forEach(id => this.initControl(id, controlsPerGroup.controls));
+      const ids = group.ids || [];
+      controlsPerGroup.controls = ids.map(id => this.getControl(id))
+
       this.controlsPerGroups.push(controlsPerGroup);
     });
 
   }
 
-  initControl(controlId: string, controls: DescriptorFormControl[]): void {
-    const descriptor: DescriptorFormControl = this.descriptor.controls.find(control => control.controlName === controlId);
-    if (descriptor) {
-      controls.push(descriptor);
-    }
+  private getControl(controlId: string): DescriptorFormControl{
+    return this.descriptor.controls.find(control => control.controlName === controlId);
   }
 
 }

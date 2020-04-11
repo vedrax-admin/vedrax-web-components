@@ -2,16 +2,17 @@ import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, 
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { MatTable } from '@angular/material/table';
-import { Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Subscription, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 import { VedraxTableDataSource } from './vedrax-table.datasource';
-import { VedraxDataService } from '../../services/vedrax-data.service';
-import { DescriptorTable, DescriptorAction } from '../../descriptor';
+import { DescriptorTable, DescriptorAction, DescriptorModal, DescriptorForm } from '../../descriptor';
 import { Validate } from '../../util/validate';
 import { ActionType } from '../../enum';
-import { DialogFormService } from '../../services/dialog-form.service';
+import { VedraxApiService } from '../../services';
+import { VedraxFormModalComponent } from '../../form-controls';
+import { UrlConstructor } from '../../util';
 
 /**
  * Class that defines a table component with its search box
@@ -65,27 +66,24 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.paginator = matPaginator;
   }
 
-  private table: MatTable<any>;
-
-  @ViewChild(MatTable) set matTable(table: MatTable<any>) {
-    this.matTable = table;
-  }
-
   /**
    * The datasource
    */
   datasource: VedraxTableDataSource;
 
   constructor(
-    private dialogFormService: DialogFormService,
-    public vedraxDataService: VedraxDataService,
+    private dialog: MatDialog,
+    private apiService: VedraxApiService,
     private router: Router) { }
 
   ngOnInit() {
     this.displayedColumns = this.descriptor.columns.map(col => col.id);
-    this.datasource = new VedraxTableDataSource(this.vedraxDataService);
+    this.datasource = new VedraxTableDataSource(this.apiService);
 
-    
+    if (this.descriptor.loadOnInit) {
+      this.load();
+    }
+
   }
 
   /**
@@ -99,10 +97,6 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
             tap(() => this.load())
           ).subscribe());
       }
-
-      if (this.descriptor.values) {
-        this.addItemsToTable(this.descriptor.values);
-      }
     }
   }
 
@@ -111,7 +105,6 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.dialogFormService.complete();
   }
 
   /**
@@ -143,19 +136,10 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   load(): void {
     if (this.descriptor.paginated) {
       this.setQueryParam('page', this.paginator.pageIndex);
-      this.vedraxDataService.load(this.descriptor, this.params);
+      this.datasource.loadWithPagination(this.descriptor.path, this.params);
     } else {
-      this.vedraxDataService.loadValues(this.descriptor, this.params);
+      this.datasource.load(this.descriptor.path, this.params);
     }
-  }
-
-  /**
-   * Used for adding manually items to table
-   * @param items 
-   */
-  addItemsToTable(items: any[]) {
-    this.vedraxDataService.addItems(items);
-    this.matTable.renderRows();
   }
 
   /**
@@ -166,22 +150,6 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   private setQueryParam(key: string, value: any) {
     this.params = this.params.set(key, String(value));
-  }
-
-  /**
-   * Add an item to the table
-   * @param item 
-   */
-  addItem(item: any): void {
-    this.vedraxDataService.addItem(item);
-  }
-
-  /**
-   * Update an item by its ID
-   * @param item the item to be updated
-   */
-  updateItem(item: any): void {
-    this.vedraxDataService.updateItem(item);
   }
 
   /**
@@ -199,7 +167,7 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     if (action.action === ActionType.form) {
-      this.dialogFormService.openFormDialogFromApi(action, item, this.updateItem);
+      this.openFormDialogFromApi(action, item);
       return;
     }
 
@@ -213,6 +181,57 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   private redirectToUrl(action: DescriptorAction, item: any): void {
     this.router.navigate([action.url, item['id'], action.fragment]);
+  }
+
+  /**
+   * Method for editing a row in a table
+   * @param action 
+   * @param item 
+   */
+  private openFormDialogFromApi(action: DescriptorAction, item: any): void {
+    Validate.isNotNull(action, 'action escriptor must be provided');
+    Validate.isNotNull(item, 'item must be provided');
+
+    let title = `${action.label} - ${item['id']}`;
+
+    let endpoint: string = new UrlConstructor()
+      .setFragment(action.url)
+      .setFragment(`${item['id']}`)
+      .setFragment(action.fragment)
+      .build();
+
+    this.subscription.add(
+      this.apiService
+        .get<DescriptorForm>(endpoint)
+        .pipe(
+          catchError(() => of(new DescriptorForm()))
+        )
+        .subscribe(formDescriptor => {
+          if (formDescriptor) {
+            this.openDialog(new DescriptorModal(title, formDescriptor));
+          }
+        }));
+
+  }
+
+  /**
+  * Method for opening a form dialog with the provided DescriptorForm returned from the API
+  * @param action the action as create or edit
+  * @param descriptor the provided Descriptor modal
+  */
+  private openDialog(descriptor: DescriptorModal): void {
+    const dialogRef = this.dialog.open(VedraxFormModalComponent, {
+      width: '600px',
+      data: descriptor
+    });
+
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe(vo => {
+        if (vo) {
+          this.datasource.updateItem(vo);
+        }
+      }));
+
   }
 
 }

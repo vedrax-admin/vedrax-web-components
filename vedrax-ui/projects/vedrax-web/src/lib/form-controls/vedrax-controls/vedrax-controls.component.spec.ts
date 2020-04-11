@@ -29,18 +29,18 @@ const descriptorForm: DescriptorForm = {
       controlType: ControlType.datepicker
     }
   ],
-  groups:[
+  groups: [
     {
-      name:'g1',
-      ids:['men','women']
+      name: 'g1',
+      ids: ['men', 'women']
     },
     {
-      name:'g2',
-      ids:['birthdate']
+      name: 'g2',
+      ids: ['birthdate']
     }
   ],
   endpoint: '/api/test',
-  method: ApiMethod.POST,
+  method: ApiMethod.POST
 };
 
 describe('VedraxControlsComponent', () => {
@@ -52,10 +52,10 @@ describe('VedraxControlsComponent', () => {
       imports: [
         NoopAnimationsModule
       ],
-      declarations: [ VedraxControlsComponent ],
+      declarations: [VedraxControlsComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -69,7 +69,7 @@ describe('VedraxControlsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initiate group list',()=>{
+  it('should initiate group list', () => {
     component.ngOnInit();
 
     expect(component.controlsPerGroups).toBeTruthy();

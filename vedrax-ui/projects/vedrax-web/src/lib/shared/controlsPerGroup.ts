@@ -10,4 +10,10 @@ export class ControlsPerGroup {
      * List of controls
      */
     controls: DescriptorFormControl[] = [];
+
+    addControl(control: DescriptorFormControl): void {
+        if (control) {
+            this.controls.push(control);
+        }
+    }
 }

@@ -12,6 +12,11 @@ export class DescriptorTable {
     title: string;
 
     /**
+     * Load on component initialization
+     */
+    loadOnInit?: boolean = false;
+
+    /**
      * Is the result paginated
      */
     paginated?: boolean = false;
