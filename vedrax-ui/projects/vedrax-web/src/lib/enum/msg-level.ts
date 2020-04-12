@@ -3,6 +3,8 @@
  */
 export enum MsgLevel {
 
-    info, warning, error
+    info = 'info', 
+    warning = 'warning', 
+    error = 'error'
 
 }

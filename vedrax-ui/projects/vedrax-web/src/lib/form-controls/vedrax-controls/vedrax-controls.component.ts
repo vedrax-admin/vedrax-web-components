@@ -7,7 +7,8 @@ import { ControlsPerGroup } from '../../shared/controlsPerGroup';
 
 @Component({
   selector: 'vedrax-controls',
-  templateUrl: './vedrax-controls.component.html'
+  templateUrl: './vedrax-controls.component.html',
+  styleUrls:['./vedrax-controls.component.scss']
 })
 export class VedraxControlsComponent implements OnInit {
 

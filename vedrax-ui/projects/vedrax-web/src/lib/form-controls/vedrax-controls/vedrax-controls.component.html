@@ -3,9 +3,12 @@
 
         <mat-tab *ngFor="let group of controlsPerGroups" [label]="group.name">
 
-            <vedrax-form-control *ngFor="let control of group.controls" [form]="form"
-                [descriptor]="control">
-            </vedrax-form-control>
+            <div class="form-tab-content">
+
+                <vedrax-form-control *ngFor="let control of group.controls" [form]="form" [descriptor]="control">
+                </vedrax-form-control>
+
+            </div>
 
         </mat-tab>
     </mat-tab-group>
