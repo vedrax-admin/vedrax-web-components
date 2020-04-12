@@ -108,7 +108,7 @@ export class VedraxFormComponent implements OnInit {
     alert.message = message;
     alert.level = level;
     this.msg = alert;
-    this.msgStyleClass = `alert alert-${alert.level}`;
+    this.msgStyleClass = `alert-${alert.level}`;
   }
 
 }
