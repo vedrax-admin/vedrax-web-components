@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { Subscription, throwError } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 
-
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { MsgLevel } from '../../enum/msg-level';
-
+import { ResponseWrapper } from '../../shared/response-wrapper';
+import { SnackbarService } from '../../services/snackbar.service';
 
 
 /**
@@ -42,6 +42,7 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private apiService: VedraxApiService,
+    private snackbarService: SnackbarService,
     private router: Router,
     private location: Location
   ) { }
@@ -59,18 +60,21 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
    * @param dto 
    */
   submit(dto: any) {
+
+    DateUtil.transformToISODate(dto);
+
     this.subscription.add(
-      this.apiService.callEndpoint(this.descriptor, dto)
+      this.apiService.callEndpoint<ResponseWrapper>(this.descriptor, dto)
         .pipe(
-          map(data => DateUtil.transformToISODate(data)),
           catchError(err => this.handleError(err)),
           finalize(() => {
             this.formComponent.end();
-            this.formComponent.reset();
           }))
         .subscribe(data => {
-          this.formComponent.setMsg('Success');
-          this.redirectToSuccessIfProvided();
+          if (data) {
+            this.snackbarService.open(data.status.message);
+            this.redirectToSuccessIfProvided();
+          }
         }));
   }
 
@@ -82,10 +86,7 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
 
   private redirectToSuccessIfProvided(): void {
     if (this.descriptor.successUrl) {
-      //we delay the redirection for letting the user read the message
-      setTimeout(() => {
-        this.router.navigate([this.descriptor.successUrl]);
-      }, 3000);//3s
+      this.router.navigate([this.descriptor.successUrl]);
     }
   }
 

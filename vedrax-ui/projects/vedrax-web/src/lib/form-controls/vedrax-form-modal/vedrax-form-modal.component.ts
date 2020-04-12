@@ -8,6 +8,8 @@ import { DescriptorModal } from '../../descriptor/descriptor-modal';
 import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
 import { MsgLevel } from '../../enum/msg-level';
+import { SnackbarService } from '../../services/snackbar.service';
+import { ResponseWrapper } from '../../shared/response-wrapper';
 
 @Component({
   selector: 'vedrax-form-modal',
@@ -26,6 +28,7 @@ export class VedraxFormModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DescriptorModal,
     public dialogRef: MatDialogRef<VedraxFormModalComponent>,
+    private snackbarService: SnackbarService,
     private apiService: VedraxApiService) { }
 
   ngOnInit() {
@@ -38,18 +41,20 @@ export class VedraxFormModalComponent implements OnInit {
    */
   submit(dto: any) {
 
+    DateUtil.transformToISODate(dto);
+
     this.subscription.add(
-      this.apiService.callEndpoint(this.data.formDescriptor, dto)
+      this.apiService.callEndpoint<ResponseWrapper>(this.data.formDescriptor, dto)
         .pipe(
-          map(data => DateUtil.transformToISODate(data)),
           catchError(err => this.handleError(err)),
           finalize(() => {
             this.formComponent.end();
-            this.formComponent.reset();
           }))
         .subscribe(data => {
-          this.formComponent.setMsg('Success');
-          this.close(data);
+          if (data) {
+            this.snackbarService.open(data.status.message);
+            this.dialogRef.close(data);
+          }
         }));
 
   }
@@ -58,13 +63,6 @@ export class VedraxFormModalComponent implements OnInit {
     const error = err.error && err.error.message;
     this.formComponent.setMsg(error, MsgLevel.error);
     return throwError(err);
-  }
-
-  private close(data: any) {
-    //we delay the closing of the modal for letting the user read the message
-    setTimeout(() => {
-      this.dialogRef.close(data);
-    }, 3000);
   }
 
   cancel(event: boolean) {

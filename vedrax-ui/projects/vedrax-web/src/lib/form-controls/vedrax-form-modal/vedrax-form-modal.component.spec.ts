@@ -8,6 +8,7 @@ import { DescriptorModal, DescriptorFormControl } from '../../descriptor';
 import { ControlType } from '../../enum/control-types';
 import { ApiMethod } from '../../enum/api-methods';
 import { VedraxApiService } from '../../services/vedrax-api.service';
+import { SnackbarService } from '../../services';
 
 
 
@@ -38,17 +39,22 @@ class VedraxApiServiceMock {
 
 }
 
+class SnackbarServiceMock {
+  open(message: string): void { }
+}
+
 describe('VedraxFormModalComponent', () => {
   let component: VedraxFormModalComponent;
   let fixture: ComponentFixture<VedraxFormModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[ReactiveFormsModule],
+      imports: [ReactiveFormsModule],
       declarations: [VedraxFormModalComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: MAT_DIALOG_DATA_MOCK },
         { provide: MatDialogRef, useValue: {} },
+        { provide: SnackbarService, useClass: SnackbarServiceMock },
         { provide: VedraxApiService, useClass: VedraxApiServiceMock }
       ],
       schemas: [NO_ERRORS_SCHEMA]

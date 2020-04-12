@@ -31,11 +31,11 @@ export class VedraxApiService {
      * @param descriptor the form descriptor
      * @param body the body of the request
      */
-    callEndpoint(descriptor: DescriptorForm, body: object = {}): Observable<any> {
+    callEndpoint<T>(descriptor: DescriptorForm, body: object = {}): Observable<T> {
         Validate.isNotNull(descriptor, 'Form descriptor must be provided');
         Validate.isNotNull(descriptor.method, 'methid in descriptor must be provided');
 
-        return descriptor.method === ApiMethod.POST ? this.post(descriptor.endpoint, body) : this.put(descriptor.endpoint, body);
+        return descriptor.method === ApiMethod.POST ? this.post<T>(descriptor.endpoint, body) : this.put<T>(descriptor.endpoint, body);
     }
 
     /**

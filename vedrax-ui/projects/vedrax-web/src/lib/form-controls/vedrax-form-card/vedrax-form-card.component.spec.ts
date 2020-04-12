@@ -8,6 +8,7 @@ import { VedraxApiService } from '../../services/vedrax-api.service';
 import { ControlType } from '../../enum/control-types';
 import { DescriptorForm } from '../../descriptor';
 import { ApiMethod } from '../../enum';
+import { SnackbarService } from '../../services/snackbar.service';
 
 const descriptorForm: DescriptorForm = {
   controls: [
@@ -32,6 +33,10 @@ class VedraxApiServiceMock {
 
 }
 
+class SnackbarServiceMock {
+  open(message: string): void { }
+}
+
 const router = {
   navigate: jasmine.createSpy('navigate')
 }
@@ -52,6 +57,7 @@ describe('VedraxFormCardComponent', () => {
       declarations: [VedraxFormCardComponent],
       providers: [
         { provide: VedraxApiService, useClass: VedraxApiServiceMock },
+        { provide: SnackbarService, useClass: SnackbarServiceMock },
         { provide: Router, useValue: router },
         { provide: Location, useClass: LocationMock }
       ],
