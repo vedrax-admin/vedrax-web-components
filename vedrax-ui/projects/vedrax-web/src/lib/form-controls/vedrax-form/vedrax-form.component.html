@@ -5,8 +5,6 @@
         {{msg.message}}
     </div>
 
-    <div [ngClass]="msg.level" *ngIf="msg" role="alert">{{msg.message}}</div>
-
     <vedrax-controls [descriptor]="descriptor" [form]="form"></vedrax-controls>
 
     <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">

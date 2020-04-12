@@ -4,11 +4,13 @@ import { Router } from '@angular/router';
 import { Subscription, throwError } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 
-import { DescriptorForm } from '../../descriptor';
+
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
-import { MsgLevel } from '../../enum';
+import { DescriptorForm } from '../../descriptor/descriptor-form';
+import { MsgLevel } from '../../enum/msg-level';
+
 
 
 /**
