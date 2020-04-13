@@ -67,7 +67,6 @@ export class VedraxLoginComponent implements OnInit, OnDestroy {
         catchError(err => this.handleError(err)),
         finalize(() => {
           this.formComponent.end();
-          this.formComponent.reset();
         }))
       .subscribe(() => {
         this.router.navigate([this.returnUrl]);

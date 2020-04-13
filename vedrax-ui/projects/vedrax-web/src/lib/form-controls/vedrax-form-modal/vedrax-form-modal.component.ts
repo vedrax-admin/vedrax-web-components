@@ -44,7 +44,7 @@ export class VedraxFormModalComponent implements OnInit {
     DateUtil.transformToISODate(dto);
 
     this.subscription.add(
-      this.apiService.callEndpoint<ResponseWrapper>(this.data.formDescriptor, dto)
+      this.apiService.callEndpoint(this.data.formDescriptor, dto)
         .pipe(
           catchError(err => this.handleError(err)),
           finalize(() => {
@@ -52,7 +52,7 @@ export class VedraxFormModalComponent implements OnInit {
           }))
         .subscribe(data => {
           if (data) {
-            this.snackbarService.open(data.status.message);
+            this.snackbarService.open('Success');
             this.dialogRef.close(data);
           }
         }));

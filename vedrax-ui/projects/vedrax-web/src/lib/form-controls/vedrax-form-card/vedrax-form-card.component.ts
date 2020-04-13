@@ -64,7 +64,7 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
     DateUtil.transformToISODate(dto);
 
     this.subscription.add(
-      this.apiService.callEndpoint<ResponseWrapper>(this.descriptor, dto)
+      this.apiService.callEndpoint(this.descriptor, dto)
         .pipe(
           catchError(err => this.handleError(err)),
           finalize(() => {
@@ -72,7 +72,7 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
           }))
         .subscribe(data => {
           if (data) {
-            this.snackbarService.open(data.status.message);
+            this.snackbarService.open('Success');
             this.redirectToSuccessIfProvided();
           }
         }));
