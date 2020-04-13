@@ -1,10 +1,5 @@
 <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value)">
 
-    <div class="alert" [ngClass]="msgStyleClass" *ngIf="msg" role="alert">
-        <i class="material-icons">{{msg.level}}</i>
-        {{msg.message}}
-    </div>
-
     <vedrax-controls [descriptor]="descriptor" [form]="form"></vedrax-controls>
 
     <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">

@@ -66,7 +66,6 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.apiService.callEndpoint(this.descriptor, dto)
         .pipe(
-          catchError(err => this.handleError(err)),
           finalize(() => {
             this.formComponent.end();
           }))
@@ -76,12 +75,6 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
             this.redirectToSuccessIfProvided();
           }
         }));
-  }
-
-  private handleError(err) {
-    const error = err.error && err.error.message;
-    this.formComponent.setMsg(error, MsgLevel.error);
-    return throwError(err);
   }
 
   private redirectToSuccessIfProvided(): void {

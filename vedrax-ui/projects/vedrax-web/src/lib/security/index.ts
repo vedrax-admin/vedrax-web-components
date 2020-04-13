@@ -1,3 +1,4 @@
+export * from './errorhandling/global-error-handler';
 export * from './guards/auth.guard';
 export * from './guards/no-auth.guard';
 export * from './interceptors/error.interceptor';

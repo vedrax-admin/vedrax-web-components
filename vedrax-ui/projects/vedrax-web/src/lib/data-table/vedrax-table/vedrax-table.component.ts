@@ -94,7 +94,7 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     this.subscription.add(
-      this.datasource.totalItems$.subscribe(nb => this.totalLength));
+      this.datasource.totalItems$.subscribe(nb => this.totalLength = nb));
 
   }
 

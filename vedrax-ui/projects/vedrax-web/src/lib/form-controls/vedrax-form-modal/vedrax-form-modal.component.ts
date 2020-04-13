@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription, throwError } from 'rxjs';
-import { catchError, finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorModal } from '../../descriptor/descriptor-modal';
@@ -9,7 +9,6 @@ import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
 import { MsgLevel } from '../../enum/msg-level';
 import { SnackbarService } from '../../services/snackbar.service';
-import { ResponseWrapper } from '../../shared/response-wrapper';
 
 @Component({
   selector: 'vedrax-form-modal',
@@ -46,7 +45,6 @@ export class VedraxFormModalComponent implements OnInit {
     this.subscription.add(
       this.apiService.callEndpoint(this.data.formDescriptor, dto)
         .pipe(
-          catchError(err => this.handleError(err)),
           finalize(() => {
             this.formComponent.end();
           }))
@@ -59,14 +57,10 @@ export class VedraxFormModalComponent implements OnInit {
 
   }
 
-  private handleError(err) {
-    const error = err.error && err.error.message;
-    this.formComponent.setMsg(error, MsgLevel.error);
-    return throwError(err);
-  }
-
   cancel(event: boolean) {
-    this.dialogRef.close();
+    if (event) {
+      this.dialogRef.close();
+    }
   }
 
 }

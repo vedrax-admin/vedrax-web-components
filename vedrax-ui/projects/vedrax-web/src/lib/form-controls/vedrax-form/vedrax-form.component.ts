@@ -3,9 +3,6 @@ import { FormGroup } from '@angular/forms';
 
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { FormService } from '../../services/form.service';
-import { Msg } from '../../shared';
-import { MsgLevel } from '../../enum';
-import { Validate } from '../../util';
 
 @Component({
   selector: 'vedrax-form',
@@ -24,17 +21,6 @@ export class VedraxFormComponent implements OnInit {
   @Input() cancelLabel?: string = 'Cancel';
 
   @Input() enableCancel?: boolean = true;
-
-  /**
-  * 
-  * The returned API message if any
-  */
-  msg: Msg;
-
-  /**
-   * The message style class
-   */
-  msgStyleClass: string;
 
   /**
   * State describing if form has been submitted
@@ -95,20 +81,6 @@ export class VedraxFormComponent implements OnInit {
    */
   end(): void {
     this.submitted = false;
-  }
-
-  /**
-   * set msg
-   * @param msg 
-   */
-  setMsg(message: string, level: MsgLevel = MsgLevel.info) {
-    Validate.isNotNull(message, 'message must be provided');
-
-    const alert = new Msg();
-    alert.message = message;
-    alert.level = level;
-    this.msg = alert;
-    this.msgStyleClass = `alert-${alert.level}`;
   }
 
 }
