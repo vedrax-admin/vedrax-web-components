@@ -16,7 +16,7 @@ export class DescriptorForm {
     /**
      * Set optional Group of controls
      */
-    groups?: DescriptorFormGroup[];
+    groups?: DescriptorFormGroup[] = [];
 
     /**
      * API endpoint to call when submit
@@ -32,5 +32,20 @@ export class DescriptorForm {
      *  Redirect url when the API returns OK
      */
     successUrl?: string;
+
+    /**
+     * The label of the submit button
+     */
+    submitLabel?: string = 'Submit';
+
+    /**
+     * The label of the cancel button
+     */
+    cancelLabel?: string = 'Cancel';
+
+    /**
+     * The success message
+     */
+    successMessage?: string = 'Success';
 
 }

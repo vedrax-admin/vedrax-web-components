@@ -1,15 +1,13 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { Subscription, throwError } from 'rxjs';
-import { catchError, finalize, map } from 'rxjs/operators';
+import { Subscription} from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
-import { MsgLevel } from '../../enum/msg-level';
-import { ResponseWrapper } from '../../shared/response-wrapper';
 import { SnackbarService } from '../../services/snackbar.service';
 
 
@@ -71,7 +69,7 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
           }))
         .subscribe(data => {
           if (data) {
-            this.snackbarService.open('Success');
+            this.snackbarService.open(this.descriptor.successMessage);
             this.redirectToSuccessIfProvided();
           }
         }));

@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Subscription, throwError } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorModal } from '../../descriptor/descriptor-modal';
 import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
-import { MsgLevel } from '../../enum/msg-level';
 import { SnackbarService } from '../../services/snackbar.service';
+import { DescriptorForm } from '../../descriptor/descriptor-form';
 
 @Component({
   selector: 'vedrax-form-modal',
@@ -42,15 +42,17 @@ export class VedraxFormModalComponent implements OnInit {
 
     DateUtil.transformToISODate(dto);
 
+    const formDescriptor: DescriptorForm = this.data && this.data.formDescriptor;
+
     this.subscription.add(
-      this.apiService.callEndpoint(this.data.formDescriptor, dto)
+      this.apiService.callEndpoint(formDescriptor, dto)
         .pipe(
           finalize(() => {
             this.formComponent.end();
           }))
         .subscribe(data => {
           if (data) {
-            this.snackbarService.open('Success');
+            this.snackbarService.open(formDescriptor.successMessage);
             this.dialogRef.close(data);
           }
         }));

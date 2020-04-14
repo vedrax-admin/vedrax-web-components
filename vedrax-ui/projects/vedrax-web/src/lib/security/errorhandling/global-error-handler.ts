@@ -4,7 +4,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LoggingService } from '../../services/logging.service';
 import { SnackbarService } from '../../services/snackbar.service';
 
-
+/**
+ * Global error handler. Used it by adding to provider of the root module
+ */
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
@@ -16,19 +18,19 @@ export class GlobalErrorHandler implements ErrorHandler {
     const notifier = this.injector.get(SnackbarService)
 
     let message;
-    let stackTrace;
 
     if (error instanceof HttpErrorResponse) {
       //server error
-      message = error.message;
-      stackTrace = 'stack';
+      message = error.error && error.error.message;
+      logger.logError(message, error.error);
     } else {
       //client error
       message = error.message;
-      stackTrace = error.stack;
+      const stackTrace = error.stack;
+      logger.logError(message, stackTrace);
     }
 
     notifier.showError(message);
-    logger.logError(message, stackTrace);
+    
   }
 }
