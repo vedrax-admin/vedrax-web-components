@@ -36,8 +36,4 @@ export class DescriptorTable {
      */
     columns: DescriptorColumn[] = [];
 
-    /**
-     * The table values if any
-     */
-    values?: any[];
 }

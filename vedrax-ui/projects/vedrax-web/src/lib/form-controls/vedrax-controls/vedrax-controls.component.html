@@ -1,5 +1,5 @@
 <div *ngIf="descriptor">
-    <mat-tab-group *ngIf="descriptor.groups.length; else simpleForm">
+    <mat-tab-group *ngIf="descriptor.groups; else simpleForm">
 
         <mat-tab *ngFor="let group of controlsPerGroups" [label]="group.name">
 

@@ -8,7 +8,7 @@ import { ControlsPerGroup } from '../../shared/controlsPerGroup';
 @Component({
   selector: 'vedrax-controls',
   templateUrl: './vedrax-controls.component.html',
-  styleUrls:['./vedrax-controls.component.scss']
+  styleUrls: ['./vedrax-controls.component.scss']
 })
 export class VedraxControlsComponent implements OnInit {
 
@@ -31,23 +31,27 @@ export class VedraxControlsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const groups = this.descriptor.groups || [];
+    if (this.descriptor.groups) {
 
-    this.controlsPerGroups = [];
+      const groups = this.descriptor.groups;
 
-    groups.forEach(group => {
-      let controlsPerGroup: ControlsPerGroup = new ControlsPerGroup();
-      controlsPerGroup.name = group.name;
+      this.controlsPerGroups = [];
 
-      const ids = group.ids || [];
-      controlsPerGroup.controls = ids.map(id => this.getControl(id))
+      groups.forEach(group => {
+        let controlsPerGroup: ControlsPerGroup = new ControlsPerGroup();
+        controlsPerGroup.name = group.name;
 
-      this.controlsPerGroups.push(controlsPerGroup);
-    });
+        const ids = group.ids || [];
+        controlsPerGroup.controls = ids.map(id => this.getControl(id))
+
+        this.controlsPerGroups.push(controlsPerGroup);
+      });
+
+    }
 
   }
 
-  private getControl(controlId: string): DescriptorFormControl{
+  private getControl(controlId: string): DescriptorFormControl {
     return this.descriptor.controls.find(control => control.controlName === controlId);
   }
 

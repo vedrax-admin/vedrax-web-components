@@ -16,7 +16,7 @@ export class DescriptorForm {
     /**
      * Set optional Group of controls
      */
-    groups?: DescriptorFormGroup[] = [];
+    groups?: DescriptorFormGroup[];
 
     /**
      * API endpoint to call when submit
