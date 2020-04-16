@@ -9,6 +9,11 @@ export class DescriptorPage {
     content: any[] = [];
 
     /**
+     * Pageable object
+     */
+    pageable?: any;
+
+    /**
      * Is first page ?
      */
     first: boolean;
@@ -42,4 +47,9 @@ export class DescriptorPage {
      * Is content empty ?
      */
     empty: boolean;
+
+    /**
+     * Sort object
+     */
+    sort?: any;
 }
