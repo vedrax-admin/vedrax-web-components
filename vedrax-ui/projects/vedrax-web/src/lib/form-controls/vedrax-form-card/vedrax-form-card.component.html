@@ -2,7 +2,7 @@
     <mat-card-title *ngIf="title">{{title}}</mat-card-title>
     <mat-card-content>
 
-        <vedrax-form [descriptor]="descriptor" (onSubmit)="submit($event)" (onCancel)="cancel($event)">
+        <vedrax-form [descriptor]="descriptor" [lovs]="lovs" (onSubmit)="submit($event)" (onCancel)="cancel($event)">
         </vedrax-form>
 
     </mat-card-content>

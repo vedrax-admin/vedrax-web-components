@@ -2,7 +2,7 @@
     <h1 mat-dialog-title>{{data.title}}</h1>
     <div mat-dialog-content>
 
-        <vedrax-form [descriptor]="data.formDescriptor" (onSubmit)="submit($event)" (onCancel)="cancel($event)">
+        <vedrax-form [descriptor]="data.formDescriptor" [lovs]="lovs" (onSubmit)="submit($event)" (onCancel)="cancel($event)">
         </vedrax-form>
 
     </div>

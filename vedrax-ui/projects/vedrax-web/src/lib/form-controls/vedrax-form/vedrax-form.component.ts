@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { FormService } from '../../services/form.service';
+import { DescriptorOption } from '../../descriptor';
 
 @Component({
   selector: 'vedrax-form',
@@ -15,6 +16,8 @@ export class VedraxFormComponent implements OnInit {
    * The descriptor form
    */
   @Input() descriptor: DescriptorForm;
+
+  @Input() lovs?: Map<string, Array<DescriptorOption>>;
 
   @Input() submitLabel?: string = 'Submit';
 

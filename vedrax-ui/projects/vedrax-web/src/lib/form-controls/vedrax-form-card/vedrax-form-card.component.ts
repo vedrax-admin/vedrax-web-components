@@ -9,6 +9,7 @@ import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { SnackbarService } from '../../services/snackbar.service';
+import { DescriptorOption } from '../../descriptor/descriptor-option';
 
 
 /**
@@ -25,6 +26,8 @@ export class VedraxFormCardComponent implements OnInit, OnDestroy {
    * The form descriptor
    */
   @Input() descriptor: DescriptorForm;
+
+  @Input() lovs?: Map<string, Array<DescriptorOption>>;
 
   /**
    * Provide optionnaly a card title

@@ -31,8 +31,6 @@ export class FormService {
     return new FormGroup(formGroup);
   }
 
-
-
   /**
    * Method for creating a control. 
    * 

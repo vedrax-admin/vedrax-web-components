@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { VedraxBaseComponent } from '../../shared/vedrax-base.component';
+import { DescriptorOption } from '../../descriptor/descriptor-option';
 
 /**
  * Class that defines a generic component according to the control type
@@ -9,5 +10,7 @@ import { VedraxBaseComponent } from '../../shared/vedrax-base.component';
   templateUrl: './vedrax-control.component.html'
 })
 export class VedraxControlComponent extends VedraxBaseComponent {
+
+  @Input() lovs?: Map<string, Array<DescriptorOption>>;
   
 }

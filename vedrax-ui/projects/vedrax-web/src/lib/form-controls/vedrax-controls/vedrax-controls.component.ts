@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { ControlsPerGroup } from '../../shared/controlsPerGroup';
+import { DescriptorOption } from '../../descriptor/descriptor-option';
 
 @Component({
   selector: 'vedrax-controls',
@@ -26,6 +27,11 @@ export class VedraxControlsComponent implements OnInit {
    * The form object
    */
   @Input() form: FormGroup;
+
+  /**
+   * Optional LOVs
+   */
+  @Input() lovs?: Map<string, Array<DescriptorOption>>;
 
   constructor() { }
 

@@ -26,4 +26,9 @@ export class DescriptorAction {
      * <url>/<id>/<fragment>
      */
     fragment?: string;
+
+    /**
+     * Flag for defining if the table should be updated
+     */
+    updatable?: boolean;
 }

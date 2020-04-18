@@ -192,7 +192,14 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    * @param item the provided selected item
    */
   private redirectToUrl(action: DescriptorAction, item: any): void {
-    this.router.navigate([action.url, item['id'], action.fragment]);
+
+    let url: string = new UrlConstructor()
+      .setFragment(action.url)
+      .setFragment(`${item['id']}`)
+      .setFragment(action.fragment)
+      .build();
+
+    this.router.navigateByUrl(url, { state: item });
   }
 
   /**
@@ -201,12 +208,10 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    * @param item 
    */
   private openFormDialogFromApi(action: DescriptorAction, item: any): void {
-    Validate.isNotNull(action, 'action escriptor must be provided');
-    Validate.isNotNull(item, 'item must be provided');
 
     let title = `${action.label} - ${item['id']}`;
 
-    let endpoint: string = new UrlConstructor()
+    let url: string = new UrlConstructor()
       .setFragment(action.url)
       .setFragment(`${item['id']}`)
       .setFragment(action.fragment)
@@ -214,13 +219,13 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.subscription.add(
       this.apiService
-        .get<DescriptorForm>(endpoint)
+        .get<DescriptorForm>(url)
         .pipe(
           catchError(() => of(new DescriptorForm()))
         )
         .subscribe(formDescriptor => {
           if (formDescriptor) {
-            this.openDialog(new DescriptorModal(title, formDescriptor));
+            this.openDialog(new DescriptorModal(title, formDescriptor), action.updatable);
           }
         }));
 
@@ -231,18 +236,22 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   * @param action the action as create or edit
   * @param descriptor the provided Descriptor modal
   */
-  private openDialog(descriptor: DescriptorModal): void {
+  private openDialog(descriptor: DescriptorModal, updatable: boolean): void {
     const dialogRef = this.dialog.open(VedraxFormModalComponent, {
       width: '600px',
       data: descriptor
     });
 
-    this.subscription.add(
-      dialogRef.afterClosed().subscribe(vo => {
-        if (vo) {
-          this.datasource.updateItem(vo);
-        }
-      }));
+    if (updatable) {
+
+      this.subscription.add(
+        dialogRef.afterClosed().subscribe(vo => {
+          if (vo) {
+            this.datasource.updateItem(vo);
+          }
+        }));
+
+    }
 
   }
 
