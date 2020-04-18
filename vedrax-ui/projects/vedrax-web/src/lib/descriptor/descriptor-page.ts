@@ -44,6 +44,11 @@ export class DescriptorPage {
     number: number = 0;
 
     /**
+     * Number of elements
+     */
+    numberOfElements: number = 0;
+
+    /**
      * Is content empty ?
      */
     empty: boolean;

@@ -57,6 +57,16 @@ export class VedraxTableDataSource extends DataSource<any[]>{
     }
 
     /**
+     * Method for adding an item
+     * @param item 
+     */
+    addItem(item: any) {
+        if (item && item.id) {
+            this.dataSubject.next([...this.data, item]);
+        }
+    }
+
+    /**
      * Method for adding items
      * @param items 
      */

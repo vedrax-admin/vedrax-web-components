@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, 
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { Subscription, of} from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -244,6 +244,10 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
         }
       }));
 
+  }
+
+  public addItem(item: any) {
+    this.datasource.addItem(item);
   }
 
 }
