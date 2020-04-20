@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -9,7 +9,6 @@ import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
-import { DescriptorOption } from '../../descriptor/descriptor-option';
 
 @Component({
   selector: 'vedrax-form-modal',
@@ -22,8 +21,6 @@ export class VedraxFormModalComponent implements OnInit {
    * The form component
    */
   @ViewChild(VedraxFormComponent) formComponent: VedraxFormComponent;
-
-  @Input() lovs?: Map<string, Array<DescriptorOption>>;
 
   private subscription: Subscription = new Subscription();
 

@@ -11,6 +11,4 @@ import { DescriptorOption } from '../../descriptor/descriptor-option';
 })
 export class VedraxControlComponent extends VedraxBaseComponent {
 
-  @Input() lovs?: Map<string, Array<DescriptorOption>>;
-  
 }

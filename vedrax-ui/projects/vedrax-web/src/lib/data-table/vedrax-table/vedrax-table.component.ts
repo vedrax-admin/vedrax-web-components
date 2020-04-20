@@ -256,7 +256,15 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   public addItem(item: any) {
-    this.datasource.addItem(item);
+    if (item) {
+      this.datasource.addItem(item);
+    }
+  }
+
+  public updateItem(item: any) {
+    if (item) {
+      this.datasource.updateItem(item);
+    }
   }
 
 }

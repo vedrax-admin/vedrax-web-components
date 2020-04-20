@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 
 import { ApiMethod } from '../enum/api-methods';
 import { Validate } from '../util/validate';
 import { DescriptorForm } from '../descriptor/descriptor-form';
 
-@Injectable({ 
-    providedIn: 'root' 
+@Injectable({
+    providedIn: 'root'
 })
 export class VedraxApiService {
 
@@ -24,6 +24,22 @@ export class VedraxApiService {
         Validate.isNotNull(path, 'Path must be provided');
 
         return this.httpClient.get<T>(path, { params });
+    }
+
+    /**
+     * Method for calling multiple request at once
+     * @param paths 
+     */
+    getMultipleSource(paths: string[] = []): Observable<any[]> {
+
+        let endpoints: Observable<any>[] = [];
+
+        paths.forEach(path => {
+            let listLov = this.get<any>(path);
+            endpoints.push(listLov);
+        });
+
+        return forkJoin(endpoints);
     }
 
     /**

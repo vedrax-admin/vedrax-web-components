@@ -17,8 +17,6 @@ export class VedraxFormComponent implements OnInit {
    */
   @Input() descriptor: DescriptorForm;
 
-  @Input() lovs?: Map<string, Array<DescriptorOption>>;
-
   @Input() submitLabel?: string = 'Submit';
 
   @Input() cancelLabel?: string = 'Cancel';

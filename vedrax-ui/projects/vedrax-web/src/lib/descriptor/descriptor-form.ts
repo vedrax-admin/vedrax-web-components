@@ -48,4 +48,9 @@ export class DescriptorForm {
      */
     successMessage?: string = 'Success';
 
+    /**
+     * when true the table is updated with the returned item
+     */
+    updateTable?: boolean;
+
 }

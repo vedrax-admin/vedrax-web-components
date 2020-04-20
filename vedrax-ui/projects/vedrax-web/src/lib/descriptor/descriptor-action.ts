@@ -27,8 +27,4 @@ export class DescriptorAction {
      */
     fragment?: string;
 
-    /**
-     * Flag for defining if the table should be updated
-     */
-    updatable?: boolean;
 }

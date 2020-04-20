@@ -5,7 +5,7 @@
 
             <div class="form-tab-content">
 
-                <vedrax-form-control *ngFor="let control of group.controls" [form]="form" [descriptor]="control" [lovs]="lovs">
+                <vedrax-form-control *ngFor="let control of group.controls" [form]="form" [descriptor]="control">
                 </vedrax-form-control>
 
             </div>
@@ -15,7 +15,7 @@
 
     <ng-template #simpleForm>
 
-        <vedrax-form-control *ngFor="let control of descriptor.controls" [form]="form" [descriptor]="control" [lovs]="lovs">
+        <vedrax-form-control *ngFor="let control of descriptor.controls" [form]="form" [descriptor]="control">
         </vedrax-form-control>
 
     </ng-template>

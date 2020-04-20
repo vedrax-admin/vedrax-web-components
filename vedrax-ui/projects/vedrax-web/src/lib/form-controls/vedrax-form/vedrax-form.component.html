@@ -1,6 +1,6 @@
 <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value)">
 
-    <vedrax-controls [descriptor]="descriptor" [form]="form" [lovs]="lovs"></vedrax-controls>
+    <vedrax-controls [descriptor]="descriptor" [form]="form"></vedrax-controls>
 
     <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
         <button *ngIf="enableCancel" type="button" mat-raised-button (click)="cancel()">{{cancelLabel}}</button>

@@ -1,4 +1,5 @@
 export * from './controlsPerGroup';
+export * from './lov-endpoint';
 export * from './matrixColumn';
 export * from './msg';
 export * from './nvp';

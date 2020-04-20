@@ -28,11 +28,6 @@ export class VedraxControlsComponent implements OnInit {
    */
   @Input() form: FormGroup;
 
-  /**
-   * Optional LOVs
-   */
-  @Input() lovs?: Map<string, Array<DescriptorOption>>;
-
   constructor() { }
 
   ngOnInit(): void {
