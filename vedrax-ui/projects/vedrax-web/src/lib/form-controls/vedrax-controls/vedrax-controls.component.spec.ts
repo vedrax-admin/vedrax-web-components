@@ -9,6 +9,7 @@ import { ApiMethod } from '../../enum/api-methods';
 
 
 const descriptorForm: DescriptorForm = {
+  title:'test',
   controls: [
     {
       controlName: 'men',

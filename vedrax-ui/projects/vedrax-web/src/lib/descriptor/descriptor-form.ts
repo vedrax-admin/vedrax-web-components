@@ -9,6 +9,11 @@ import { ApiMethod } from '../enum/api-methods';
 export class DescriptorForm {
 
     /**
+     * Title of the form
+     */
+    title: string;
+
+    /**
      * List of form controls
      */
     controls: DescriptorFormControl[] = [];

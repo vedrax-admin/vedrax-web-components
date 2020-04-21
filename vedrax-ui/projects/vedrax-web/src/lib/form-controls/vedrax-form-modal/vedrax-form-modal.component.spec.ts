@@ -15,6 +15,7 @@ import { SnackbarService } from '../../services';
 const MAT_DIALOG_DATA_MOCK: DescriptorModal = {
   title: 'test',
   formDescriptor: {
+    title:'test',
     controls: [
       {
         controlName: 'men',

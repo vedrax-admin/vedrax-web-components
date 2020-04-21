@@ -1,1 +1,10 @@
-<p>vedrax-crud works!</p>
+<mat-toolbar>
+    <button *ngIf="backUrl" mat-icon-button color="primary" [routerLink]="backUrl" aria-label="back button">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{title}}</span>
+    <span class="vedrax-toolbar-remaining-space"></span>
+    <button *ngIf="createAction" mat-raised-button color="primary" (click)="create()">{{createAction.label}}</button>
+</mat-toolbar>
+
+<vedrax-table [descriptor]="tableDescriptor" (onSelect)="select($event)"></vedrax-table>

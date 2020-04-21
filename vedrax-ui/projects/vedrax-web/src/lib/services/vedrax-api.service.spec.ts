@@ -6,6 +6,7 @@ import { ApiMethod, ControlType } from '../enum';
 import { DescriptorForm } from '../descriptor/descriptor-form';
 
 const descriptorForm: DescriptorForm = {
+    title:'test',
     controls: [
       {
         controlName: 'men',

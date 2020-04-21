@@ -11,6 +11,7 @@ import { ApiMethod } from '../../enum';
 import { SnackbarService } from '../../services/snackbar.service';
 
 const descriptorForm: DescriptorForm = {
+  title:'test',
   controls: [
     {
       controlName: 'men',

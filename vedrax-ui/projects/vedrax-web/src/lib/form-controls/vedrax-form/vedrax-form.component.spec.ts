@@ -11,6 +11,7 @@ import { ApiMethod } from '../../enum';
 import { VedraxFormComponent } from './vedrax-form.component';
 
 const descriptorForm: DescriptorForm = {
+  title:'test',
   controls: [
     {
       controlName: 'men',

@@ -1,22 +1,14 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
-import { Router } from '@angular/router';
-import { Subscription, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { VedraxTableDataSource } from './vedrax-table.datasource';
 
-import { Validate } from '../../util/validate';
 import { DescriptorTable } from '../../descriptor/descriptor-table';
 import { DescriptorAction } from '../../descriptor/descriptor-action';
-import { DescriptorForm } from '../../descriptor/descriptor-form';
-import { DescriptorModal } from '../../descriptor/descriptor-modal';
 import { VedraxApiService } from '../../services/vedrax-api.service';
-import { ActionType } from '../../enum/action-types';
-import { UrlConstructor } from '../../util/url-constructor';
-import { VedraxFormModalComponent } from '../../form-controls/vedrax-form-modal/vedrax-form-modal.component';
 
 /**
  * Class that defines a table component with its search box
@@ -81,9 +73,7 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   datasource: VedraxTableDataSource;
 
   constructor(
-    private dialog: MatDialog,
-    private apiService: VedraxApiService,
-    private router: Router) { }
+    private apiService: VedraxApiService) { }
 
   ngOnInit() {
     this.displayedColumns = this.descriptor.columns.map(col => col.id);
@@ -170,97 +160,23 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    * @param element the selected element
    */
   select(action: DescriptorAction, item: any): void {
-    Validate.isNotNull(action, 'action must be provided');
-    Validate.isNotNull(item, 'Item must be provided');
-
-    if (action.action === ActionType.redirect) {
-      this.redirectToUrl(action, item);
-      return;
-    }
-
-    if (action.action === ActionType.form) {
-      this.openFormDialogFromApi(action, item);
-      return;
-    }
-
     this.onSelect.emit({ action, item });
   }
 
   /**
-   * Method for returning to the providing URL
-   * @param action the provided action object for which the URL is constructed
-   * @param item the provided selected item
-   */
-  private redirectToUrl(action: DescriptorAction, item: any): void {
-
-    let url: string = new UrlConstructor()
-      .setFragment(action.url)
-      .setFragment(`${item['id']}`)
-      .setFragment(action.fragment)
-      .build();
-
-    this.router.navigateByUrl(url, { state: item });
-  }
-
-  /**
-   * Method for editing a row in a table
-   * @param action 
+   * Add manually an item
    * @param item 
    */
-  private openFormDialogFromApi(action: DescriptorAction, item: any): void {
-
-    let title = `${action.label} - ${item['id']}`;
-
-    let url: string = new UrlConstructor()
-      .setFragment(action.url)
-      .setFragment(`${item['id']}`)
-      .setFragment(action.fragment)
-      .build();
-
-    this.subscription.add(
-      this.apiService
-        .get<DescriptorForm>(url)
-        .pipe(
-          catchError(() => of(new DescriptorForm()))
-        )
-        .subscribe(formDescriptor => {
-          if (formDescriptor) {
-            this.openDialog(new DescriptorModal(title, formDescriptor), action.updatable);
-          }
-        }));
-
-  }
-
-  /**
-  * Method for opening a form dialog with the provided DescriptorForm returned from the API
-  * @param action the action as create or edit
-  * @param descriptor the provided Descriptor modal
-  */
-  private openDialog(descriptor: DescriptorModal, updatable: boolean): void {
-    const dialogRef = this.dialog.open(VedraxFormModalComponent, {
-      width: '600px',
-      data: descriptor
-    });
-
-    if (updatable) {
-
-      this.subscription.add(
-        dialogRef.afterClosed().subscribe(vo => {
-          if (vo) {
-            this.datasource.updateItem(vo);
-          }
-        }));
-
-    }
-
-  }
-
   public addItem(item: any) {
     if (item) {
       this.datasource.addItem(item);
     }
   }
 
+  /**
+   * Update manually an item by its ID
+   * @param item 
+   */
   public updateItem(item: any) {
     if (item) {
       this.datasource.updateItem(item);

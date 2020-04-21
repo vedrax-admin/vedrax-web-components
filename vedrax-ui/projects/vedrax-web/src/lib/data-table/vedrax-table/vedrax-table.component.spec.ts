@@ -47,20 +47,8 @@ const tableDescriptor: DescriptorTable = {
   ]
 };
 
-const router = {
-  navigate: jasmine.createSpy('navigate')
-}
-
 class ApiServiceMock{
 
-};
-
-class MatDialogMock {
-  open() {
-    return {
-      afterClosed: () => of('OK')
-    };
-  }
 };
 
 const mock = { id: 2, name: 'test' };
@@ -77,9 +65,7 @@ describe('VedraxTableComponent', () => {
         VedraxMaterialModule
       ],
       providers: [
-        { provide: VedraxApiService, useClass: ApiServiceMock },
-        { provide: MatDialog, useClass: MatDialogMock },
-        { provide: Router, useValue: router }
+        { provide: VedraxApiService, useClass: ApiServiceMock }
       ],
       declarations: [VedraxTableComponent],
       schemas: [NO_ERRORS_SCHEMA]

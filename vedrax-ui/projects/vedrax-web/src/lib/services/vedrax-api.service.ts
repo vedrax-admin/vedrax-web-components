@@ -27,19 +27,18 @@ export class VedraxApiService {
     }
 
     /**
-     * Method for calling multiple request at once
+     * Method for calling multiple request at once by passing a map of key/endpoint
      * @param paths 
      */
-    getMultipleSource(paths: string[] = []): Observable<any[]> {
+    getMultipleSource(apiCalls: Map<string, string> = new Map()): Observable<any> {
 
-        let endpoints: Observable<any>[] = [];
+        let forkJoinObj: object = {};
 
-        paths.forEach(path => {
-            let listLov = this.get<any>(path);
-            endpoints.push(listLov);
+        apiCalls.forEach((endpoint, key) => {
+            forkJoinObj[key] = this.get<any>(endpoint);
         });
 
-        return forkJoin(endpoints);
+        return forkJoin(forkJoinObj);
     }
 
     /**

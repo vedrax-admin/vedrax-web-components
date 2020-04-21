@@ -85,7 +85,8 @@ import { VedraxCrudComponent } from './vedrax-crud/vedrax-crud.component';
     VedraxModalComponent,
     VedraxLoginComponent,
     VedraxLoaderComponent,
-    VedraxFormComponent
+    VedraxFormComponent,
+    VedraxCrudComponent
   ],
   entryComponents: [
     VedraxTableComponent,
