@@ -4,36 +4,31 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { VedraxFormModalComponent } from './vedrax-form-modal.component';
-import { DescriptorModal, DescriptorFormControl } from '../../descriptor';
+import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { ControlType } from '../../enum/control-types';
 import { ApiMethod } from '../../enum/api-methods';
 import { VedraxApiService } from '../../services/vedrax-api.service';
-import { SnackbarService } from '../../services';
+import { SnackbarService } from '../../services/snackbar.service';
 
-
-
-const MAT_DIALOG_DATA_MOCK: DescriptorModal = {
+const MAT_DIALOG_DATA_MOCK: DescriptorForm = {
   title: 'test',
-  formDescriptor: {
-    title:'test',
-    controls: [
-      {
-        controlName: 'men',
-        controlProperties: [],
-        controlLabel: 'Are you a men ?',
-        controlType: ControlType.checkbox,
-      },
-      {
-        controlName: 'birthdate',
-        controlProperties: [],
-        controlLabel: 'Birth date',
-        controlType: ControlType.datepicker,
-        controlValidations: []
-      }
-    ],
-    endpoint: '/api/test',
-    method: ApiMethod.POST,
-  }
+  controls: [
+    {
+      controlName: 'men',
+      controlProperties: [],
+      controlLabel: 'Are you a men ?',
+      controlType: ControlType.checkbox,
+    },
+    {
+      controlName: 'birthdate',
+      controlProperties: [],
+      controlLabel: 'Birth date',
+      controlType: ControlType.datepicker,
+      controlValidations: []
+    }
+  ],
+  endpoint: '/api/test',
+  method: ApiMethod.POST,
 };
 
 class VedraxApiServiceMock {

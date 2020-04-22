@@ -214,16 +214,12 @@ describe('VedraxCrudComponent', () => {
     req.flush(DESCRIPTOR_FORM);
 
     const reqSpecies = httpTestingController.expectOne('/api/lov/species');
-    reqSpecies.flush(null, { status: 400, statusText: 'bad request' });
-
     const reqRegions = httpTestingController.expectOne('/api/lov/regions');
+    reqSpecies.flush(null, { status: 400, statusText: 'bad request' });
 
     expect(component.formDescriptor).toBeDefined();
     expect(component.formDescriptor.controls).toBeDefined();
-    expect(component.formDescriptor.controls.length).toBe(3);
-
-    expect(component.formDescriptor.controls[0].controlName).toBe('species');
-    expect(component.formDescriptor.controls[0].controlOptions).toBeUndefined();
+    expect(component.formDescriptor.controls.length).toBe(0);
 
   });
 

@@ -25,7 +25,7 @@ export class VedraxFormModalComponent implements OnInit {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DescriptorModal,
+    @Inject(MAT_DIALOG_DATA) public data: DescriptorForm,
     public dialogRef: MatDialogRef<VedraxFormModalComponent>,
     private snackbarService: SnackbarService,
     private apiService: VedraxApiService) { }
@@ -42,7 +42,7 @@ export class VedraxFormModalComponent implements OnInit {
 
     DateUtil.transformToISODate(dto);
 
-    const formDescriptor: DescriptorForm = this.data && this.data.formDescriptor;
+    const formDescriptor: DescriptorForm = this.data;
 
     this.subscription.add(
       this.apiService.callEndpoint(formDescriptor, dto)

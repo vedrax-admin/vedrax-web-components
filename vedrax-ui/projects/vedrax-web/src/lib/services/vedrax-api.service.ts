@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 
 import { ApiMethod } from '../enum/api-methods';
 import { Validate } from '../util/validate';
@@ -30,9 +30,11 @@ export class VedraxApiService {
      * Method for calling multiple request at once by passing a map of key/endpoint
      * @param paths 
      */
-    getMultipleSource(apiCalls: Map<string, string> = new Map()): Observable<any> {
+    getMultipleSource(descriptorForm: DescriptorForm, apiCalls: Map<string, string> = new Map()): Observable<any> {
 
-        let forkJoinObj: object = {};
+        let forkJoinObj: object = {
+            descriptor: of(descriptorForm)
+        };
 
         apiCalls.forEach((endpoint, key) => {
             forkJoinObj[key] = this.get<any>(endpoint);

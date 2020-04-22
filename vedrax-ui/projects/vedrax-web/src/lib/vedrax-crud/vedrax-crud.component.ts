@@ -10,7 +10,6 @@ import { DescriptorTable } from '../descriptor/descriptor-table';
 import { DescriptorOption } from '../descriptor/descriptor-option';
 import { UrlConstructor } from '../util/url-constructor';
 import { DescriptorAction } from '../descriptor/descriptor-action';
-import { DescriptorModal } from '../descriptor/descriptor-modal';
 import { VedraxFormModalComponent } from '../form-controls/vedrax-form-modal/vedrax-form-modal.component';
 import { VedraxTableComponent } from '../data-table/vedrax-table/vedrax-table.component';
 import { LovEndpoint } from '../shared/lov-endpoint';
@@ -18,6 +17,8 @@ import { ControlType } from '../enum/control-types';
 import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
 import { Validate } from '../util/validate';
 import { ActionType } from '../enum/action-types';
+import { ApiMethod } from '../enum/api-methods';
+import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
 
 /**
  * Class that represents a CRUD component
@@ -125,24 +126,21 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
     Validate.isNotNull(title, 'title must be provided');
     Validate.isNotNull(endpoint, 'endpoint must be provided');
 
-    let descriptorForm: DescriptorForm;
-
     this.subscription.add(
       this.apiService.get<DescriptorForm>(endpoint)
         .pipe(
           catchError(() => of(new DescriptorForm())),//catch error for getting form descfriptor
-          map(descriptor => {
-            descriptorForm = descriptor;
-            return this.manageLOV(descriptor);
-          }),
-          mergeMap(endpoints => this.apiService.getMultipleSource(endpoints)),
-          catchError(() => of({})),//catch error for getting LOVs
-        ).subscribe((result: object) => {
-          this.updateWithResponse(descriptorForm, result);
+          map(descriptor => [descriptor, this.manageLOV(descriptor)]),
+          mergeMap(([descriptor, endpoints]: [DescriptorForm, Map<string, string>]) => this.apiService.getMultipleSource(descriptor, endpoints)),
+          catchError(() => of({
+            descriptor: new DescriptorForm()
+          })),//catch error for getting LOVs
+          map(result => this.updateWithResponse(result))
+        ).subscribe(descriptorForm => {
           if (isForCreate) {
             this.formDescriptor = descriptorForm;
           }
-          this.openDialog(new DescriptorModal(title, descriptorForm));
+          this.openDialog(descriptorForm);
         }));
 
   }
@@ -181,12 +179,16 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
       .map(lov => new LovEndpoint(lov.controlName, lov.controlOptionsEndpoint));
   }
 
-  private updateWithResponse(formDescriptor: DescriptorForm, result: object = {}): void {
+  private updateWithResponse(result: object = {}): DescriptorForm {
+    let formDescriptor: DescriptorForm = result['descriptor'];
     const entries = Object.entries(result);
     for (const [key, options] of entries) {
-      this.lovs.set(key, options);
-      this.setOptions(formDescriptor, key, options);
+      if (key !== 'descriptor') {
+        this.lovs.set(key, options);
+        this.setOptions(formDescriptor, key, options);
+      }
     }
+    return formDescriptor;
   }
 
   private setOptions(formDescriptor: DescriptorForm, key: string, options: DescriptorOption[] = []) {
@@ -216,18 +218,20 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   * @param action the action as create or edit
   * @param descriptor the provided Descriptor modal
   */
-  private openDialog(descriptor: DescriptorModal): void {
+  private openDialog(descriptor: DescriptorForm): void {
 
     const dialogRef = this.dialog.open(VedraxFormModalComponent, {
       width: '600px',
       data: descriptor
     });
 
-    if (descriptor.formDescriptor.updateTable) {
+    if (descriptor.updateTable) {
 
       this.subscription.add(
         dialogRef.afterClosed().subscribe(vo => {
-          if (vo) {
+          if (descriptor.method == ApiMethod.POST) {
+            this.tableComponent.addItem(vo);
+          } else {
             this.tableComponent.updateItem(vo);
           }
         }));
