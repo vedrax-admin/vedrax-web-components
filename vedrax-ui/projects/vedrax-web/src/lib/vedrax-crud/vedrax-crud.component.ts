@@ -1,24 +1,19 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subscription, of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { Subscription, of, forkJoin, combineLatest } from 'rxjs';
+import { map, mergeMap, concatMap } from 'rxjs/operators';
 
-import { VedraxApiService } from '../services/vedrax-api.service';
 import { DescriptorForm } from '../descriptor/descriptor-form';
 import { DescriptorTable } from '../descriptor/descriptor-table';
 import { DescriptorOption } from '../descriptor/descriptor-option';
 import { UrlConstructor } from '../util/url-constructor';
 import { DescriptorAction } from '../descriptor/descriptor-action';
-import { VedraxFormModalComponent } from '../form-controls/vedrax-form-modal/vedrax-form-modal.component';
 import { VedraxTableComponent } from '../data-table/vedrax-table/vedrax-table.component';
-import { LovEndpoint } from '../shared/lov-endpoint';
-import { ControlType } from '../enum/control-types';
-import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
 import { Validate } from '../util/validate';
 import { ActionType } from '../enum/action-types';
 import { ApiMethod } from '../enum/api-methods';
-import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
+import { FormDescriptorService } from '../services/form-descriptor.service';
+import { DialogFormService } from '../services/dialog-form.service';
 
 /**
  * Class that represents a CRUD component
@@ -71,8 +66,8 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private dialog: MatDialog,
-    private apiService: VedraxApiService,
+    private dialogFormService: DialogFormService,
+    private formDescriptorService: FormDescriptorService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -87,10 +82,13 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
 
   create() {
 
-    if (this.createAction) {
+    if (this.formDescriptor) {
 
-      this.openFormDialogFromApi(this.createAction.label, this.createAction.url, true);
+      this.dialogFormService.open(this.formDescriptor)
+        .subscribe(([descriptorForm, vo]: [DescriptorForm, any]) => this.updateTable(descriptorForm, vo));
 
+    } else {
+      this.openFormDialogFromApi(this.createAction.url, true);
     }
 
   }
@@ -104,7 +102,6 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
     Validate.isNotNull(action, 'action must be provided');
     Validate.isNotNull(item, 'Item must be provided');
 
-    const title = `${action.label} - ${item['id']}`;
     const endpoint: string = new UrlConstructor()
       .setFragment(action.url)
       .setFragment(`${item['id']}`)
@@ -117,91 +114,41 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
     }
 
     if (action.action === ActionType.form) {
-      this.openFormDialogFromApi(title, endpoint, true);
+      this.openFormDialogFromApi(endpoint, false);
       return;
     }
   }
 
-  private openFormDialogFromApi(title: string, endpoint: string, isForCreate: boolean): void {
-    Validate.isNotNull(title, 'title must be provided');
+  private openFormDialogFromApi(endpoint: string, isForCreate: boolean): void {
     Validate.isNotNull(endpoint, 'endpoint must be provided');
 
     this.subscription.add(
-      this.apiService.get<DescriptorForm>(endpoint)
+      this.formDescriptorService.getDescriptor(endpoint, this.lovs)
         .pipe(
-          catchError(() => of(new DescriptorForm())),//catch error for getting form descfriptor
-          map(descriptor => [descriptor, this.manageLOV(descriptor)]),
-          mergeMap(([descriptor, endpoints]: [DescriptorForm, Map<string, string>]) => this.apiService.getMultipleSource(descriptor, endpoints)),
-          catchError(() => of({
-            descriptor: new DescriptorForm()
-          })),//catch error for getting LOVs
-          map(result => this.updateWithResponse(result))
-        ).subscribe(descriptorForm => {
-          if (isForCreate) {
-            this.formDescriptor = descriptorForm;
-          }
-          this.openDialog(descriptorForm);
-        }));
-
+          map((descriptor) => {
+            if (isForCreate) {
+              this.formDescriptor = descriptor;
+            }
+            return descriptor;
+          }),
+          mergeMap(descriptor => {
+            return forkJoin(of(descriptor), this.dialogFormService.open(descriptor));
+          }),
+          map(([descriptor, vo]) => {
+            this.updateTable(descriptor, vo);
+            return vo;
+          })
+        ).subscribe());
   }
 
-  private manageLOV(formDescriptor: DescriptorForm): Map<string, string> {
+  private updateTable(descriptorForm: DescriptorForm, vo: any): void {
 
-    const emptyLovs: LovEndpoint[] = this.hasEmptyLOV(formDescriptor);
-
-    let apiCalls: Map<string, string> = new Map();
-
-    emptyLovs.forEach(lov => {
-
-      const key = lov.key;
-
-      if (this.lovs.has(key)) {
-        //LOV is in cache
-        this.setOptions(formDescriptor, key, this.lovs.get(key));
-      } else {
-        //LOV is not in cache
-        apiCalls.set(key, lov.endpoint);
-      }
-
-    });
-
-    return apiCalls;
-
-  }
-
-  /**
-   * Method that returns the list of LOV not set in the form descriptor
-   * @param formDescriptor 
-   */
-  private hasEmptyLOV(formDescriptor: DescriptorForm): LovEndpoint[] {
-    return formDescriptor.controls
-      .filter(ctrl => ctrl.controlType == ControlType.select && ctrl.controlOptionsEndpoint && !ctrl.controlOptions)
-      .map(lov => new LovEndpoint(lov.controlName, lov.controlOptionsEndpoint));
-  }
-
-  private updateWithResponse(result: object = {}): DescriptorForm {
-    let formDescriptor: DescriptorForm = result['descriptor'];
-    const entries = Object.entries(result);
-    for (const [key, options] of entries) {
-      if (key !== 'descriptor') {
-        this.lovs.set(key, options);
-        this.setOptions(formDescriptor, key, options);
-      }
+    if (descriptorForm.method == ApiMethod.POST) {
+      this.tableComponent.addItem(vo);
+    } else {
+      this.tableComponent.updateItem(vo);
     }
-    return formDescriptor;
-  }
 
-  private setOptions(formDescriptor: DescriptorForm, key: string, options: DescriptorOption[] = []) {
-    const ctrl = this.getFormControl(formDescriptor, key);
-    if (ctrl) {
-      ctrl.controlOptions = options;
-    }
-  }
-
-  private getFormControl(formDescriptor: DescriptorForm, key: string): DescriptorFormControl {
-    Validate.isNotNull(key, "key must be provided");
-
-    return formDescriptor.controls.find(ctrl => ctrl.controlName === key);
   }
 
   /**
@@ -212,33 +159,5 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   private redirectToUrl(endpoint: string, item: any): void {
     this.router.navigateByUrl(endpoint, { state: item });
   }
-
-  /**
-  * Method for opening a form dialog with the provided DescriptorForm returned from the API
-  * @param action the action as create or edit
-  * @param descriptor the provided Descriptor modal
-  */
-  private openDialog(descriptor: DescriptorForm): void {
-
-    const dialogRef = this.dialog.open(VedraxFormModalComponent, {
-      width: '600px',
-      data: descriptor
-    });
-
-    if (descriptor.updateTable) {
-
-      this.subscription.add(
-        dialogRef.afterClosed().subscribe(vo => {
-          if (descriptor.method == ApiMethod.POST) {
-            this.tableComponent.addItem(vo);
-          } else {
-            this.tableComponent.updateItem(vo);
-          }
-        }));
-
-    }
-
-  }
-
 
 }

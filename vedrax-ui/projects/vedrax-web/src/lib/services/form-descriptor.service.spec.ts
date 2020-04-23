@@ -74,7 +74,7 @@ describe('FormDescriptorService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('when select should add LOV', () => {
+    it('should initialized form descriptor with LOVs', () => {
 
         service.getDescriptor('/api/descriptor/form').subscribe(formDescriptor => {
             expect(formDescriptor).toBeDefined();
@@ -101,7 +101,41 @@ describe('FormDescriptorService', () => {
 
         reqSpecies.flush(SPECIES);
         reqRegions.flush(REGIONS);
-
     });
+
+    it('error throws when getting form descriptor', () => {
+
+        service.getDescriptor('/api/descriptor/form').subscribe(formDescriptor => {
+            expect(formDescriptor).toBeDefined();
+            expect(formDescriptor.controls).toBeDefined();
+            expect(formDescriptor.controls.length).toBe(0);
+        });
+
+        const req = httpTestingController.expectOne('/api/descriptor/form');
+        expect(req.request.method).toEqual('GET');
+        req.flush(null, { status: 400, statusText: 'bad request' });
+    });
+
+
+  it('error throws when getting LOV', () => {
+
+    service.getDescriptor('/api/descriptor/form').subscribe(formDescriptor => {
+        expect(formDescriptor).toBeDefined();
+        expect(formDescriptor.controls).toBeDefined();
+        expect(formDescriptor.controls.length).toBe(0);
+    });
+
+    const req = httpTestingController.expectOne('/api/descriptor/form');
+    expect(req.request.method).toEqual('GET');
+    req.flush(DESCRIPTOR_FORM);
+
+
+    const reqSpecies = httpTestingController.expectOne('/api/lov/species');
+    const reqRegions = httpTestingController.expectOne('/api/lov/regions');
+    
+    reqSpecies.flush(null, { status: 400, statusText: 'bad request' });
+
+
+  });
 
 });
