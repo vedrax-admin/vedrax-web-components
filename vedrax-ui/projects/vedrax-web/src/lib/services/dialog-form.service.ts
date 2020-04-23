@@ -5,6 +5,7 @@ import { Observable, EMPTY, of, forkJoin } from 'rxjs';
 import { DescriptorForm } from '../descriptor/descriptor-form';
 import { VedraxFormModalComponent } from '../form-controls/vedrax-form-modal/vedrax-form-modal.component';
 import { Validate } from '../util/validate';
+import { take, map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -22,7 +23,11 @@ export class DialogFormService {
             data: descriptor
         });
 
-        return dialogRef.afterClosed();
+        return dialogRef.afterClosed()
+            .pipe(
+                take(1),
+                map(res => res)
+            );
     }
 
 }

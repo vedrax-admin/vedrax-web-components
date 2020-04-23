@@ -9,6 +9,9 @@ import { VedraxTableDataSource } from './vedrax-table.datasource';
 import { DescriptorTable } from '../../descriptor/descriptor-table';
 import { DescriptorAction } from '../../descriptor/descriptor-action';
 import { VedraxApiService } from '../../services/vedrax-api.service';
+import { DialogFormService } from '../../services';
+import { DescriptorForm } from '../../descriptor/descriptor-form';
+import { ApiMethod } from '../../enum/api-methods';
 
 /**
  * Class that defines a table component with its search box
@@ -73,7 +76,8 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   datasource: VedraxTableDataSource;
 
   constructor(
-    private apiService: VedraxApiService) { }
+    private apiService: VedraxApiService,
+    private dialogFormService: DialogFormService) { }
 
   ngOnInit() {
     this.displayedColumns = this.descriptor.columns.map(col => col.id);
@@ -181,6 +185,21 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     if (item) {
       this.datasource.updateItem(item);
     }
+  }
+
+  /**
+   * Method for opening a dialog
+   * @param descriptorForm provided form descriptor 
+   */
+  public openDialog(descriptorForm: DescriptorForm) {
+    this.subscription.add(
+      this.dialogFormService.open(descriptorForm).subscribe(vo => {
+        if (descriptorForm.method == ApiMethod.POST) {
+          this.addItem(vo);
+        } else {
+          this.updateItem(vo);
+        }
+      }));
   }
 
 }

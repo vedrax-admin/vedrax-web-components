@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, of, forkJoin, combineLatest } from 'rxjs';
-import { map, mergeMap, concatMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { DescriptorForm } from '../descriptor/descriptor-form';
 import { DescriptorTable } from '../descriptor/descriptor-table';
@@ -11,9 +11,7 @@ import { DescriptorAction } from '../descriptor/descriptor-action';
 import { VedraxTableComponent } from '../data-table/vedrax-table/vedrax-table.component';
 import { Validate } from '../util/validate';
 import { ActionType } from '../enum/action-types';
-import { ApiMethod } from '../enum/api-methods';
 import { FormDescriptorService } from '../services/form-descriptor.service';
-import { DialogFormService } from '../services/dialog-form.service';
 
 /**
  * Class that represents a CRUD component
@@ -45,6 +43,8 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
    */
   @Input() createAction?: DescriptorAction;
 
+  @Output() onDialogOpen: EventEmitter<DescriptorForm> = new EventEmitter();
+
   /**
    * a form descriptor retrieve from API
    */
@@ -66,7 +66,6 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private dialogFormService: DialogFormService,
     private formDescriptorService: FormDescriptorService,
     private router: Router) { }
 
@@ -83,10 +82,7 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   create() {
 
     if (this.formDescriptor) {
-
-      this.dialogFormService.open(this.formDescriptor)
-        .subscribe(([descriptorForm, vo]: [DescriptorForm, any]) => this.updateTable(descriptorForm, vo));
-
+      this.tableComponent.openDialog(this.formDescriptor);
     } else {
       this.openFormDialogFromApi(this.createAction.url, true);
     }
@@ -130,25 +126,12 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
               this.formDescriptor = descriptor;
             }
             return descriptor;
-          }),
-          mergeMap(descriptor => {
-            return forkJoin(of(descriptor), this.dialogFormService.open(descriptor));
-          }),
-          map(([descriptor, vo]) => {
-            this.updateTable(descriptor, vo);
-            return vo;
           })
-        ).subscribe());
-  }
-
-  private updateTable(descriptorForm: DescriptorForm, vo: any): void {
-
-    if (descriptorForm.method == ApiMethod.POST) {
-      this.tableComponent.addItem(vo);
-    } else {
-      this.tableComponent.updateItem(vo);
-    }
-
+        ).subscribe(descriptor => {
+          if (descriptor) {
+            this.tableComponent.openDialog(descriptor);
+          }
+        }));
   }
 
   /**

@@ -1,14 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VedraxCrudComponent } from './vedrax-crud.component';
-import { of, forkJoin, Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { ControlType } from '../enum/control-types';
 import { ApiMethod } from '../enum/api-methods';
 import { DescriptorForm } from '../descriptor/descriptor-form';
 
-import { DialogFormService } from '../services/dialog-form.service';
 import { FormDescriptorService } from '../services/form-descriptor.service';
 import { DescriptorOption } from '../descriptor/descriptor-option';
 import { ActionType } from '../enum/action-types';
@@ -44,7 +43,7 @@ const DESCRIPTOR_FORM: DescriptorForm = {
   ],
   endpoint: '/api/test',
   method: ApiMethod.POST,
-  updateTable:true
+  updateTable: true
 };
 
 const SPECIES: DescriptorOption[] = [
@@ -69,8 +68,7 @@ class FormDescriptorServiceMock {
 class DialogFormServiceMock {
 
   open(descriptor: DescriptorForm): Observable<any> {
-    console.log('open dialog mock');
-    return of('ok');
+    return of({ item: 1 });
   }
 
 
@@ -83,13 +81,12 @@ const router = {
 describe('VedraxCrudComponent', () => {
   let component: VedraxCrudComponent;
   let fixture: ComponentFixture<VedraxCrudComponent>;
-  let dialogService: DialogFormService;
+  const vedraxTableComponent = jasmine.createSpyObj('VedraxTableComponent', ['openDialog']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VedraxCrudComponent],
       providers: [
-        { provide: DialogFormService, useClass: DialogFormServiceMock },
         { provide: FormDescriptorService, useClass: FormDescriptorServiceMock },
         { provide: Router, useValue: router }
       ],
@@ -102,7 +99,6 @@ describe('VedraxCrudComponent', () => {
 
     fixture = TestBed.createComponent(VedraxCrudComponent);
     component = fixture.componentInstance;
-    dialogService = TestBed.get(DialogFormService);
     fixture.detectChanges();
   });
 
@@ -110,47 +106,56 @@ describe('VedraxCrudComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  /*
   it('test create with no cached formDescriptor', () => {
 
-    spyOn(dialogService, 'open');
+    //form descriptor is not defined
+    component.formDescriptor = undefined;
 
-    expect(component.formDescriptor).toBeUndefined();
+    //check if map of LOVs is initialized 
     expect(component.lovs).toBeDefined();
     expect(component.lovs.size).toBe(0);
 
+    //set create action object
     component.createAction = {
       label:'test',
       url: 'test',
       action: ActionType.form
     };
 
+    //set table component with spy object
+    component.tableComponent = vedraxTableComponent;
+
+    //call method to be tested
     component.create();
 
+    //the cached form descriptor should be defined
     expect(component.formDescriptor).toBeDefined();
 
-    expect(dialogService.open).toHaveBeenCalledWith(component.formDescriptor);
+    //open dialog method of table component should have been called
+    expect(vedraxTableComponent.openDialog).toHaveBeenCalledWith(DESCRIPTOR_FORM);
 
   });
 
-*/
   it('test create with cached formDescriptor', () => {
 
-    spyOn(dialogService, 'open');
+    //set form descriptor within component
+    component.formDescriptor = DESCRIPTOR_FORM;
 
-    //component.formDescriptor = DESCRIPTOR_FORM;
-
+    //set create action object
     component.createAction = {
-      label:'test',
+      label: 'test',
       url: 'test',
       action: ActionType.form
     };
 
+    //set table component with spy object
+    component.tableComponent = vedraxTableComponent;
+
+    //call method to be tested
     component.create();
 
-    expect(component.formDescriptor).toBeDefined();
-
-    expect(dialogService.open).toHaveBeenCalledWith(component.formDescriptor);
+    //open dialog method of table component should have been called
+    expect(vedraxTableComponent.openDialog).toHaveBeenCalledWith(DESCRIPTOR_FORM);
 
   });
 
