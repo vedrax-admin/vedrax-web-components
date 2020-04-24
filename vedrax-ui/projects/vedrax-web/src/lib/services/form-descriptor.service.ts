@@ -29,8 +29,8 @@ export class FormDescriptorService {
 
         return this.apiService.get<DescriptorForm>(endpoint)
             .pipe(
-                catchError(() => of(new DescriptorForm())),//catch error for getting form descfriptor
                 map(descriptor => [descriptor, this.manageLOV(descriptor, lovs)]),
+                catchError(() => of(new DescriptorForm())),
                 mergeMap(([descriptor, endpoints]: [DescriptorForm, Map<string, string>]) => this.apiService.getMultipleSource(descriptor, endpoints)),
                 catchError(() => of({
                     descriptor: new DescriptorForm()

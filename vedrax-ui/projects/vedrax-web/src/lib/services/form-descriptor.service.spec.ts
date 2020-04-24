@@ -116,26 +116,25 @@ describe('FormDescriptorService', () => {
         req.flush(null, { status: 400, statusText: 'bad request' });
     });
 
+    it('error throws when getting LOV', () => {
 
-  it('error throws when getting LOV', () => {
+        service.getDescriptor('/api/descriptor/form').subscribe(formDescriptor => {
+            expect(formDescriptor).toBeDefined();
+            expect(formDescriptor.controls).toBeDefined();
+            expect(formDescriptor.controls.length).toBe(0);
+        });
 
-    service.getDescriptor('/api/descriptor/form').subscribe(formDescriptor => {
-        expect(formDescriptor).toBeDefined();
-        expect(formDescriptor.controls).toBeDefined();
-        expect(formDescriptor.controls.length).toBe(0);
+        const req = httpTestingController.expectOne('/api/descriptor/form');
+        expect(req.request.method).toEqual('GET');
+        req.flush(DESCRIPTOR_FORM);
+
+
+        const reqSpecies = httpTestingController.expectOne('/api/lov/species');
+        const reqRegions = httpTestingController.expectOne('/api/lov/regions');
+
+        reqSpecies.flush(null, { status: 400, statusText: 'bad request' });
+
+
     });
-
-    const req = httpTestingController.expectOne('/api/descriptor/form');
-    expect(req.request.method).toEqual('GET');
-    req.flush(DESCRIPTOR_FORM);
-
-
-    const reqSpecies = httpTestingController.expectOne('/api/lov/species');
-    const reqRegions = httpTestingController.expectOne('/api/lov/regions');
-    
-    reqSpecies.flush(null, { status: 400, statusText: 'bad request' });
-
-
-  });
 
 });

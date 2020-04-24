@@ -194,10 +194,12 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   public openDialog(descriptorForm: DescriptorForm) {
     this.subscription.add(
       this.dialogFormService.open(descriptorForm).subscribe(vo => {
-        if (descriptorForm.method == ApiMethod.POST) {
-          this.addItem(vo);
-        } else {
-          this.updateItem(vo);
+        if (descriptorForm.updateTable) {
+          if (descriptorForm.method == ApiMethod.POST) {
+            this.addItem(vo);
+          } else {
+            this.updateItem(vo);
+          }
         }
       }));
   }
