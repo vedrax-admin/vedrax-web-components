@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,6 +12,11 @@ import { VedraxTableComponent } from '../data-table/vedrax-table/vedrax-table.co
 import { Validate } from '../util/validate';
 import { ActionType } from '../enum/action-types';
 import { FormDescriptorService } from '../services/form-descriptor.service';
+
+class TableSelectionItem {
+  action: DescriptorAction;
+  item: any;
+}
 
 /**
  * Class that represents a CRUD component
@@ -42,8 +47,6 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
    * an optionnal action descriptor for the create button
    */
   @Input() createAction?: DescriptorAction;
-
-  @Output() onDialogOpen: EventEmitter<DescriptorForm> = new EventEmitter();
 
   /**
    * a form descriptor retrieve from API
@@ -94,9 +97,12 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   * 
   * @param element the selected element
   */
-  select(action: DescriptorAction, item: any): void {
-    Validate.isNotNull(action, 'action must be provided');
-    Validate.isNotNull(item, 'Item must be provided');
+  select(selection: TableSelectionItem): void {
+    Validate.isNotNull(selection.action, 'action must be provided');
+    Validate.isNotNull(selection.item, 'Item must be provided');
+
+    const action: DescriptorAction = selection.action;
+    const item: any = selection.item;
 
     const endpoint: string = new UrlConstructor()
       .setFragment(action.url)
