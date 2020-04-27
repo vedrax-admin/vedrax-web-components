@@ -19,14 +19,12 @@ const DESCRIPTOR_FORM: DescriptorForm = {
       controlName: 'species',
       controlProperties: [],
       controlLabel: 'Species',
-      controlOptionsEndpoint: '/api/lov/species',
       controlType: ControlType.select,
     },
     {
       controlName: 'regions',
       controlProperties: [],
       controlLabel: 'Region',
-      controlOptionsEndpoint: '/api/lov/regions',
       controlType: ControlType.select
     },
     {

@@ -46,11 +46,6 @@ export class DescriptorFormControl {
     controlValidations?: DescriptorValidation[];
 
     /**
-     * Endpoint for retrieving list of options
-     */
-    controlOptionsEndpoint?: string;
-
-    /**
      * List of optional options used mainly in the 'SELECT' control
      */
     controlOptions?: DescriptorOption[];

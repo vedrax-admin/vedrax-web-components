@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
+import { catchError, map, mergeMap } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+
 import { VedraxApiService } from './vedrax-api.service';
 import { Validate } from '../util/validate';
 import { DescriptorForm } from '../descriptor/descriptor-form';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
-import { LovEndpoint } from '../shared/lov-endpoint';
-import { ControlType } from '../enum/control-types';
 import { DescriptorOption } from '../descriptor/descriptor-option';
 import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
+import { DescriptorEndpoint } from '../descriptor/descriptor-endpoint';
 
 /**
  * Service that provides methods for getting descriptor form.
@@ -46,7 +46,7 @@ export class FormDescriptorService {
      */
     private manageLOV(formDescriptor: DescriptorForm, lovs: Map<string, Array<DescriptorOption>>): Map<string, string> {
 
-        const emptyLovs: LovEndpoint[] = this.hasEmptyLOV(formDescriptor);
+        const emptyLovs: DescriptorEndpoint[] = formDescriptor.lovs || [];
 
         let apiCalls: Map<string, string> = new Map();
 
@@ -59,23 +59,13 @@ export class FormDescriptorService {
                 this.setOptions(formDescriptor, key, lovs.get(key));
             } else {
                 //LOV is not in cache
-                apiCalls.set(key, lov.endpoint);
+                apiCalls.set(key, lov.url);
             }
 
         });
 
         return apiCalls;
 
-    }
-
-    /**
-     * Method that returns the list of controls without LOV initialized
-     * @param formDescriptor the form descriptor
-     */
-    private hasEmptyLOV(formDescriptor: DescriptorForm): LovEndpoint[] {
-        return formDescriptor.controls
-            .filter(ctrl => ctrl.controlType === ControlType.select && ctrl.controlOptionsEndpoint && !ctrl.controlOptions)
-            .map(lov => new LovEndpoint(lov.controlName, lov.controlOptionsEndpoint));
     }
 
     /**
@@ -95,15 +85,22 @@ export class FormDescriptorService {
         return formDescriptor;
     }
 
-    /**
-     * Method for setting options
-     * @param formDescriptor the form descriptor
-     * @param key the control key
-     * @param options the options the control 
-     */
-    private setOptions(formDescriptor: DescriptorForm, key: string, options: DescriptorOption[] = []) {
-        const ctrl = this.getFormControl(formDescriptor, key);
-        if (ctrl) {
+    private setOptions(formDescriptor: DescriptorForm, key: string, options: DescriptorOption[] = []): void {
+        const keys = this.getKeys(key);
+        const parent = keys[0];
+        const child = keys[1];
+
+        const ctrl = this.getFormControl(formDescriptor.controls, parent);
+
+        Validate.isNotNull(ctrl, `control with key [${parent}] does not exist.`);
+
+        if (child) {
+            const childCtrl = this.getFormControl(ctrl.controlChildren, child);
+            
+            Validate.isNotNull(childCtrl, `control child with key [${child}] does not exist.`);
+
+            childCtrl.controlOptions = options;
+        } else {
             ctrl.controlOptions = options;
         }
     }
@@ -113,8 +110,16 @@ export class FormDescriptorService {
      * @param formDescriptor the form descriptor
      * @param key the key
      */
-    private getFormControl(formDescriptor: DescriptorForm, key: string): DescriptorFormControl {
-        return formDescriptor.controls.find(ctrl => ctrl.controlName === key);
+    private getFormControl(controls: DescriptorFormControl[] = [], key: string): DescriptorFormControl {
+        return controls.find(ctrl => ctrl.controlName === key);
+    }
+
+    /**
+     * Method for getting keys from string with separated value of ':'
+     * @param key 
+     */
+    private getKeys(key: string): string[] {
+        return key.split(":", 2);
     }
 
 }

@@ -1,6 +1,7 @@
 import { DescriptorFormControl } from './descriptor-form-control';
 import { DescriptorFormGroup } from './descriptor-form-group';
 import { ApiMethod } from '../enum/api-methods';
+import { DescriptorEndpoint } from './descriptor-endpoint';
 
 
 /**
@@ -22,6 +23,11 @@ export class DescriptorForm {
      * Set optional Group of controls
      */
     groups?: DescriptorFormGroup[];
+
+    /**
+     * The list of endpoint
+     */
+    lovs?: DescriptorEndpoint[];
 
     /**
      * API endpoint to call when submit

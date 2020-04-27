@@ -10,19 +10,27 @@ import { DescriptorForm } from '../descriptor/descriptor-form';
 
 const DESCRIPTOR_FORM: DescriptorForm = {
     title: 'create',
+    lovs:[
+        {
+            key:'species',
+            url:'/api/lov/species'
+        },
+        {
+            key:'regions',
+            url:'/api/lov/regions'
+        }
+    ],
     controls: [
         {
             controlName: 'species',
             controlProperties: [],
             controlLabel: 'Species',
-            controlOptionsEndpoint: '/api/lov/species',
             controlType: ControlType.select,
         },
         {
             controlName: 'regions',
             controlProperties: [],
             controlLabel: 'Region',
-            controlOptionsEndpoint: '/api/lov/regions',
             controlType: ControlType.select
         },
         {
@@ -40,6 +48,7 @@ const DESCRIPTOR_FORM: DescriptorForm = {
     endpoint: '/api/test',
     method: ApiMethod.POST,
 };
+
 
 const SPECIES: DescriptorOption[] = [
     { key: 'S1', value: 'S1' },
@@ -116,6 +125,7 @@ describe('FormDescriptorService', () => {
         req.flush(null, { status: 400, statusText: 'bad request' });
     });
 
+    
     it('error throws when getting LOV', () => {
 
         service.getDescriptor('/api/descriptor/form').subscribe(formDescriptor => {
@@ -136,5 +146,7 @@ describe('FormDescriptorService', () => {
 
 
     });
+
+    
 
 });
