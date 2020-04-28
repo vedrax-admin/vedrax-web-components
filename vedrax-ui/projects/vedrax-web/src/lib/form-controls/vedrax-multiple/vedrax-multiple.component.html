@@ -11,7 +11,7 @@
     <mat-list class="vedrax-multiple-list">
         <mat-list-item *ngFor="let item of selections">
             <span>{{ item.value }}</span>
-            <button mat-icon-button (click)="remove(item.key)">
+            <button class="remove-item" mat-icon-button (click)="remove(item.key)">
                 <mat-icon>clear</mat-icon>
             </button>
         </mat-list-item>

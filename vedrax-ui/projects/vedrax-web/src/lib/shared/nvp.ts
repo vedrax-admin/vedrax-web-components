@@ -11,5 +11,5 @@ export class NVP {
     /**
      * The value
      */
-    value: number;
+    value: string | number;
 }
