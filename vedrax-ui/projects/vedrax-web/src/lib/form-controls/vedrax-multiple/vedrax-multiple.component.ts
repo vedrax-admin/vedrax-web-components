@@ -18,6 +18,17 @@ export class VedraxMultipleComponent implements OnInit {
   selections: NVP[] = [];
 
   ngOnInit(): void {
+    this.init();
+  }
+
+  private init(): void {
+    const keys: any[] = this.formArray.value || [];
+    this.selections = keys.map(id => this.toNvp(id));
+  }
+
+  private toNvp(id: string): NVP {
+    const options = this.descriptor.controlOptions || [];
+    return options.find(item => item.key === id);
   }
 
   /**
