@@ -6,7 +6,7 @@ export class NVP {
     /**
      * The key
      */
-    key: string;
+    key: string | number;
 
     /**
      * The value

@@ -30,6 +30,7 @@ import { loaderInterceptorProvider } from './loader/interceptors/loader.intercep
 import { VedraxLoaderComponent } from './loader/loader.component';
 import { VedraxFormComponent } from './form-controls/vedrax-form/vedrax-form.component';
 import { VedraxCrudComponent } from './vedrax-crud/vedrax-crud.component';
+import { VedraxMultipleComponent } from './form-controls/vedrax-multiple/vedrax-multiple.component';
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { VedraxCrudComponent } from './vedrax-crud/vedrax-crud.component';
     VedraxLoginComponent,
     VedraxLoaderComponent,
     VedraxFormComponent,
-    VedraxCrudComponent
+    VedraxCrudComponent,
+    VedraxMultipleComponent
   ],
   exports: [
     VedraxFilterComponent,
