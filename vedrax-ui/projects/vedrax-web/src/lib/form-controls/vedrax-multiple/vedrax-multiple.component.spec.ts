@@ -63,19 +63,19 @@ describe('VedraxMultipleComponent', () => {
 
     component.ngOnInit();
 
-    expect(component.selections.length).toBe(6);
+    expect(component.selections.length).toBe(3);
 
     const item: NVP = { key: 7, value: 'v7' };
 
     component.onChange(item);
 
-    expect(component.selections.length).toBe(7);
-    expect(component.formArray.length).toBe(7);
+    expect(component.selections.length).toBe(4);
+    expect(component.formArray.length).toBe(4);
 
     component.remove(item.key);
 
-    expect(component.formArray.length).toBe(6);
-    expect(component.selections.length).toBe(6);
+    expect(component.formArray.length).toBe(3);
+    expect(component.selections.length).toBe(3);
 
   });
 });
