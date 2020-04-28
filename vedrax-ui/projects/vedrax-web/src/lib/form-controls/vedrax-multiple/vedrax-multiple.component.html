@@ -2,7 +2,7 @@
     <mat-form-field>
         <mat-label>{{descriptor.controlLabel}}</mat-label>
         <mat-select (selectionChange)="onChange($event)">
-            <mat-option *ngFor="let option of descriptor.options" [value]="option">
+            <mat-option *ngFor="let option of descriptor.controlOptions" [value]="option">
                 {{option.value}}
             </mat-option>
         </mat-select>
