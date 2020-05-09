@@ -119,8 +119,5 @@ describe('VedraxSearchComponent', () => {
     //control value is set when dialog is closed
     expect(component.control.value).toBe(2);
 
-    //the display is set according to the provided key in descriptor
-    expect(component.displayValue).toBe('test');
-
   });
 });

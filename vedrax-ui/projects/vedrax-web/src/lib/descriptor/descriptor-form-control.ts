@@ -57,19 +57,6 @@ export class DescriptorFormControl {
     controlChildren?: DescriptorFormControl[];
 
     /**
-     * The 'SEARCH' control uses this key 
-     * to select and display the object property accordingly
-     */
-    controlDisplayKey?: string;
-
-    /**
-     * The 'SEARCH' control uses this value 
-     * to display an object property mapped to the controlDisplayKey
-     * (e.g. company name rather than company ID)
-     */
-    controlDisplayValue?: string;
-
-    /**
      * The 'SEARCH' control uses this optional object for 
      * generating the searching table accordingly
      */

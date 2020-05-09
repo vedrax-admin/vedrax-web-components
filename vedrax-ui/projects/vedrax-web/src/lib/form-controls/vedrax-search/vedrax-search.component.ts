@@ -19,11 +19,6 @@ export class VedraxSearchComponent extends VedraxBaseComponent
   implements OnInit, OnDestroy {
 
   /**
-   * The value of the given attributes
-   */
-  displayValue: string;
-
-  /**
    * List of subscriptions
    */
   private subscription: Subscription = new Subscription();
@@ -63,14 +58,11 @@ export class VedraxSearchComponent extends VedraxBaseComponent
           const data = result.data.item;
           //set control with ID per default
           this.control.setValue(data['id']);
-          //set display value only
-          this.displayValue = data[this.descriptor.controlDisplayKey];
         }
       }));
   }
 
   ngOnInit(): void {
-    this.displayValue = this.descriptor.controlDisplayValue;
   }
 
   ngOnDestroy(): void {

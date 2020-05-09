@@ -1,6 +1,13 @@
 <mat-form-field *ngIf="descriptor">
-    <input readonly matInput type="text" [placeholder]="descriptor.controlLabel" [ngModel]="displayValue">
-    <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="openDialog()">
+    <input 
+    [id]="descriptor.controlName"
+    readonly 
+    matInput 
+    type="text" 
+    [placeholder]="descriptor.controlLabel" 
+    [formControl]="control">
+    <mat-hint *ngIf="descriptor.controlHint">{{descriptor.controlHint}}</mat-hint>
+    <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="openSearchDialog()">
         <mat-icon>search</mat-icon>
     </button>
     <mat-error>
