@@ -11,5 +11,6 @@ export enum ControlType {
     arrayOfControls = "arrayOfControls",
     search = "search",
     matrix = "matrix",
-    nvp = "nvp"
+    nvp = "nvp",
+    chips = "chips"
 }

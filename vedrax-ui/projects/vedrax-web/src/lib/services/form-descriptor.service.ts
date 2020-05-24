@@ -8,6 +8,7 @@ import { DescriptorForm } from '../descriptor/descriptor-form';
 import { DescriptorOption } from '../descriptor/descriptor-option';
 import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
 import { DescriptorEndpoint } from '../descriptor/descriptor-endpoint';
+import { ControlType } from '../enum';
 
 /**
  * Service that provides methods for getting descriptor form.
@@ -95,11 +96,19 @@ export class FormDescriptorService {
         Validate.isNotNull(ctrl, `control with key [${parent}] does not exist.`);
 
         if (child) {
-            const childCtrl = this.getFormControl(ctrl.controlChildren, child);
-            
+
+            let childCtrl = this.getFormControl(ctrl.controlChildren, child);
+
+            if (ctrl.controlType === ControlType.search) {
+
+                childCtrl = this.getFormControl(ctrl.controlSearch.searchControls, child);
+
+            }
+
             Validate.isNotNull(childCtrl, `control child with key [${child}] does not exist.`);
 
             childCtrl.controlOptions = options;
+
         } else {
             ctrl.controlOptions = options;
         }
