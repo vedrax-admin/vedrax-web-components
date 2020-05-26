@@ -1,4 +1,5 @@
 export * from './vedrax-checkbox/vedrax-checkbox.component';
+export * from './vedrax-chips/vedrax-chips.component';
 export * from './vedrax-control/vedrax-control.component';
 export * from './vedrax-controls/vedrax-controls.component';
 export * from './vedrax-datepicker/vedrax-datepicker.component';
