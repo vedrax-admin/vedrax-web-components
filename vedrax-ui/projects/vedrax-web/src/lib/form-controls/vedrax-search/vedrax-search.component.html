@@ -7,7 +7,7 @@
     [placeholder]="descriptor.controlLabel" 
     [formControl]="control">
     <mat-hint *ngIf="descriptor.controlHint">{{descriptor.controlHint}}</mat-hint>
-    <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="openSearchDialog()">
+    <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="openDialog()">
         <mat-icon>search</mat-icon>
     </button>
     <mat-error>
