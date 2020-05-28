@@ -6,6 +6,11 @@ import { NVP } from './nvp';
 export class MatrixColumn {
 
     /**
+     * Flag set when visible
+     */
+    visible: boolean;
+
+    /**
      * The matrix key
      */
     key: string;

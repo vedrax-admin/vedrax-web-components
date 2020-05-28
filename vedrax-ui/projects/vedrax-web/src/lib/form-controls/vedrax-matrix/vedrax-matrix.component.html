@@ -1,6 +1,7 @@
 <div *ngIf="descriptor" [formGroup]="form">
 
-    <div fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px grid" [formArrayName]="descriptor.controlName">
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px grid"
+        [formArrayName]="descriptor.controlName">
 
         <div fxFlex="50" fxFlex.xs="100" *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
 
@@ -9,14 +10,13 @@
                 <mat-card-title>{{control.get('key').value}}</mat-card-title>
                 <mat-card-content formArrayName="entries">
 
-                    <div *ngFor="let entry of control.get('entries').controls; let y = index;">
+                    <div fxLayout="column" *ngFor="let entry of control.get('entries').controls; let y = index;"
+                        [formGroupName]="y">
 
-                        <div fxFlex fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="start center" [formGroupName]="y">
-                            <mat-form-field appearance="outline">
-                                <mat-label>{{entry.get('key').value}}</mat-label>
-                                <input type="number" required matInput formControlName="value">
-                            </mat-form-field>
-                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{entry.get('key').value}}</mat-label>
+                            <input type="number" required matInput formControlName="value">
+                        </mat-form-field>
 
                     </div>
 

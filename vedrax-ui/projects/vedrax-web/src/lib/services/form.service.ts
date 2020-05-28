@@ -122,6 +122,7 @@ export class FormService {
 
   private addMatrix(matrixColumn: MatrixColumn): FormGroup {
     return this.formBuilder.group({
+      visible: matrixColumn.visible,
       key: matrixColumn.key,
       entries: this.formBuilder.array(this.addEntries(matrixColumn.entries))
     });
