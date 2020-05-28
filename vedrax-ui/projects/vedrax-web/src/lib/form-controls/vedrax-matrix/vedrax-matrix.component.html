@@ -4,20 +4,18 @@
 
         <div fxFlex="50" fxFlex.xs="100" *ngFor="let control of formArray.controls; let i = index;">
 
-            <mat-card [formGroupName]="i">
+            <mat-card *ngIf="control.get('visible').value" [formGroupName]="i">
 
                 <mat-card-title>{{control.get('key').value}}</mat-card-title>
                 <mat-card-content formArrayName="entries">
 
                     <div *ngFor="let entry of control.get('entries').controls; let y = index;">
 
-                        <div fxFlex fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="start center" [formGroupName]="y">
-                            <div fxFlex="30">{{entry.get('key').value}}</div>
-                            <div fxFlex>
-                                <mat-form-field appearance="outline">
-                                    <input type="number" required matInput formControlName="value">
-                                </mat-form-field>
-                            </div>
+                        <div fxFlex fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="start center" [formGroupName]="y">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{entry.get('key').value}}</mat-label>
+                                <input type="number" required matInput formControlName="value">
+                            </mat-form-field>
                         </div>
 
                     </div>
