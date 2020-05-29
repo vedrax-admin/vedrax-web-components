@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { VedraxApiService } from '../../services/vedrax-api.service';
-import { DescriptorModal } from '../../descriptor/descriptor-modal';
 import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -52,7 +51,7 @@ export class VedraxFormModalComponent implements OnInit {
           }))
         .subscribe(data => {
           if (data) {
-            this.snackbarService.open(formDescriptor.successMessage);
+            this.snackbarService.open(formDescriptor.successMessage || 'done');
             this.dialogRef.close(data);
           }
         }));
