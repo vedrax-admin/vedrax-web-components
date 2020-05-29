@@ -1,28 +1,24 @@
 <div *ngIf="descriptor" [formGroup]="form">
 
-    <div fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px grid"
-        [formArrayName]="descriptor.controlName">
+    <div [formArrayName]="descriptor.controlName" class="vedrax-matrix-pb-15">
 
         <div fxFlex="50" fxFlex.xs="100" *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
 
-            <mat-card *ngIf="control.get('visible').value">
+            <mat-expansion-panel *ngIf="control.get('visible').value">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{control.get('key').value}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
 
-                <mat-card-title>{{control.get('key').value}}</mat-card-title>
-                <mat-card-content formArrayName="entries">
+                <p *ngFor="let entry of control.get('entries').controls; let y = index;" [formGroupName]="y">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{entry.get('key').value}}</mat-label>
+                        <input type="number" required matInput formControlName="value">
+                    </mat-form-field>
+                </p>
 
-                    <div fxLayout="column" *ngFor="let entry of control.get('entries').controls; let y = index;"
-                        [formGroupName]="y">
-
-                        <mat-form-field appearance="outline">
-                            <mat-label>{{entry.get('key').value}}</mat-label>
-                            <input type="number" required matInput formControlName="value">
-                        </mat-form-field>
-
-                    </div>
-
-                </mat-card-content>
-
-            </mat-card>
+            </mat-expansion-panel>
 
         </div>
 
