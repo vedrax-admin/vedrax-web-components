@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -77,7 +78,8 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
   constructor(
     private apiService: VedraxApiService,
-    private dialogFormService: DialogFormService) { }
+    private dialogFormService: DialogFormService,
+    private router: Router) { }
 
   ngOnInit() {
     this.displayedColumns = this.descriptor.columns.map(col => col.id);
@@ -194,6 +196,7 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   public openDialog(descriptorForm: DescriptorForm) {
     this.subscription.add(
       this.dialogFormService.open(descriptorForm).subscribe(vo => {
+        //when updatable table
         if (descriptorForm.updateTable) {
           if (descriptorForm.method == ApiMethod.POST) {
             this.addItem(vo);
@@ -201,6 +204,11 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
             this.updateItem(vo);
           }
         }
+        //when success URL
+        if (descriptorForm.successUrl) {
+          this.router.navigateByUrl(descriptorForm.successUrl);
+        }
+
       }));
   }
 
