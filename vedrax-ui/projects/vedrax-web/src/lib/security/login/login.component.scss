@@ -4,8 +4,12 @@
     margin: 2em auto;
 
     mat-card-title {
-      text-align: center;
       color: #4051B5;
     }
      
+}
+
+.login-card-logo {
+  background-image: url('/assets/images/vedrax-logo-opt.svg');
+  background-size: cover;
 }
