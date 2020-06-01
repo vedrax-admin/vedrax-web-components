@@ -55,9 +55,9 @@ export class AuthGuard implements CanActivate, CanLoad {
 
     private navigateToHomePage(state: RouterStateSnapshot): void {
         if (state) {
-            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+            this.router.navigate(['/'], { queryParams: { returnUrl: state.url } });
         } else {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/']);
         }
     }
 

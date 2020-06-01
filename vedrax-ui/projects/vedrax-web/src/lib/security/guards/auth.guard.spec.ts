@@ -97,7 +97,7 @@ describe('AuthGuard', () => {
 
             expect(authGuard.canActivate(routeMock, routeStateMock)).toEqual(false);
             //redirect to home page
-            expect(router.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: '/users' } });
+            expect(router.navigate).toHaveBeenCalledWith(['/'], { queryParams: { returnUrl: '/users' } });
         });
 
     });
