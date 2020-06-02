@@ -7,4 +7,8 @@
     <button *ngIf="createAction" mat-raised-button color="primary" (click)="create()">{{createAction.label}}</button>
 </mat-toolbar>
 
+<div class="alert alert-info m-t-15 m-b-15" *ngIf="description">
+    {{description}}
+</div>
+
 <vedrax-table [descriptor]="tableDescriptor" (onSelect)="select($event)"></vedrax-table>

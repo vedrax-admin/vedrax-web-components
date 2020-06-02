@@ -34,9 +34,14 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   @Input() title: string;
 
   /**
-   * an optionnal back url
+   * an optional back url
    */
   @Input() backUrl?: string;
+
+  /**
+   * an optional description
+   */
+  @Input() description?: string;
 
   /**
    * a table descriptor
