@@ -44,7 +44,7 @@ export class VedraxTableDataSource extends DataSource<any[]>{
             this.apiService.get<DescriptorPage>(endpoint, params)
                 .pipe(
                     catchError(() => of(new DescriptorPage())),
-                    finalize(() => this.submittedSubject.next(true))
+                    finalize(() => this.submittedSubject.next(false))
                 )
                 .subscribe(page => {
                     this.addItems(page.content);
@@ -59,7 +59,7 @@ export class VedraxTableDataSource extends DataSource<any[]>{
             this.apiService.get<any[]>(endpoint, params)
                 .pipe(
                     catchError(() => of([])),
-                    finalize(() => this.submittedSubject.next(true))
+                    finalize(() => this.submittedSubject.next(false))
                 )
                 .subscribe(list => {
                     this.addItems(list);

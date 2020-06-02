@@ -32,6 +32,7 @@ import { VedraxFormComponent } from './form-controls/vedrax-form/vedrax-form.com
 import { VedraxCrudComponent } from './vedrax-crud/vedrax-crud.component';
 import { VedraxMultipleComponent } from './form-controls/vedrax-multiple/vedrax-multiple.component';
 import { VedraxChipsComponent } from './form-controls/vedrax-chips/vedrax-chips.component';
+import { DebounceClickDirective } from './util/debounce-click.directive';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { VedraxChipsComponent } from './form-controls/vedrax-chips/vedrax-chips.
     VedraxFormComponent,
     VedraxCrudComponent,
     VedraxMultipleComponent,
-    VedraxChipsComponent
+    VedraxChipsComponent,
+    DebounceClickDirective
   ],
   exports: [
     VedraxFilterComponent,
