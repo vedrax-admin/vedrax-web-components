@@ -54,6 +54,10 @@ export class FormService {
       return this.createControlWithNvp(descriptor);
     }
 
+    if (descriptor.controlType === ControlType.chips) {
+      return this.createControlWithChips(descriptor);
+    }
+
     return this.createControl(descriptor);
   }
 
@@ -113,6 +117,12 @@ export class FormService {
     return this.formBuilder.array(this.addEntries(nvps));
   }
 
+  private createControlWithChips(descriptor: DescriptorFormControl): FormArray {
+    const chips: string[] = descriptor.controlValue || [];
+
+    return this.formBuilder.array(this.addChipEntries(chips));
+  }
+
   getFormArray(form: FormGroup, fieldName: string): FormArray {
     Validate.isNotNull(form, 'form must be provided');
     Validate.isNotNull(fieldName, 'fieldName must be provided');
@@ -134,6 +144,16 @@ export class FormService {
     for (let entry of entries) {
       elements.push(this.formBuilder.group(entry));
     }
+    return elements;
+  }
+
+  private addChipEntries(chips: string[]): FormControl[] {
+    let elements: FormControl[] = [];
+
+    for (let entry of chips) {
+      elements.push(this.formBuilder.control(entry));
+    }
+
     return elements;
   }
 
