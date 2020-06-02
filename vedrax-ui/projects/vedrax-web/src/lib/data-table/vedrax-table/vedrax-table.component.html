@@ -1,7 +1,7 @@
 <div *ngIf="descriptor">
 
     <vedrax-filter *ngIf="descriptor.searchControls as searchCtrls" [descriptors]="searchCtrls"
-        (onSubmit)="filter($event)">
+        (onSubmit)="filter($event)" [submitted]="submitted">
     </vedrax-filter>
 
     <div class="vedrax-table-m-t-15 vedrax-table-box mat-elevation-z8">

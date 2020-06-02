@@ -40,6 +40,11 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   displayedColumns: string[] = [];
 
   /**
+   * Is the request submitted
+   */
+  submitted: boolean = false;
+
+  /**
    * Total elements
    */
   totalLength: number = 0;
@@ -123,6 +128,8 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    */
   filter(search: any = {}) {
 
+    this.submitted = true;
+
     //re-initialize the query params
     this.params = new HttpParams();
 
@@ -148,6 +155,8 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     } else {
       this.datasource.load(this.descriptor.path, this.params);
     }
+
+    this.subscription.add(this.datasource.submitted$.subscribe(status => this.submitted = status));
   }
 
   /**

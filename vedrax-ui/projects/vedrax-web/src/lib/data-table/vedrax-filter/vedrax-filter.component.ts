@@ -16,6 +16,11 @@ export class VedraxFilterComponent implements OnInit {
   @Input() descriptors: DescriptorFormControl[] = [];
 
   /**
+   * Status of the request
+   */
+  @Input() submitted: boolean = false;
+
+  /**
    * Emit event with data when submitting the form
    */
   @Output() onSubmit = new EventEmitter<any>();

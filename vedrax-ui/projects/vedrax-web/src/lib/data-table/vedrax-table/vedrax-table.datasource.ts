@@ -1,7 +1,7 @@
 import { DataSource, CollectionViewer } from "@angular/cdk/collections";
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subscription, BehaviorSubject, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError,finalize } from 'rxjs/operators';
 
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorPage } from '../../descriptor/descriptor-page';
@@ -14,8 +14,10 @@ export class VedraxTableDataSource extends DataSource<any[]>{
     private subscription: Subscription = new Subscription();
     private dataSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
     private totalItemsSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-
+    private submittedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+ 
     public totalItems$ = this.totalItemsSubject.asObservable();
+    public submitted$ = this.submittedSubject.asObservable();
 
     get data(): any[] {
         return this.dataSubject.value;
@@ -31,14 +33,18 @@ export class VedraxTableDataSource extends DataSource<any[]>{
 
     disconnect(collectionViewer: CollectionViewer): void {
         this.dataSubject.complete();
+        this.submittedSubject.complete();
         this.totalItemsSubject.complete();
     }
 
     loadWithPagination(endpoint: string, params?: HttpParams) {
+        this.submittedSubject.next(true);
+
         this.subscription.add(
             this.apiService.get<DescriptorPage>(endpoint, params)
                 .pipe(
-                    catchError(() => of(new DescriptorPage()))
+                    catchError(() => of(new DescriptorPage())),
+                    finalize(() => this.submittedSubject.next(true))
                 )
                 .subscribe(page => {
                     this.addItems(page.content);
@@ -47,12 +53,17 @@ export class VedraxTableDataSource extends DataSource<any[]>{
     }
 
     load(endpoint: string, params?: HttpParams) {
+        this.submittedSubject.next(true);
+
         this.subscription.add(
             this.apiService.get<any[]>(endpoint, params)
                 .pipe(
-                    catchError(() => of([]))
+                    catchError(() => of([])),
+                    finalize(() => this.submittedSubject.next(true))
                 )
-                .subscribe(list => this.addItems(list)));
+                .subscribe(list => {
+                    this.addItems(list);
+                }));
 
     }
 

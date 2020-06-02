@@ -1,14 +1,14 @@
 <form [formGroup]="formSearch" novalidate (ngSubmit)="submit(formSearch.value)">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
-            Search
+            Recherche
         </mat-expansion-panel-header>
 
         <vedrax-control *ngFor="let descriptor of descriptors" [control]="formSearch.get(descriptor.controlName)"
             [descriptor]="descriptor"></vedrax-control>
 
         <mat-action-row>
-            <button type="submit" [disabled]="formSearch.invalid" mat-raised-button color="primary">Go</button>
+            <button type="submit" [disabled]="formSearch.invalid || submitted" mat-raised-button color="primary">Go</button>
         </mat-action-row>
     </mat-expansion-panel>
 </form>
