@@ -43,6 +43,7 @@ export class VedraxFilterComponent implements OnInit {
    */
   submit(dto: any) {
     if (this.formSearch.valid) {
+      this.submitted = true;
       this.onSubmit.emit(dto);
     }
   }
