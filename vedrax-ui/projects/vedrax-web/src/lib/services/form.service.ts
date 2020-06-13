@@ -58,6 +58,10 @@ export class FormService {
       return this.createControlWithChips(descriptor);
     }
 
+    if(descriptor.controlType === ControlType.multiple){
+      return this.createControlWithChips(descriptor);
+    }
+
     return this.createControl(descriptor);
   }
 
@@ -118,7 +122,7 @@ export class FormService {
   }
 
   private createControlWithChips(descriptor: DescriptorFormControl): FormArray {
-    const chips: string[] = descriptor.controlValue || [];
+    const chips: string[] | number[] = descriptor.controlValue || [];
 
     return this.formBuilder.array(this.addChipEntries(chips));
   }
@@ -147,7 +151,7 @@ export class FormService {
     return elements;
   }
 
-  private addChipEntries(chips: string[]): FormControl[] {
+  private addChipEntries(chips: string[] | number []): FormControl[] {
     let elements: FormControl[] = [];
 
     for (let entry of chips) {

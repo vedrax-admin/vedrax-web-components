@@ -17,6 +17,21 @@ export class DescriptorColumn {
     label: string;
 
     /**
+     * When boolean value
+     */
+    withBool?: boolean = false;
+
+    /**
+     * Display this value when true
+     */
+    valueWhenTrue?: string;
+
+    /**
+     * Display this value when false
+     */
+    valueWhenFalse?: string;
+
+    /**
      * Optional actions for the column
      */
     actions?: DescriptorAction[];
