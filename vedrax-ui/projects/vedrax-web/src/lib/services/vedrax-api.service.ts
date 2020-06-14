@@ -5,7 +5,7 @@ import { Observable, forkJoin, of } from 'rxjs';
 import { ApiMethod } from '../enum/api-methods';
 import { Validate } from '../util/validate';
 import { DescriptorForm } from '../descriptor/descriptor-form';
-import { DescriptorEndpoint } from 'vedrax-web/lib/descriptor/descriptor-endpoint';
+import { DescriptorEndpoint } from '../descriptor/descriptor-endpoint';
 
 @Injectable({
     providedIn: 'root'
