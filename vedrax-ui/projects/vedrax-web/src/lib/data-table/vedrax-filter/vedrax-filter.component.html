@@ -1,10 +1,10 @@
-<form [formGroup]="formSearch" novalidate (ngSubmit)="submit(formSearch.value)">
+<form *ngIf="search" [formGroup]="formSearch" novalidate (ngSubmit)="submit(formSearch.value)">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
             Recherche
         </mat-expansion-panel-header>
 
-        <vedrax-control *ngFor="let descriptor of descriptors" [control]="formSearch.get(descriptor.controlName)"
+        <vedrax-control *ngFor="let descriptor of search.controls" [control]="formSearch.get(descriptor.controlName)"
             [descriptor]="descriptor"></vedrax-control>
 
         <mat-action-row>

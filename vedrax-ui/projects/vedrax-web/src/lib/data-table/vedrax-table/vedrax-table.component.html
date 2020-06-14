@@ -1,6 +1,6 @@
 <div *ngIf="descriptor">
 
-    <vedrax-filter *ngIf="descriptor.searchControls as searchCtrls" [descriptors]="searchCtrls"
+    <vedrax-filter [search]="descriptor.search"
         (onSubmit)="filter($event)" [submitted]="submitted">
     </vedrax-filter>
 

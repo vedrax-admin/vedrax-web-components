@@ -1,19 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { FormService } from '../../services/form.service';
-import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
+import { DescriptorSearch } from '../../descriptor/descriptor-search';
+import { FormDescriptorService } from '../../services/form-descriptor.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'vedrax-filter',
   templateUrl: './vedrax-filter.component.html'
 })
-export class VedraxFilterComponent implements OnInit {
+export class VedraxFilterComponent implements OnInit, OnDestroy {
 
   /**
    * The list of filter controls
    */
-  @Input() descriptors: DescriptorFormControl[] = [];
+  @Input() search: DescriptorSearch;
 
   /**
    * Status of the request
@@ -30,10 +32,26 @@ export class VedraxFilterComponent implements OnInit {
    */
   formSearch: FormGroup;
 
-  constructor(private formService: FormService) { }
+  /**
+  * The list of subscription
+  */
+  private subscription: Subscription = new Subscription();
+
+  constructor(
+    private formService: FormService,
+    private formDescriptorService: FormDescriptorService
+  ) { }
 
   ngOnInit() {
-    this.formSearch = this.formService.createFormGroup(this.descriptors);
+    this.formSearch = this.formService.createFormGroup(this.search.controls);
+    this.subscription.add(this.formDescriptorService.initLov(this.search.controls, this.search.lovs).subscribe());
+  }
+
+  /**
+  * Used for unsubscribing on destroy
+  */
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   /**

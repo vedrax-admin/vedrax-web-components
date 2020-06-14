@@ -21,6 +21,31 @@ export class FormDescriptorService {
     constructor(private apiService: VedraxApiService) { }
 
     /**
+     * Method for initialized LOV
+     * @param controls 
+     * @param endpoints 
+     */
+    initLov(controls: DescriptorFormControl[] = [], endpoints: DescriptorEndpoint[] = []): Observable<any> {
+
+        if (endpoints.length == 0) {
+            return of([]);
+        }
+
+        return this.apiService.callEndpoints(endpoints).pipe(
+            map(result => {
+                endpoints.forEach(endpoint => {
+
+                    const ctrl = this.getFormControl(controls, endpoint.key);
+
+                    Validate.isNotNull(ctrl, `control with key [${endpoint.key}] does not exist.`);
+
+                    ctrl.controlOptions = result[endpoint.key];
+                });
+            })
+        );
+    }
+
+    /**
      * Get form descriptor and load LOVs if any
      * @param endpoint the API endpoint
      * @param lovs the LOVs reference used for updating
@@ -101,7 +126,7 @@ export class FormDescriptorService {
 
             if (ctrl.controlType === ControlType.search) {
 
-                childCtrl = this.getFormControl(ctrl.controlSearch.searchControls, child);
+                childCtrl = this.getFormControl(ctrl.controlSearch.search.controls, child);
 
             }
 

@@ -7,5 +7,6 @@ export * from './descriptor-modal';
 export * from './descriptor-option';
 export * from './descriptor-page';
 export * from './descriptor-property';
+export * from './descriptor-search';
 export * from './descriptor-table';
 export * from './descriptor-validation';

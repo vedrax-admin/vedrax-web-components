@@ -1,5 +1,5 @@
-import { DescriptorFormControl } from './descriptor-form-control';
 import { DescriptorColumn } from './descriptor-column';
+import { DescriptorSearch } from './descriptor-search';
 
 /**
  * Class that describes a table
@@ -29,7 +29,7 @@ export class DescriptorTable {
     /**
      * The controls to search the data for
      */
-    searchControls?: DescriptorFormControl[];
+    search?: DescriptorSearch;
 
     /**
      * The list of columns displayed

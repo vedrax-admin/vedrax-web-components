@@ -5,6 +5,7 @@ import { Observable, forkJoin, of } from 'rxjs';
 import { ApiMethod } from '../enum/api-methods';
 import { Validate } from '../util/validate';
 import { DescriptorForm } from '../descriptor/descriptor-form';
+import { DescriptorEndpoint } from 'vedrax-web/lib/descriptor/descriptor-endpoint';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,21 @@ export class VedraxApiService {
 
         apiCalls.forEach((endpoint, key) => {
             forkJoinObj[key] = this.get<any>(endpoint);
+        });
+
+        return forkJoin(forkJoinObj);
+    }
+
+    /**
+     * Method for calling multiple request at once by passing a list of descriptorEndpoint
+     * @param paths 
+     */
+    callEndpoints(apiCalls: DescriptorEndpoint[] = []): Observable<any> {
+
+        let forkJoinObj: object = {};
+
+        apiCalls.forEach(endpoint => {
+            forkJoinObj[endpoint.key] = this.get<any>(endpoint.url);
         });
 
         return forkJoin(forkJoinObj);
