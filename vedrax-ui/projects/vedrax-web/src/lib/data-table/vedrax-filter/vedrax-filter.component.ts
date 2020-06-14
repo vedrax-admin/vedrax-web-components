@@ -43,8 +43,10 @@ export class VedraxFilterComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.formSearch = this.formService.createFormGroup(this.search.controls);
-    this.subscription.add(this.formDescriptorService.initLov(this.search.controls, this.search.lovs).subscribe());
+    if (this.search) {
+      this.formSearch = this.formService.createFormGroup(this.search.controls);
+      this.subscription.add(this.formDescriptorService.initLov(this.search.controls, this.search.lovs).subscribe());
+    }
   }
 
   /**
