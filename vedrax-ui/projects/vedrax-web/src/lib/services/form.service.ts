@@ -58,7 +58,7 @@ export class FormService {
       return this.createControlWithChips(descriptor);
     }
 
-    if(descriptor.controlType === ControlType.multiple){
+    if (descriptor.controlType === ControlType.multiple) {
       return this.createControlWithChips(descriptor);
     }
 
@@ -74,6 +74,13 @@ export class FormService {
     let validations = this.createValidation(descriptor);
 
     return new FormControl({ value: descriptor.controlValue, disabled: this.isDisabled(descriptor.controlProperties) }, validations);
+  }
+
+  private createControlWithValue(descriptor: DescriptorFormControl, value: any) {
+    let validations = this.createValidation(descriptor);
+
+    return new FormControl({ value: value, disabled: this.isDisabled(descriptor.controlProperties) }, validations);
+
   }
 
   /**
@@ -92,15 +99,40 @@ export class FormService {
   private createControlWithChildren(descriptor: DescriptorFormControl): FormArray {
 
     const controls = descriptor.controlChildren || [];
+    const values: any[] = descriptor.controlValue || [];
 
     let validations = this.createValidation(descriptor);
-    let children = {};
 
+    let groups: FormGroup[] = values.length > 0
+      ? this.createGroupsFromChildrenWithValues(controls, values)
+      : this.createGroupsFromChildrenWithoutValue(controls);
+
+    return new FormArray(groups, validations);
+  }
+
+  private createGroupsFromChildrenWithValues(controls: DescriptorFormControl[] = [], values: any[] = []) {
+
+    let groups: FormGroup[] = [];
+
+    values.forEach(element => {
+      let children = {};
+
+      controls.forEach(ctrl => {
+        children[ctrl.controlName] = this.createControlWithValue(ctrl, element[ctrl.controlName]);
+      });
+
+      groups.push(new FormGroup(children));
+    });
+
+    return groups;
+  }
+
+  private createGroupsFromChildrenWithoutValue(controls: DescriptorFormControl[] = []) {
+    let children = {};
     controls.forEach(ctrl => {
       children[ctrl.controlName] = this.createControl(ctrl);
     });
-
-    return new FormArray([new FormGroup(children)], validations);
+    return [new FormGroup(children)];
   }
 
   private createControlWithMatrix(descriptor: DescriptorFormControl): FormArray {
@@ -151,7 +183,7 @@ export class FormService {
     return elements;
   }
 
-  private addChipEntries(chips: string[] | number []): FormControl[] {
+  private addChipEntries(chips: string[] | number[]): FormControl[] {
     let elements: FormControl[] = [];
 
     for (let entry of chips) {

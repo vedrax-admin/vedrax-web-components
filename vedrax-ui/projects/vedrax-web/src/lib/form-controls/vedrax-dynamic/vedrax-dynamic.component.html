@@ -2,18 +2,23 @@
 
     <div fxLayout="column" [formArrayName]="descriptor.controlName">
 
-        <div fxLayout="row" fxLayoutGap="15px" *ngFor="let control of formArray.controls; let i = index;"
-            [formGroupName]="i">
+        <mat-card *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
 
-            <vedrax-control *ngFor="let ctrl of descriptor.controlChildren" [descriptor]="ctrl"
-                [control]="control.get(ctrl.controlName)"></vedrax-control>
+            <mat-card-content>
 
-            <button class="remove-param" mat-icon-button aria-label="remove" (click)="remove(i)">
-                <mat-icon>delete</mat-icon>
-            </button>
+                <vedrax-control *ngFor="let ctrl of descriptor.controlChildren" [descriptor]="ctrl"
+                    [control]="control.get(ctrl.controlName)"></vedrax-control>
 
-        </div>
+            </mat-card-content>
+            <mat-card-actions>
 
+                <button class="remove-param" mat-icon-button aria-label="remove" (click)="remove(i)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+
+            </mat-card-actions>
+
+        </mat-card>
 
         <button color="primary" class="add-param" mat-stroked-button aria-label="add" (click)="add()">
             {{descriptor.controlLabel}}
