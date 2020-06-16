@@ -2,7 +2,7 @@
 
     <div fxLayout="column" [formArrayName]="descriptor.controlName">
 
-        <mat-card *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
+        <mat-card class="m-b-15" *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
 
             <mat-card-content>
 
