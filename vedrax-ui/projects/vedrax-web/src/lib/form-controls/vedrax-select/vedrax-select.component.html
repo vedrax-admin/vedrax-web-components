@@ -1,6 +1,6 @@
 <mat-form-field *ngIf="descriptor">
     <mat-label>{{descriptor.controlLabel}}</mat-label>
-    <mat-select [id]="descriptor.controlName" [formControl]="control" [multiple]="hasProperty('multiple')">
+    <mat-select [formControl]="control" [multiple]="hasProperty('multiple')">
         <mat-option *ngFor="let option of descriptor.controlOptions" [value]="option.key">
             {{option.value}}
         </mat-option>

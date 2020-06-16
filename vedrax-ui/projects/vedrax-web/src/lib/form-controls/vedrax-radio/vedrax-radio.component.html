@@ -1,4 +1,4 @@
-<mat-radio-group *ngIf="descriptor" [id]="descriptor.controlName" [formControl]="control" [attr.aria-label]="descriptor.controlLabel">
+<mat-radio-group *ngIf="descriptor" [formControl]="control" [attr.aria-label]="descriptor.controlLabel">
     <mat-radio-button *ngFor="let option of descriptor.controlOptions" [value]="option.key">{{option.value}}
     </mat-radio-button>
 </mat-radio-group>
