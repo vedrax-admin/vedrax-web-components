@@ -8,12 +8,11 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-list class="vedrax-multiple-list">
-        <mat-list-item *ngFor="let item of selections">
-            <span>{{ item.value }}</span>
-            <button class="remove-item" mat-icon-button (click)="remove(item.key)">
-                <mat-icon>clear</mat-icon>
-            </button>
-        </mat-list-item>
-    </mat-list>
+    <mat-chip-list aria-label="Item selection">
+        <mat-chip *ngFor="let item of selections" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(item.key)">
+            {{item.value}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
 </div>

@@ -12,6 +12,8 @@ export class VedraxMultipleComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() descriptor: DescriptorFormControl;
+  selectable = true;
+  removable = true;
 
   constructor() { }
 
