@@ -2,7 +2,7 @@
 
     <div fxLayout="column" [formArrayName]="descriptor.controlName">
 
-        <mat-card class="m-b-15" *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
+        <mat-card class="vedrax-card-dynamic" *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
 
             <mat-card-content>
 
@@ -10,7 +10,7 @@
                     [control]="control.get(ctrl.controlName)"></vedrax-control>
 
             </mat-card-content>
-            <mat-card-actions>
+            <mat-card-actions align="end">
 
                 <button class="remove-param" mat-icon-button aria-label="remove" (click)="remove(i)">
                     <mat-icon>delete</mat-icon>
