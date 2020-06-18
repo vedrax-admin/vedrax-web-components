@@ -37,7 +37,7 @@ export class VedraxSearchComponent extends VedraxBaseComponent
     dialogConfig.width = '600px';
     dialogConfig.data = {
       title: this.descriptor.controlLabel,
-      descriptor: this.descriptor
+      descriptor: this.descriptor.controlSearch
     };
 
     const dialogRef = this.dialog.open(VedraxSearchTableComponent, dialogConfig);

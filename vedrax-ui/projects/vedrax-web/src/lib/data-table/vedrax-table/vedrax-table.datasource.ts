@@ -92,7 +92,7 @@ export class VedraxTableDataSource extends DataSource<any[]>{
      * Transform when boolean
      * @param items 
      */
-    private transformItems(items: any[]) {
+    private transformItems(items: any[] = []) {
 
         this.descriptorTable.columns
             .filter(column => column.withBool)
