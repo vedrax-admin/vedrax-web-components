@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { VedraxMaterialModule } from './material/vedrax-material.module';
 
-import {VedraxBaseComponent} from './shared/vedrax-base.component';
+import { VedraxBaseComponent } from './shared/vedrax-base.component';
 import { VedraxFilterComponent } from './data-table/vedrax-filter/vedrax-filter.component';
 import { VedraxTableComponent } from './data-table/vedrax-table/vedrax-table.component';
 import { VedraxCheckboxComponent } from './form-controls/vedrax-checkbox/vedrax-checkbox.component';
@@ -33,6 +33,7 @@ import { VedraxCrudComponent } from './vedrax-crud/vedrax-crud.component';
 import { VedraxMultipleComponent } from './form-controls/vedrax-multiple/vedrax-multiple.component';
 import { VedraxChipsComponent } from './form-controls/vedrax-chips/vedrax-chips.component';
 import { DebounceClickDirective } from './util/debounce-click.directive';
+import { VedraxSearchTableComponent } from './form-controls/vedrax-search-table/vedrax-search-table.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,8 @@ import { DebounceClickDirective } from './util/debounce-click.directive';
     VedraxCrudComponent,
     VedraxMultipleComponent,
     VedraxChipsComponent,
-    DebounceClickDirective
+    DebounceClickDirective,
+    VedraxSearchTableComponent
   ],
   exports: [
     VedraxFilterComponent,
@@ -92,14 +94,16 @@ import { DebounceClickDirective } from './util/debounce-click.directive';
     VedraxLoginComponent,
     VedraxLoaderComponent,
     VedraxFormComponent,
-    VedraxCrudComponent
+    VedraxCrudComponent,
+    VedraxSearchTableComponent
   ],
   entryComponents: [
     VedraxTableComponent,
     VedraxFormModalComponent,
-    VedraxModalComponent
+    VedraxModalComponent,
+    VedraxSearchTableComponent
   ],
-  providers:[
+  providers: [
     errorInterceptorProvider,
     jwtInterceptorProvider,
     loaderInterceptorProvider

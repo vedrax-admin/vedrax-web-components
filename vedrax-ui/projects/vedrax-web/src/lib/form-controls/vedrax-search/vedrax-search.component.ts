@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { VedraxModalComponent } from '../../vedrax-modal/vedrax-modal.component';
 import { VedraxBaseComponent } from '../../shared/vedrax-base.component';
 import { VedraxTableComponent } from '../../data-table/vedrax-table/vedrax-table.component';
+import { VedraxSearchTableComponent } from '../vedrax-search-table/vedrax-search-table.component';
 
 /**
  * Class that defines a search component where 
@@ -31,19 +32,17 @@ export class VedraxSearchComponent extends VedraxBaseComponent
    * Open a dialog with the embedded search table
    */
   openDialog() {
-    const dialogRef = this.dialog.open(VedraxModalComponent, {
-      width: '600px',
-      data: {
-        title: this.descriptor.controlLabel,
-        component: VedraxTableComponent,
-        inputs: {
-          descriptor: this.descriptor.controlSearch
-        }
-      }
-    });
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '600px';
+    dialogConfig.data = {
+      title: this.descriptor.controlLabel,
+      descriptor: this.descriptor
+    };
+
+    const dialogRef = this.dialog.open(VedraxSearchTableComponent, dialogConfig);
 
     this.onClose(dialogRef);
-
   }
 
   /**
