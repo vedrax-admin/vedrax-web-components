@@ -20,7 +20,8 @@ export class DialogFormService {
 
         const dialogRef = this.dialog.open(VedraxFormModalComponent, {
             width: '600px',
-            data: descriptor
+            data: descriptor,
+            disableClose: true
         });
 
         return dialogRef.afterClosed()

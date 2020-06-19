@@ -34,6 +34,7 @@ import { VedraxMultipleComponent } from './form-controls/vedrax-multiple/vedrax-
 import { VedraxChipsComponent } from './form-controls/vedrax-chips/vedrax-chips.component';
 import { DebounceClickDirective } from './util/debounce-click.directive';
 import { VedraxSearchTableComponent } from './form-controls/vedrax-search-table/vedrax-search-table.component';
+import { VedraxAutocompleteComponent } from './form-controls/vedrax-autocomplete/vedrax-autocomplete.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { VedraxSearchTableComponent } from './form-controls/vedrax-search-table/
     VedraxMultipleComponent,
     VedraxChipsComponent,
     DebounceClickDirective,
-    VedraxSearchTableComponent
+    VedraxSearchTableComponent,
+    VedraxAutocompleteComponent
   ],
   exports: [
     VedraxFilterComponent,
@@ -95,7 +97,8 @@ import { VedraxSearchTableComponent } from './form-controls/vedrax-search-table/
     VedraxLoaderComponent,
     VedraxFormComponent,
     VedraxCrudComponent,
-    VedraxSearchTableComponent
+    VedraxSearchTableComponent,
+    VedraxAutocompleteComponent
   ],
   entryComponents: [
     VedraxTableComponent,

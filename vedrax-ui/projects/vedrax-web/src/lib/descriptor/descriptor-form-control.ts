@@ -61,4 +61,9 @@ export class DescriptorFormControl {
      * generating the searching table accordingly
      */
     controlSearch?: DescriptorTable;
+
+    /**
+     * The search URL
+     */
+    controlSearchUrl?: string;
 }

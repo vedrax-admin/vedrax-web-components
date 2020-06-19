@@ -1,3 +1,5 @@
+export * from './vedrax-autocomplete/vedrax-autocomplete.component';
+export * from './vedrax-autocomplete/vedrax-autocomplete.datasource';
 export * from './vedrax-checkbox/vedrax-checkbox.component';
 export * from './vedrax-chips/vedrax-chips.component';
 export * from './vedrax-control/vedrax-control.component';

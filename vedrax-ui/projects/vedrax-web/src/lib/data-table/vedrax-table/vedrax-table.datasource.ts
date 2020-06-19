@@ -36,6 +36,7 @@ export class VedraxTableDataSource extends DataSource<any[]>{
         this.dataSubject.complete();
         this.submittedSubject.complete();
         this.totalItemsSubject.complete();
+        this.subscription.unsubscribe();
     }
 
     loadWithPagination(endpoint: string, params?: HttpParams) {
