@@ -1,22 +1,22 @@
-<div *ngIf="descriptor">
-    <button (click)="open(dropdown, origin)" #origin>
+<div class="dopdown" *ngIf="descriptor">
+    <button class="vedrax-select-trigger" (click)="open(dropdown, origin)" #origin>
         <ng-template [ngIf]="!isOpen" [ngIfElse]="searchTpl">
             {{selected.value}}
         </ng-template>
         <ng-template #searchTpl>
-            <input matInput [formControl]="searchControl">
+            <input class="vedrax-autocomplete-search" placeholder="Recherche..." [formControl]="searchControl" autofocus (click)="$event.stopPropagation()">
         </ng-template>
     </button>
 
     <ng-template #dropdown>
         <div class="vedrax-autocomplete-menu">
-            <cdk-virtual-scroll-viewport itemSize="30" [style.height.px]="visibleOptions * 30">
+            <cdk-virtual-scroll-viewport itemSize="30" [style.height.px]="visibleOptions * 30" class="vedrax-menu-inner">
                 <div *cdkVirtualFor="let option of dataSource">
 
-                    <div *ngIf="option" [class.active]="isActive(option)" (click)="select(option)">
+                    <div *ngIf="option" class="vedrax-select-item" [class.active]="isActive(option)" (click)="select(option)">
                         {{option.value}}
                     </div>
-                    <div *ngIf="!option">
+                    <div *ngIf="!option" class="no-results-item">
                         Loading ...
                     </div>
 

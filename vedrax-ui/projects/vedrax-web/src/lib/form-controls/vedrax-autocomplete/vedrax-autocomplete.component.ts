@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, OnDestroy, TemplateRef, ViewContainerRef, EmbeddedViewRef, NgZone } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, TemplateRef, ViewContainerRef, EmbeddedViewRef, NgZone, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
-import { Subscription } from 'rxjs';
-import { debounceTime, filter, distinctUntilChanged } from 'rxjs/operators';
+import { Subscription, fromEvent } from 'rxjs';
+import { debounceTime, filter, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { VedraxAutocompleteDataSource } from './vedrax-autocomplete.datasource';
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { Validate } from 'vedrax-web/lib/util';
@@ -10,7 +10,8 @@ import Popper from 'popper.js';
 
 @Component({
   selector: 'vedrax-autocomplete',
-  templateUrl: './vedrax-autocomplete.component.html'
+  templateUrl: './vedrax-autocomplete.component.html',
+  styleUrls:['./vedrax-autocomplete.component.scss']
 })
 export class VedraxAutocompleteComponent implements OnInit, OnDestroy {
 
@@ -18,6 +19,8 @@ export class VedraxAutocompleteComponent implements OnInit, OnDestroy {
   @Input() descriptor: DescriptorFormControl;
   selected: any;
   label: string;
+
+  @Output() closed = new EventEmitter();
 
   private subscription: Subscription = new Subscription();
 
@@ -34,11 +37,16 @@ export class VedraxAutocompleteComponent implements OnInit, OnDestroy {
   constructor(
     private apiService: VedraxApiService,
     private vcr: ViewContainerRef,
-    private zone: NgZone) {
+    private zone: NgZone,
+    private cdr: ChangeDetectorRef) {
     Validate.isNotNull(this.descriptor, "descriptor shoud be provided");
     Validate.isNotNull(this.descriptor.controlSearchUrl, "search endpoint shoud be provided");
 
     this.datasource = new VedraxAutocompleteDataSource(this.apiService, this.descriptor.controlSearchUrl)
+  }
+
+  get isOpen() {
+    return !!this.popper;
   }
 
   ngOnInit(): void {
@@ -89,7 +97,32 @@ export class VedraxAutocompleteComponent implements OnInit, OnDestroy {
     this.zone.runOutsideAngular(() => {
       this.popper = new Popper(origin, dropdown, { removeOnDestroy: true });
     });
+
+    this.handleClickOutside();
+
   }
 
+  close() {
+    this.closed.emit();
+    this.popper.destroy();
+    this.view.destroy();
+    this.searchControl.patchValue('');
+    this.view = null;
+    this.popper = null;
+  }
+
+  private handleClickOutside() {
+    this.subscription.add(fromEvent(document, 'click')
+      .pipe(
+        filter(({ target }) => {
+          const origin = this.popper.reference as HTMLElement;
+          return origin.contains(target as HTMLElement) === false;
+        }),
+        takeUntil(this.closed)
+      ).subscribe(() => {
+        this.close();
+        this.cdr.detectChanges();
+      }));
+  }
 
 }

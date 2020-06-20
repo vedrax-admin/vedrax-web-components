@@ -62,6 +62,10 @@ export class FormService {
       return this.createControlWithChips(descriptor);
     }
 
+    if(descriptor.controlType === ControlType.autocomplete){
+      return this.createControlWithAutocomplete(descriptor);
+    }
+
     return this.createControl(descriptor);
   }
 
@@ -89,6 +93,13 @@ export class FormService {
    */
   private isDisabled(properties: DescriptorProperty[] = []): boolean {
     return properties.some(property => property.propertyName === 'readOnly');
+  }
+
+  private createControlWithAutocomplete(descriptor: DescriptorFormControl): FormControl {
+
+    const value = descriptor.controlValue || {};
+
+    return this.createControlWithValue(descriptor, value['key']);
   }
 
   /**

@@ -12,5 +12,6 @@ export enum ControlType {
     search = "search",
     matrix = "matrix",
     nvp = "nvp",
-    chips = "chips"
+    chips = "chips",
+    autocomplete = "autocomplete"
 }
