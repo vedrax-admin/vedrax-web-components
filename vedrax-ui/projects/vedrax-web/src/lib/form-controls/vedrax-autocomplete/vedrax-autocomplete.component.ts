@@ -5,7 +5,7 @@ import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime, filter, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { VedraxAutocompleteDataSource } from './vedrax-autocomplete.datasource';
 import { VedraxApiService } from '../../services/vedrax-api.service';
-import { Validate } from 'vedrax-web/lib/util';
+import { Validate } from '../../util';
 import Popper from 'popper.js';
 
 @Component({
@@ -26,7 +26,7 @@ export class VedraxAutocompleteComponent implements OnInit, OnDestroy {
 
   searchControl = new FormControl();
 
-  private datasource: VedraxAutocompleteDataSource;
+  datasource: VedraxAutocompleteDataSource;
 
   private view: EmbeddedViewRef<any>;
 

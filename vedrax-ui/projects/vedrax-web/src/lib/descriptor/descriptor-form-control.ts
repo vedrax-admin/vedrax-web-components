@@ -66,4 +66,9 @@ export class DescriptorFormControl {
      * The search URL
      */
     controlSearchUrl?: string;
+
+    /**
+     * The display key for autocomplete
+     */
+    controlDisplayKey?: string;
 }

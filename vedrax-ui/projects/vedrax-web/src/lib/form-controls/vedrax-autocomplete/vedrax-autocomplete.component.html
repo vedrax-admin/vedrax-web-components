@@ -11,7 +11,7 @@
     <ng-template #dropdown>
         <div class="vedrax-autocomplete-menu">
             <cdk-virtual-scroll-viewport itemSize="30" [style.height.px]="visibleOptions * 30" class="vedrax-menu-inner">
-                <div *cdkVirtualFor="let option of dataSource">
+                <div *cdkVirtualFor="let option of datasource">
 
                     <div *ngIf="option" class="vedrax-select-item" [class.active]="isActive(option)" (click)="select(option)">
                         {{option.value}}
