@@ -39,8 +39,6 @@ export class VedraxAutocompleteComponent implements OnInit, OnDestroy {
     private vcr: ViewContainerRef,
     private zone: NgZone,
     private cdr: ChangeDetectorRef) {
-    Validate.isNotNull(this.descriptor, "descriptor shoud be provided");
-    Validate.isNotNull(this.descriptor.controlSearchUrl, "search endpoint shoud be provided");
 
     this.datasource = new VedraxAutocompleteDataSource(this.apiService, this.descriptor.controlSearchUrl)
   }

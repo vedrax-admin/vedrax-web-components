@@ -4,6 +4,7 @@ import { Observable, Subscription, BehaviorSubject, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { VedraxApiService } from '../../services/vedrax-api.service';
+import { DescriptorPage } from '../../descriptor/descriptor-page';
 
 /**
  * Class that implements the {@link DataSource}.
@@ -71,13 +72,14 @@ export class VedraxAutocompleteDataSource extends DataSource<any[]>{
                 .set('q', this.searchStr.trim().toLowerCase())
                 .set('page', String(this.lastPage));
 
+
             this.subscription.add(
-                this.apiService.get<any[]>(this.endpoint, params)
+                this.apiService.get<DescriptorPage>(this.endpoint, params)
                     .pipe(
-                        catchError(() => of([]))
+                        catchError(() => of(new DescriptorPage()))
                     )
-                    .subscribe(list => {
-                        this.cachedData = this.cachedData.concat(list);
+                    .subscribe(page => {
+                        this.cachedData = this.cachedData.concat(page.content);
                         this.dataSubject.next(this.cachedData);
                     }));
 
