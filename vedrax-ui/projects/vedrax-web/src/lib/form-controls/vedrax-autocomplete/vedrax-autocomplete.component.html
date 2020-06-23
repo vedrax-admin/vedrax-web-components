@@ -1,27 +1,34 @@
-<div class="dopdown" *ngIf="descriptor">
-    <button class="vedrax-select-trigger" (click)="open(dropdown, origin)" #origin>
-        <ng-template [ngIf]="!isOpen" [ngIfElse]="searchTpl">
-            {{selected.value}}
-        </ng-template>
-        <ng-template #searchTpl>
-            <input class="vedrax-autocomplete-search" placeholder="Recherche..." [formControl]="searchControl" autofocus (click)="$event.stopPropagation()">
-        </ng-template>
-    </button>
+<div *ngIf="descriptor">
+    <div *ngIf="search; else selectedItem">
 
-    <ng-template #dropdown>
-        <div class="vedrax-autocomplete-menu">
-            <cdk-virtual-scroll-viewport itemSize="30" [style.height.px]="visibleOptions * 30" class="vedrax-menu-inner">
-                <div *cdkVirtualFor="let option of datasource">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <button mat-button matPrefix mat-icon-button aria-label="Back" (click)="search = false">
+                <mat-icon>search</mat-icon>
+            </button>
+            <input [formControl]="searchControl" matInput>
+            <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="query()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
 
-                    <div *ngIf="option" class="vedrax-select-item" [class.active]="isActive(option)" (click)="select(option)">
-                        {{option.value}}
-                    </div>
-                    <div *ngIf="!option" class="no-results-item">
-                        Loading ...
-                    </div>
-
-                </div>
+        <mat-selection-list multiple=false>
+            <cdk-virtual-scroll-viewport itemSize="30" [style.height.px]="visibleOptions * 30">
+                <mat-list-option *cdkVirtualFor="let option of datasource" (click)="select(option)">
+                    <p matLine *ngIf="option">{{option.value}}</p>
+                    <p matLine *ngIf="!option">Loading...</p>
+                </mat-list-option>
             </cdk-virtual-scroll-viewport>
-        </div>
+        </mat-selection-list>
+
+    </div>
+    <ng-template #selectedItem>
+        <mat-form-field>
+            <mat-label>{{descriptor.controlLabel}}</mat-label>
+            <input readonly matInput type="text" [ngModel]="selected.value">
+            <button mat-button matSuffix mat-icon-button aria-label="Edit" (click)="performSearch()">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </mat-form-field>
     </ng-template>
 </div>

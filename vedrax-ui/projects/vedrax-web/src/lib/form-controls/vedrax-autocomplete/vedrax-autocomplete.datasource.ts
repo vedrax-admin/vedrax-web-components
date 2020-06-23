@@ -12,8 +12,8 @@ import { DescriptorPage } from '../../descriptor/descriptor-page';
 export class VedraxAutocompleteDataSource extends DataSource<any[]>{
 
     private subscription: Subscription = new Subscription();
-    private cachedData: any[] = [];
     private dataSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+    private cachedData:any[] = [];
     private pageSize = 30;
     private lastPage = 0;
     private searchStr: string;
@@ -45,6 +45,10 @@ export class VedraxAutocompleteDataSource extends DataSource<any[]>{
     }
 
     private getPageForIndex(i: number): number {
+        console.log(`index ${i}`);
+
+        const pageNumber:number = Math.floor(i / this.pageSize);
+        console.log(`${pageNumber} = ${i} / ${this.pageSize}`);
         return Math.floor(i / this.pageSize);
     }
 
@@ -54,8 +58,9 @@ export class VedraxAutocompleteDataSource extends DataSource<any[]>{
         if (query !== this.searchStr) {
             //cached search query
             this.searchStr = query;
-            //reset cached data
+            //reset list
             this.cachedData = [];
+            this.dataSubject.next(this.cachedData);
             //reset page
             this.lastPage = 0;
             //call API
