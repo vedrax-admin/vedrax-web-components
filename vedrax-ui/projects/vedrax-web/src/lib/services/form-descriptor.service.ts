@@ -124,12 +124,6 @@ export class FormDescriptorService {
 
             let childCtrl = this.getFormControl(ctrl.controlChildren, child);
 
-            if (ctrl.controlType === ControlType.search) {
-
-                childCtrl = this.getFormControl(ctrl.controlSearch.search.controls, child);
-
-            }
-
             Validate.isNotNull(childCtrl, `control child with key [${child}] does not exist.`);
 
             childCtrl.controlOptions = options;

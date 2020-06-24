@@ -1,5 +1,4 @@
 export * from './vedrax-autocomplete/vedrax-autocomplete.component';
-export * from './vedrax-autocomplete/vedrax-autocomplete.datasource';
 export * from './vedrax-checkbox/vedrax-checkbox.component';
 export * from './vedrax-chips/vedrax-chips.component';
 export * from './vedrax-control/vedrax-control.component';
@@ -16,7 +15,5 @@ export * from './vedrax-nvp/vedrax-nvp.component';
 export * from './vedrax-radio/vedrax-radio.component';
 export * from './vedrax-search-list/vedrax-search-list.component';
 export * from './vedrax-search-list/vedrax-search-list.datasource';
-export * from './vedrax-search-table/vedrax-search-table.component';
-export * from './vedrax-search/vedrax-search.component';
 export * from './vedrax-select/vedrax-select.component';
 export * from './vedrax-validation/vedrax-validation.component';

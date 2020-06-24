@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorPage } from '../../descriptor/descriptor-page';
+import { NVP } from '../../shared/nvp';
 
 /**
  * Class that implements the {@link DataSource}.
@@ -19,7 +20,8 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
     private searchStr: string;
 
     constructor(private apiService: VedraxApiService,
-        private endpoint: string) {
+        private endpoint: string,
+        private params: NVP[]) {
         super();
     }
 
@@ -69,13 +71,19 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
 
         if (this.searchStr) {
 
-            const params: HttpParams = new HttpParams()
+            const queryParams = this.params || [];
+
+            let parameters: HttpParams = new HttpParams()
                 .set('q', this.searchStr.trim().toLowerCase())
                 .set('page', String(this.lastPage));
 
+            queryParams.forEach(param => {
+                parameters = parameters.set(String(param.key), String(param.value));
+            });
+
 
             this.subscription.add(
-                this.apiService.get<DescriptorPage>(this.endpoint, params)
+                this.apiService.get<DescriptorPage>(this.endpoint, parameters)
                     .pipe(
                         catchError(() => of(new DescriptorPage()))
                     )

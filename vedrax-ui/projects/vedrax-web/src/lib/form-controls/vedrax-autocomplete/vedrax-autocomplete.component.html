@@ -1,7 +1,7 @@
 <div *ngIf="descriptor">
     <div *ngIf="search; else selectedItem">
 
-        <metrolab-vedrax-search-list [endpoint]="descriptor.controlSearchUrl" (onClosed)="closeSearch()" (onSelect)="select($event)"></metrolab-vedrax-search-list>
+        <metrolab-vedrax-search-list [endpoint]="endpoint" [params]="params" (onClosed)="closeSearch()" (onSelect)="select($event)"></metrolab-vedrax-search-list>
 
     </div>
     <ng-template #selectedItem>
@@ -11,6 +11,9 @@
             <button mat-button matSuffix mat-icon-button aria-label="Edit" (click)="openSearch()">
                 <mat-icon>edit</mat-icon>
             </button>
+            <mat-error>
+                <vedrax-validation [control]="formControl" [validations]="descriptor.controlValidations"></vedrax-validation>
+            </mat-error>
         </mat-form-field>
     </ng-template>
 </div>

@@ -3,6 +3,7 @@ import { DescriptorValidation } from './descriptor-validation';
 import { DescriptorOption } from './descriptor-option';
 import { DescriptorTable } from './descriptor-table';
 import { ControlType } from '../enum/control-types';
+import { DescriptorAutocomplete } from './descriptor-autocomplete';
 
 
 /**
@@ -57,18 +58,8 @@ export class DescriptorFormControl {
     controlChildren?: DescriptorFormControl[];
 
     /**
-     * The 'SEARCH' control uses this optional object for 
-     * generating the searching table accordingly
+     * The search utility
      */
-    controlSearch?: DescriptorTable;
+    search?:DescriptorAutocomplete;
 
-    /**
-     * The search URL
-     */
-    controlSearchUrl?: string;
-
-    /**
-     * The display key for autocomplete
-     */
-    controlDisplayKey?: string;
 }

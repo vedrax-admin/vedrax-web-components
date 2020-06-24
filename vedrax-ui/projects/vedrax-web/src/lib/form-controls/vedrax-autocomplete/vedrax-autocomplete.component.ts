@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { NVP } from '../../shared';
+import { Validate } from '../../util';
 
 @Component({
   selector: 'vedrax-autocomplete',
-  templateUrl: './vedrax-autocomplete.component.html',
-  styleUrls: ['./vedrax-autocomplete.component.scss']
+  templateUrl: './vedrax-autocomplete.component.html'
 })
 export class VedraxAutocompleteComponent implements OnInit {
 
@@ -14,12 +14,18 @@ export class VedraxAutocompleteComponent implements OnInit {
   @Input() descriptor: DescriptorFormControl;
   selected: NVP;
   search: boolean = false;
+  endpoint: string;
+  params: NVP[] = [];
 
 
   constructor() {
   }
 
   ngOnInit(): void {
+    Validate.isNotNull(this.descriptor.search, "search must be provided in descriptor");
+
+    this.endpoint = this.descriptor.search.endpoint;
+    this.params = this.descriptor.search.defaultParams;
     this.selected = this.descriptor.controlValue || { key: -1, value: this.descriptor.controlLabel };
   }
 

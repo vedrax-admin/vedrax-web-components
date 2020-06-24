@@ -62,7 +62,7 @@ export class FormService {
       return this.createControlWithChips(descriptor);
     }
 
-    if(descriptor.controlType === ControlType.autocomplete){
+    if (descriptor.controlType === ControlType.autocomplete) {
       return this.createControlWithAutocomplete(descriptor);
     }
 

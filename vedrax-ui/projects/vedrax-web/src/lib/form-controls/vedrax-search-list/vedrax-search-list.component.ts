@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, filter, distinctUntilChanged } from 'rxjs/operators';
 import { VedraxSearchListDataSource } from './vedrax-search-list.datasource';
 import { VedraxApiService } from '../../services/vedrax-api.service';
+import { NVP } from '../../shared/nvp';
 
 @Component({
   selector: 'metrolab-vedrax-search-list',
@@ -11,7 +12,15 @@ import { VedraxApiService } from '../../services/vedrax-api.service';
 })
 export class VedraxSearchListComponent implements OnInit, OnDestroy {
 
+  /**
+   * API endpoint to call
+   */
   @Input() endpoint: string;
+
+  /**
+   * Apply by default query parameters to the endpoint
+   */
+  @Input() params: NVP[];
 
   @Output() onClosed = new EventEmitter();
   @Output() onSelect = new EventEmitter();
@@ -27,7 +36,7 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
   constructor(private apiService: VedraxApiService) { }
 
   ngOnInit(): void {
-    this.datasource = new VedraxSearchListDataSource(this.apiService, this.endpoint)
+    this.datasource = new VedraxSearchListDataSource(this.apiService, this.endpoint, this.params);
 
     this.subscription.add(this.searchControl.valueChanges
       .pipe(

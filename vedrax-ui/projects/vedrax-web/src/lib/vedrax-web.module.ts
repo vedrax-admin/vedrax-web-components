@@ -19,7 +19,6 @@ import { VedraxInputComponent } from './form-controls/vedrax-input/vedrax-input.
 import { VedraxMatrixComponent } from './form-controls/vedrax-matrix/vedrax-matrix.component';
 import { VedraxNvpComponent } from './form-controls/vedrax-nvp/vedrax-nvp.component';
 import { VedraxRadioComponent } from './form-controls/vedrax-radio/vedrax-radio.component';
-import { VedraxSearchComponent } from './form-controls/vedrax-search/vedrax-search.component';
 import { VedraxSelectComponent } from './form-controls/vedrax-select/vedrax-select.component';
 import { VedraxValidationComponent } from './form-controls/vedrax-validation/vedrax-validation.component';
 import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
@@ -33,7 +32,6 @@ import { VedraxCrudComponent } from './vedrax-crud/vedrax-crud.component';
 import { VedraxMultipleComponent } from './form-controls/vedrax-multiple/vedrax-multiple.component';
 import { VedraxChipsComponent } from './form-controls/vedrax-chips/vedrax-chips.component';
 import { DebounceClickDirective } from './util/debounce-click.directive';
-import { VedraxSearchTableComponent } from './form-controls/vedrax-search-table/vedrax-search-table.component';
 import { VedraxAutocompleteComponent } from './form-controls/vedrax-autocomplete/vedrax-autocomplete.component';
 import { VedraxSearchListComponent } from './form-controls/vedrax-search-list/vedrax-search-list.component';
 
@@ -61,7 +59,6 @@ import { VedraxSearchListComponent } from './form-controls/vedrax-search-list/ve
     VedraxMatrixComponent,
     VedraxNvpComponent,
     VedraxRadioComponent,
-    VedraxSearchComponent,
     VedraxSelectComponent,
     VedraxValidationComponent,
     VedraxModalComponent,
@@ -72,7 +69,6 @@ import { VedraxSearchListComponent } from './form-controls/vedrax-search-list/ve
     VedraxMultipleComponent,
     VedraxChipsComponent,
     DebounceClickDirective,
-    VedraxSearchTableComponent,
     VedraxAutocompleteComponent,
     VedraxSearchListComponent
   ],
@@ -91,7 +87,6 @@ import { VedraxSearchListComponent } from './form-controls/vedrax-search-list/ve
     VedraxMatrixComponent,
     VedraxNvpComponent,
     VedraxRadioComponent,
-    VedraxSearchComponent,
     VedraxSelectComponent,
     VedraxValidationComponent,
     VedraxModalComponent,
@@ -99,14 +94,13 @@ import { VedraxSearchListComponent } from './form-controls/vedrax-search-list/ve
     VedraxLoaderComponent,
     VedraxFormComponent,
     VedraxCrudComponent,
-    VedraxSearchTableComponent,
-    VedraxAutocompleteComponent
+    VedraxAutocompleteComponent,
+    VedraxSearchListComponent
   ],
   entryComponents: [
     VedraxTableComponent,
     VedraxFormModalComponent,
-    VedraxModalComponent,
-    VedraxSearchTableComponent
+    VedraxModalComponent
   ],
   providers: [
     errorInterceptorProvider,
