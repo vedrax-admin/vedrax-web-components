@@ -8,7 +8,6 @@ import { DescriptorForm } from '../descriptor/descriptor-form';
 import { DescriptorOption } from '../descriptor/descriptor-option';
 import { DescriptorFormControl } from '../descriptor/descriptor-form-control';
 import { DescriptorEndpoint } from '../descriptor/descriptor-endpoint';
-import { ControlType } from '../enum';
 
 /**
  * Service that provides methods for getting descriptor form.

@@ -14,7 +14,7 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
 
     private subscription: Subscription = new Subscription();
     private dataSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-    private cachedData: any[] = [];
+    private cachedData: any[];
     private pageSize = 30;
     private lastPage = 0;
     private searchStr: string;
@@ -58,7 +58,6 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
             this.searchStr = query;
             //reset list
             this.cachedData = [];
-            this.dataSubject.next(this.cachedData);
             //reset page
             this.lastPage = 0;
             //call API
@@ -88,7 +87,8 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
                         catchError(() => of(new DescriptorPage()))
                     )
                     .subscribe(page => {
-                        this.cachedData = this.cachedData.concat(page.content);
+                        const data = this.cachedData || [];
+                        this.cachedData = data.concat(page.content);
                         this.dataSubject.next(this.cachedData);
                     }));
 

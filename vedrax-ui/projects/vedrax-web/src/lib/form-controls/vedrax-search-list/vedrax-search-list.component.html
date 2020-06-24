@@ -8,8 +8,9 @@
 
 <mat-selection-list multiple=false>
     <cdk-virtual-scroll-viewport itemSize="30" [style.height.px]="visibleOptions * 30">
-        <mat-list-option *cdkVirtualFor="let option of datasource" (click)="select(option)">
-            {{option.value}}
-        </mat-list-option>
+        <ng-container *cdkVirtualFor="let option of datasource">
+            <mat-list-option *ngIf="option" (click)="select(option)">{{option.value}}</mat-list-option>
+            <mat-list-option *ngIf="!option">No data...</mat-list-option>
+        </ng-container>
     </cdk-virtual-scroll-viewport>
 </mat-selection-list>
