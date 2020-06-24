@@ -22,10 +22,12 @@ export class VedraxAutocompleteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    Validate.isNotNull(this.descriptor.search, "search must be provided in descriptor");
+    Validate.isNotNull(this.descriptor.controlSearch, "search must be provided in descriptor");
 
-    this.endpoint = this.descriptor.search.endpoint;
-    this.params = this.descriptor.search.defaultParams;
+    const controlSearchDescriptor = this.descriptor.controlSearch;
+
+    this.endpoint = controlSearchDescriptor.endpoint;
+    this.params = controlSearchDescriptor.defaultParams;
     this.selected = this.descriptor.controlValue || { key: -1, value: this.descriptor.controlLabel };
   }
 

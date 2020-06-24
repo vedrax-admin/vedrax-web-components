@@ -60,6 +60,6 @@ export class DescriptorFormControl {
     /**
      * The search utility
      */
-    search?:DescriptorAutocomplete;
+    controlSearch?: DescriptorAutocomplete;
 
 }
