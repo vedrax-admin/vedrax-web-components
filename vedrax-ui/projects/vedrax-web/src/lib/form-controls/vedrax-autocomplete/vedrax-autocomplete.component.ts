@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
-import { VedraxAutocompleteDataSource } from './vedrax-autocomplete.datasource';
-import { VedraxApiService } from '../../services/vedrax-api.service';
+import { NVP } from '../../shared';
 
 @Component({
   selector: 'vedrax-autocomplete',
@@ -13,52 +12,38 @@ export class VedraxAutocompleteComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() descriptor: DescriptorFormControl;
-  selected: any;
-  label: string;
+  selected: NVP;
   search: boolean = false;
 
-  @Output() closed = new EventEmitter();
 
-  datasource: VedraxAutocompleteDataSource;
-
-  searchControl = new FormControl();
-
-  visibleOptions = 4;
-
-  constructor(private apiService: VedraxApiService) {}
+  constructor() {
+  }
 
   ngOnInit(): void {
-
-    this.datasource = new VedraxAutocompleteDataSource(this.apiService, this.descriptor.controlSearchUrl)
-
     this.selected = this.descriptor.controlValue || { key: -1, value: this.descriptor.controlLabel };
-
   }
 
-  performSearch(): void {
+  openSearch(): void {
     this.search = true;
-    this.searchControl.setValue('');
   }
 
-  query(): void {
-    const text = this.searchControl.value;
-    if (text) {
-      this.datasource.search(text);
-    }
+  closeSearch(): void {
+    this.search = false;
   }
 
-  select(option): void {
-
+  select(option: NVP): void {
     if (option) {
       this.search = false;
       this.selected = option;
-      this.formControl.setValue(option['key']);
+      this.formControl.setValue(option.key);
     }
-
   }
 
   get formControl(): FormControl {
     return this.form.get(this.descriptor.controlName) as FormControl;
   }
+
+
+
 
 }

@@ -14,6 +14,8 @@ export * from './vedrax-input/vedrax-input.component';
 export * from './vedrax-matrix/vedrax-matrix.component';
 export * from './vedrax-nvp/vedrax-nvp.component';
 export * from './vedrax-radio/vedrax-radio.component';
+export * from './vedrax-search-list/vedrax-search-list.component';
+export * from './vedrax-search-list/vedrax-search-list.datasource';
 export * from './vedrax-search-table/vedrax-search-table.component';
 export * from './vedrax-search/vedrax-search.component';
 export * from './vedrax-select/vedrax-select.component';

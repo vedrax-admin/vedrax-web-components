@@ -1,32 +1,14 @@
 <div *ngIf="descriptor">
     <div *ngIf="search; else selectedItem">
 
-        <mat-form-field>
-            <mat-label>Search</mat-label>
-            <button mat-button matPrefix mat-icon-button aria-label="Back" (click)="search = false">
-                <mat-icon>search</mat-icon>
-            </button>
-            <input [formControl]="searchControl" matInput>
-            <button mat-button matSuffix mat-icon-button aria-label="Search" (click)="query()">
-                <mat-icon>search</mat-icon>
-            </button>
-        </mat-form-field>
-
-        <mat-selection-list multiple=false>
-            <cdk-virtual-scroll-viewport itemSize="30" [style.height.px]="visibleOptions * 30">
-                <mat-list-option *cdkVirtualFor="let option of datasource" (click)="select(option)">
-                    <p matLine *ngIf="option">{{option.value}}</p>
-                    <p matLine *ngIf="!option">Loading...</p>
-                </mat-list-option>
-            </cdk-virtual-scroll-viewport>
-        </mat-selection-list>
+        <metrolab-vedrax-search-list [endpoint]="descriptor.controlSearchUrl" (onClosed)="closeSearch()" (onSelect)="select($event)"></metrolab-vedrax-search-list>
 
     </div>
     <ng-template #selectedItem>
         <mat-form-field>
             <mat-label>{{descriptor.controlLabel}}</mat-label>
             <input readonly matInput type="text" [ngModel]="selected.value">
-            <button mat-button matSuffix mat-icon-button aria-label="Edit" (click)="performSearch()">
+            <button mat-button matSuffix mat-icon-button aria-label="Edit" (click)="openSearch()">
                 <mat-icon>edit</mat-icon>
             </button>
         </mat-form-field>
