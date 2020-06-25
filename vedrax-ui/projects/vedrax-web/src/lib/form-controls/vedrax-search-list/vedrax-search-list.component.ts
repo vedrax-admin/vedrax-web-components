@@ -8,7 +8,8 @@ import { NVP } from '../../shared/nvp';
 
 @Component({
   selector: 'metrolab-vedrax-search-list',
-  templateUrl: './vedrax-search-list.component.html'
+  templateUrl: './vedrax-search-list.component.html',
+  styleUrls:['./vedrax-search-list.component.scss']
 })
 export class VedraxSearchListComponent implements OnInit, OnDestroy {
 
@@ -16,6 +17,8 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
    * API endpoint to call
    */
   @Input() endpoint: string;
+
+  @Input() label: string;
 
   /**
    * Apply by default query parameters to the endpoint

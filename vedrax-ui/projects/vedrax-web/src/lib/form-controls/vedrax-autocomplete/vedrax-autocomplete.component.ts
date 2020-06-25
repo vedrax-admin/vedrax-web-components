@@ -28,7 +28,7 @@ export class VedraxAutocompleteComponent implements OnInit {
 
     this.endpoint = controlSearchDescriptor.endpoint;
     this.params = controlSearchDescriptor.defaultParams;
-    this.selected = this.descriptor.controlValue || { key: -1, value: this.descriptor.controlLabel };
+    this.selected = this.descriptor.controlValue || { key: -1, value: '' };
   }
 
   openSearch(): void {

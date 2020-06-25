@@ -4,8 +4,8 @@
             Recherche
         </mat-expansion-panel-header>
 
-        <vedrax-control *ngFor="let descriptor of search.controls" [control]="formSearch.get(descriptor.controlName)"
-            [descriptor]="descriptor"></vedrax-control>
+        <vedrax-form-control *ngFor="let descriptor of search.controls" [form]="formSearch" [descriptor]="descriptor">
+            </vedrax-form-control>
 
         <mat-action-row>
             <button type="submit" [disabled]="formSearch.invalid || submitted" mat-raised-button color="primary">Go</button>
