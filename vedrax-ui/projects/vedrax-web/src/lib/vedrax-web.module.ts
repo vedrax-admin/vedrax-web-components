@@ -34,6 +34,10 @@ import { VedraxChipsComponent } from './form-controls/vedrax-chips/vedrax-chips.
 import { DebounceClickDirective } from './util/debounce-click.directive';
 import { VedraxAutocompleteComponent } from './form-controls/vedrax-autocomplete/vedrax-autocomplete.component';
 import { VedraxSearchListComponent } from './form-controls/vedrax-search-list/vedrax-search-list.component';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
+import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { MomentUtcDateAdapter } from './services/moment-utc-date.adapter';
+
 
 @NgModule({
   imports: [
@@ -105,7 +109,10 @@ import { VedraxSearchListComponent } from './form-controls/vedrax-search-list/ve
   providers: [
     errorInterceptorProvider,
     jwtInterceptorProvider,
-    loaderInterceptorProvider
+    loaderInterceptorProvider,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    { provide: DateAdapter, useClass: MomentUtcDateAdapter }
   ]
 })
 export class VedraxWebModule { }
