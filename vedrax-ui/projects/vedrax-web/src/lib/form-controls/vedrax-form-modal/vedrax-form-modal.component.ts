@@ -39,7 +39,7 @@ export class VedraxFormModalComponent implements OnInit {
    */
   submit(dto: any) {
 
-    DateUtil.transformToISODate(dto);
+    //DateUtil.transformToISODate(dto);
 
     const formDescriptor: DescriptorForm = this.data;
 
