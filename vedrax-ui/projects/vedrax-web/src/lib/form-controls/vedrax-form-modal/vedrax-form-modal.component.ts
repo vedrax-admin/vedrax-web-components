@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { VedraxApiService } from '../../services/vedrax-api.service';
-import { DateUtil } from '../../util/date-util';
 import { VedraxFormComponent } from '../vedrax-form/vedrax-form.component';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
@@ -14,7 +13,7 @@ import { DescriptorForm } from '../../descriptor/descriptor-form';
   templateUrl: './vedrax-form-modal.component.html',
   styleUrls: ['./vedrax-form-modal.component.scss']
 })
-export class VedraxFormModalComponent implements OnInit {
+export class VedraxFormModalComponent implements OnInit, OnDestroy {
 
   /**
    * The form component
@@ -32,14 +31,16 @@ export class VedraxFormModalComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   /**
    * Emit an event with data when the form is valid
    * 
    * @param dto 
    */
   submit(dto: any) {
-
-    //DateUtil.transformToISODate(dto);
 
     const formDescriptor: DescriptorForm = this.data;
 
