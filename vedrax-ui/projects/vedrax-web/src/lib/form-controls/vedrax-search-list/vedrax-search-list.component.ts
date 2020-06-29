@@ -23,9 +23,9 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
   /**
    * Apply by default query parameters to the endpoint
    */
-  @Input() params: NVP[];
+  @Input() params: NVP[] = [];
 
-  @Input() filters?: NVP[];
+  @Input() filters: NVP[] = [];
 
   @Output() onClosed = new EventEmitter();
   @Output() onSelect = new EventEmitter();
@@ -44,17 +44,20 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.datasource = new VedraxSearchListDataSource(this.apiService, this.endpoint, this.params);
 
-    /*
+    //init filter value by default
+    if (this.filters.length > 0) {
+      this.filterControl.setValue(this.filters[0].key);
+    }
+
     this.subscription.add(this.searchControl.valueChanges
       .pipe(
         filter(Boolean),
         debounceTime(1000),
         distinctUntilChanged()
       ).subscribe((text: string) => {
-        this.datasource.search(text);
+        this.datasource.search(text, this.filterControl.value);
       }));
 
-      */
   }
 
   ngOnDestroy(): void {

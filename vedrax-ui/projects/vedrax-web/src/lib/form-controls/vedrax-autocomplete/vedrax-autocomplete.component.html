@@ -6,6 +6,9 @@
     </div>
     <ng-template #selectedItem>
         <mat-form-field>
+            <button mat-button matPrefix mat-icon-button aria-label="Cancel" (click)="cancel()">
+                <mat-icon>cancel</mat-icon>
+            </button>
             <mat-label>{{descriptor.controlLabel}}</mat-label>
             <input readonly matInput type="text" [ngModel]="selected.value">
             <button mat-button matSuffix mat-icon-button aria-label="Edit" (click)="openSearch()">

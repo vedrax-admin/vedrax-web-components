@@ -49,6 +49,10 @@ export class VedraxAutocompleteComponent implements OnInit {
     }
   }
 
+  cancel(): void {
+    this.formControl.reset();
+  }
+
   get formControl(): FormControl {
     return this.form.get(this.descriptor.controlName) as FormControl;
   }
