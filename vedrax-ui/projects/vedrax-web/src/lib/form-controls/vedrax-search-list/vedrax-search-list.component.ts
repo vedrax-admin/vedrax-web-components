@@ -38,6 +38,7 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
   datasource: VedraxSearchListDataSource;
 
   visibleOptions = 4;
+  withFilter:boolean = false;
 
   constructor(private apiService: VedraxApiService) { }
 
@@ -45,8 +46,9 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
     this.datasource = new VedraxSearchListDataSource(this.apiService, this.endpoint, this.params);
 
     //init filter value by default
-    if (this.filters.length > 0) {
+    if (this.filters && this.filters.length > 0) {
       this.filterControl.setValue(this.filters[0].key);
+      this.withFilter = true;
     }
 
     this.subscription.add(this.searchControl.valueChanges

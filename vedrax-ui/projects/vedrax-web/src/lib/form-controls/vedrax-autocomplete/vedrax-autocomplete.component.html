@@ -6,8 +6,8 @@
     </div>
     <ng-template #selectedItem>
         <mat-form-field>
-            <button mat-button matPrefix mat-icon-button aria-label="Cancel" (click)="cancel()">
-                <mat-icon>cancel</mat-icon>
+            <button *ngIf="selected.key" mat-button matPrefix mat-icon-button aria-label="clear" (click)="clearSearch()">
+                <mat-icon>clear</mat-icon>
             </button>
             <mat-label>{{descriptor.controlLabel}}</mat-label>
             <input readonly matInput type="text" [ngModel]="selected.value">

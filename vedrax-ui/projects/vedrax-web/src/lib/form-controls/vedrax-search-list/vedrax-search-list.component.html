@@ -1,6 +1,6 @@
 <mat-card class="m-b-15">
     <mat-card-content>
-        <mat-form-field *ngIf="filters.length">
+        <mat-form-field *ngIf="withFilter">
             <mat-label>Filtrer par</mat-label>
             <mat-select [formControl]="filterControl">
                 <mat-option *ngFor="let filter of filters" [value]="filter.key">
