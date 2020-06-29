@@ -1,0 +1,18 @@
+<div class="m-b-15">
+    <mat-form-field>
+        <mat-label>{{label}}</mat-label>
+        <button mat-button matPrefix mat-icon-button aria-label="Back" (click)="close()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <input [formControl]="searchControl" matInput>
+    </mat-form-field>
+
+    <div class="vedrax-viewer-list">
+        <mat-selection-list multiple=false>
+            <cdk-virtual-scroll-viewport itemSize="30" [style.height.px]="visibleOptions * 30">
+                <mat-list-option *cdkVirtualFor="let option of datasource" (click)="select(option)">{{option.value}}
+                </mat-list-option>
+            </cdk-virtual-scroll-viewport>
+        </mat-selection-list>
+    </div>
+</div>

@@ -9,7 +9,7 @@ import { NVP } from '../../shared/nvp';
 @Component({
   selector: 'metrolab-vedrax-search-list',
   templateUrl: './vedrax-search-list.component.html',
-  styleUrls:['./vedrax-search-list.component.scss']
+  styleUrls: ['./vedrax-search-list.component.scss']
 })
 export class VedraxSearchListComponent implements OnInit, OnDestroy {
 
@@ -25,12 +25,15 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
    */
   @Input() params: NVP[];
 
+  @Input() filters?: NVP[];
+
   @Output() onClosed = new EventEmitter();
   @Output() onSelect = new EventEmitter();
 
   private subscription: Subscription = new Subscription();
 
   searchControl = new FormControl();
+  filterControl = new FormControl();
 
   datasource: VedraxSearchListDataSource;
 
@@ -41,6 +44,7 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.datasource = new VedraxSearchListDataSource(this.apiService, this.endpoint, this.params);
 
+    /*
     this.subscription.add(this.searchControl.valueChanges
       .pipe(
         filter(Boolean),
@@ -49,10 +53,16 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
       ).subscribe((text: string) => {
         this.datasource.search(text);
       }));
+
+      */
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  search() {
+    this.datasource.search(this.searchControl.value, this.filterControl.value);
   }
 
   select(option): void {

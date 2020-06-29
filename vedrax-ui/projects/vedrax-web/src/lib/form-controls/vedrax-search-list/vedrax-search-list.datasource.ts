@@ -18,6 +18,7 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
     private pageSize = 30;
     private lastPage = 0;
     private searchStr: string;
+    private filter: string;
 
     constructor(private apiService: VedraxApiService,
         private endpoint: string,
@@ -50,12 +51,13 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
         return Math.floor(i / this.pageSize);
     }
 
-    search(query: string) {
+    search(query: string, filter?: string) {
 
         //search query is different
         if (query !== this.searchStr) {
             //cached search query
             this.searchStr = query;
+            this.filter = filter;
             //reset list
             this.cachedData = [];
             //reset page
@@ -79,6 +81,10 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
             queryParams.forEach(param => {
                 parameters = parameters.set(String(param.key), String(param.value));
             });
+
+            if (this.filter) {
+                parameters = parameters.set("filter", this.filter);
+            }
 
 
             this.subscription.add(

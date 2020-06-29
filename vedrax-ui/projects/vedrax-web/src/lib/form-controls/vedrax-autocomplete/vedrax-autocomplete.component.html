@@ -1,7 +1,7 @@
 <div *ngIf="descriptor">
     <div *ngIf="search; else selectedItem">
 
-        <metrolab-vedrax-search-list [label]="descriptor.controlLabel" [endpoint]="endpoint" [params]="params" (onClosed)="closeSearch()" (onSelect)="select($event)"></metrolab-vedrax-search-list>
+        <metrolab-vedrax-search-list [label]="descriptor.controlLabel" [endpoint]="endpoint" [params]="params" [filters]="filters" (onClosed)="closeSearch()" (onSelect)="select($event)"></metrolab-vedrax-search-list>
 
     </div>
     <ng-template #selectedItem>

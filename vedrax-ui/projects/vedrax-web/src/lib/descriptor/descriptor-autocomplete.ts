@@ -16,4 +16,9 @@ export class DescriptorAutocomplete {
      * Default params
      */
     defaultParams?: NVP[] = [];
+
+    /**
+     * List of filters
+     */
+    filters?: NVP[] = [];
 }

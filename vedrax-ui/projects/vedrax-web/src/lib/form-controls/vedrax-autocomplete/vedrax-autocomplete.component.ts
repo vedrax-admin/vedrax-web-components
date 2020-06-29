@@ -16,6 +16,7 @@ export class VedraxAutocompleteComponent implements OnInit {
   search: boolean = false;
   endpoint: string;
   params: NVP[] = [];
+  filters: NVP[];
 
 
   constructor() {
@@ -28,6 +29,7 @@ export class VedraxAutocompleteComponent implements OnInit {
 
     this.endpoint = controlSearchDescriptor.endpoint;
     this.params = controlSearchDescriptor.defaultParams;
+    this.filters = controlSearchDescriptor.filters;
     this.selected = this.descriptor.controlValue || { key: -1, value: '' };
   }
 
