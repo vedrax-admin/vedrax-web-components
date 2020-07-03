@@ -16,4 +16,5 @@ export * from './vedrax-radio/vedrax-radio.component';
 export * from './vedrax-search-list/vedrax-search-list.component';
 export * from './vedrax-search-list/vedrax-search-list.datasource';
 export * from './vedrax-select/vedrax-select.component';
+export * from './vedrax-title/vedrax-title.component';
 export * from './vedrax-validation/vedrax-validation.component';

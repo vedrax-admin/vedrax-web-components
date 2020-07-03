@@ -37,6 +37,7 @@ import { VedraxSearchListComponent } from './form-controls/vedrax-search-list/ve
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { MomentUtcDateAdapter } from './services/moment-utc-date.adapter';
+import { VedraxTitleComponent } from './form-controls/vedrax-title/vedrax-title.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { MomentUtcDateAdapter } from './services/moment-utc-date.adapter';
     VedraxChipsComponent,
     DebounceClickDirective,
     VedraxAutocompleteComponent,
-    VedraxSearchListComponent
+    VedraxSearchListComponent,
+    VedraxTitleComponent
   ],
   exports: [
     VedraxFilterComponent,
@@ -99,7 +101,8 @@ import { MomentUtcDateAdapter } from './services/moment-utc-date.adapter';
     VedraxFormComponent,
     VedraxCrudComponent,
     VedraxAutocompleteComponent,
-    VedraxSearchListComponent
+    VedraxSearchListComponent,
+    VedraxTitleComponent
   ],
   entryComponents: [
     VedraxTableComponent,

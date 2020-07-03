@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { FormService } from '../../services/form.service';
-import { DescriptorOption } from '../../descriptor';
 
 @Component({
   selector: 'vedrax-form',

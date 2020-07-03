@@ -52,6 +52,11 @@ export class DescriptorFormControl {
     controlOptions?: DescriptorOption[];
 
     /**
+     * The list of the children attributes for constituting the title of an element
+     */
+    controlKeysAsTitle?: string[];
+
+    /**
      * The 'ARRAY_CONTROLS' uses this list of inner controls 
      * for creating a dynamic form component.
      */
