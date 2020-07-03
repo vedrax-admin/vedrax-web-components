@@ -1,0 +1,29 @@
+<div *ngIf="descriptor" class="vedrax-dynamic-m-b-15" [formGroup]="form">
+
+    <div fxLayout="column" [formArrayName]="descriptor.controlName">
+
+        <mat-card class="vedrax-card-dynamic" *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
+
+            <mat-card-content>
+
+                <vedrax-control *ngFor="let ctrl of descriptor.controlChildren" [descriptor]="ctrl"
+                    [control]="control.get(ctrl.controlName)"></vedrax-control>
+
+            </mat-card-content>
+            <mat-card-actions>
+
+                <button class="remove-param" mat-icon-button aria-label="remove" (click)="remove(i)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+
+            </mat-card-actions>
+
+        </mat-card>
+
+        <button color="primary" class="add-param" mat-stroked-button aria-label="add" (click)="add()">
+            {{descriptor.controlLabel}}
+        </button>
+
+    </div>
+
+</div>
