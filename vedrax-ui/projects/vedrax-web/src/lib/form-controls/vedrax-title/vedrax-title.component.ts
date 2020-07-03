@@ -11,7 +11,7 @@ export class VedraxTitleComponent implements OnInit {
   @Input() descriptor: DescriptorFormControl;
   @Input() index: number = 0;
 
-  title: string;
+  title: string = '';
 
   constructor() { }
 
@@ -30,6 +30,12 @@ export class VedraxTitleComponent implements OnInit {
         this.title = `${this.title} ${this.getValue(key)}`;
       }
     });
+
+    this.title = this.whenEmptyTitle(this.title);
+  }
+
+  private whenEmptyTitle(value: string) {
+    return value ? value : '...';
   }
 
   private getControlFromKey(key: string): DescriptorFormControl {
