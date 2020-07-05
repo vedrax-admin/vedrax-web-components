@@ -2,7 +2,7 @@
 
     <div fxLayout="column" [formArrayName]="descriptor.controlName">
 
-        <mat-accordion>
+        <mat-accordion class="vedrax-card-dynamic">
 
             <mat-expansion-panel *ngFor="let control of formArray.controls; let i = index;" [formGroupName]="i">
                 <mat-expansion-panel-header>
