@@ -26,9 +26,12 @@ export class VedraxTitleComponent implements OnInit {
 
     keys.forEach(key => {
       const ctrl = this.getControlFromKey(key);
-      if (ctrl.controlType === ControlType.select) {
+
+      if (ctrl && ctrl.controlType === ControlType.select) {
         this.addToElements(elements, this.getOption(ctrl, this.getValue(key)));
-      } else {
+      }
+
+      if (ctrl && ctrl.controlType === ControlType.input) {
         this.addToElements(elements, this.getValue(key));
       }
     });
@@ -36,15 +39,15 @@ export class VedraxTitleComponent implements OnInit {
     this.title = elements.length ? elements.join(' ') : '...';
   }
 
+  private getControlFromKey(key: string): DescriptorFormControl {
+    const children = this.descriptor.controlChildren || [];
+    return children.find(child => child.controlName === key);
+  }
+
   private addToElements(elements: any[], value: string): void {
     if (value) {
       elements.push(value);
     }
-  }
-
-  private getControlFromKey(key: string): DescriptorFormControl {
-    const children = this.descriptor.controlChildren || [];
-    return children.find(child => child.controlName === key);
   }
 
   private getOption(ctrl: DescriptorFormControl, key: string | number): string {
@@ -55,7 +58,8 @@ export class VedraxTitleComponent implements OnInit {
 
   private getValue(key: string): string {
     const values = this.descriptor.controlValue || [];
-    return values.length ? values[this.index][key] : undefined;
+    const item = values[this.index] || [];
+    return item[key];
   }
 
 }
