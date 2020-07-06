@@ -22,20 +22,24 @@ export class VedraxTitleComponent implements OnInit {
   private constructTitle(): void {
     const keys = this.descriptor.controlKeysAsTitle || [];
 
+    let elements: any[] = [];
+
     keys.forEach(key => {
       const ctrl = this.getControlFromKey(key);
       if (ctrl.controlType === ControlType.select) {
-        this.title = `${this.title} ${this.getOption(ctrl, this.getValue(key))}`;
+        this.addToElements(elements, this.getOption(ctrl, this.getValue(key)));
       } else {
-        this.title = `${this.title} ${this.getValue(key)}`;
+        this.addToElements(elements, this.getValue(key));
       }
     });
 
-    this.title = this.whenEmptyTitle(this.title);
+    this.title = elements.length ? elements.join(' ') : '...';
   }
 
-  private whenEmptyTitle(value: string) {
-    return value ? value : '...';
+  private addToElements(elements: any[], value: string): void {
+    if (value) {
+      elements.push(value);
+    }
   }
 
   private getControlFromKey(key: string): DescriptorFormControl {
@@ -46,12 +50,12 @@ export class VedraxTitleComponent implements OnInit {
   private getOption(ctrl: DescriptorFormControl, key: string | number): string {
     const options = ctrl.controlOptions || [];
     const option = options.find(option => option.key === key);
-    return option ? option.value : '';
+    return option ? option.value : undefined;
   }
 
-  private getValue(key: string): any {
+  private getValue(key: string): string {
     const values = this.descriptor.controlValue || [];
-    return values.length ? values[this.index][key] : '';
+    return values.length ? values[this.index][key] : undefined;
   }
 
 }
