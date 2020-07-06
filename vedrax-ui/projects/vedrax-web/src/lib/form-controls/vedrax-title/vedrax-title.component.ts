@@ -51,7 +51,7 @@ export class VedraxTitleComponent implements OnInit {
 
   private getValue(key: string): any {
     const values = this.descriptor.controlValue || [];
-    return values[this.index][key];
+    return values.length ? values[this.index][key] : '';
   }
 
 }
