@@ -22,10 +22,10 @@
             </mat-selection-list>
         </div>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-footer class="vedrax-search-list-footer">
         <button mat-button mat-icon-button aria-label="Back" (click)="close()">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <mat-spinner *ngIf="datasource.isLoadingResult" diameter="20"></mat-spinner>
-    </mat-card-actions>
+        <mat-spinner *ngIf="datasource.isLoadingResults" diameter="20"></mat-spinner>
+    </mat-card-footer>
 </mat-card>

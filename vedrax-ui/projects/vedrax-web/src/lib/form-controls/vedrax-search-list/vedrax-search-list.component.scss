@@ -3,6 +3,16 @@
     border: 1px solid rgba(0,0,0,.2);
 }
 
-.vedrax-filter{
+.vedrax-filter {
     padding-right: 5px;
+}
+
+.vedrax-search-list-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    button {
+        margin-right: 5px;
+    }
 }

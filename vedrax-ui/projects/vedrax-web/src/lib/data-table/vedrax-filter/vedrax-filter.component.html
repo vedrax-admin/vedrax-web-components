@@ -8,7 +8,7 @@
             </vedrax-form-control>
 
         <mat-action-row>
-            <button (click)="reset()">EFFACER</button>
+            <button type="button" mat-raised-button (click)="reset()">EFFACER</button>
             <button type="submit" [disabled]="formSearch.invalid || submitted" mat-raised-button color="primary">SOUMETTRE</button>
         </mat-action-row>
     </mat-expansion-panel>
