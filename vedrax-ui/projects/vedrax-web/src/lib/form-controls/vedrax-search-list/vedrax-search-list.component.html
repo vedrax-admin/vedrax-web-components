@@ -26,5 +26,6 @@
         <button mat-button mat-icon-button aria-label="Back" (click)="close()">
             <mat-icon>arrow_back</mat-icon>
         </button>
+        <mat-spinner *ngIf="datasource.isLoadingResult" diameter="20"></mat-spinner>
     </mat-card-actions>
 </mat-card>

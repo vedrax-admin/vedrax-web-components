@@ -38,7 +38,7 @@ export class VedraxSearchListComponent implements OnInit, OnDestroy {
   datasource: VedraxSearchListDataSource;
 
   visibleOptions = 4;
-  withFilter:boolean = false;
+  withFilter: boolean = false;
 
   constructor(private apiService: VedraxApiService) { }
 

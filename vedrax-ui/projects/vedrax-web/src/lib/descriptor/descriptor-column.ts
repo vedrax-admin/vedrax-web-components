@@ -1,4 +1,5 @@
 import { DescriptorAction } from './descriptor-action';
+import { NVP } from '../shared/nvp';
 
 
 /**
@@ -35,4 +36,9 @@ export class DescriptorColumn {
      * Optional actions for the column
      */
     actions?: DescriptorAction[];
+
+    /**
+     * Map enum with values
+     */
+    mapping?: NVP[];
 }

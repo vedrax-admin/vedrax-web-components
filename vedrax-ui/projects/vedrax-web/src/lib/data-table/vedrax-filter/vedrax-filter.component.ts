@@ -61,11 +61,15 @@ export class VedraxFilterComponent implements OnInit, OnDestroy {
    * 
    * @param dto 
    */
-  submit(dto: any) {
+  submit(dto: any): void {
     if (this.formSearch.valid) {
       this.submitted = true;
       this.onSubmit.emit(dto);
     }
+  }
+
+  reset(): void {
+    this.formSearch.reset();
   }
 
 }

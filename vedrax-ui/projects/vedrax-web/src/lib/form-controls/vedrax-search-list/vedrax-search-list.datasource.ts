@@ -19,6 +19,7 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
     private lastPage = 0;
     private searchStr: string;
     private filter: string;
+    isLoadingResults: boolean = false;
 
     constructor(private apiService: VedraxApiService,
         private endpoint: string,
@@ -72,6 +73,8 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
 
         if (this.searchStr) {
 
+            this.isLoadingResults = true;
+
             const queryParams = this.params || [];
 
             let parameters: HttpParams = new HttpParams()
@@ -90,9 +93,13 @@ export class VedraxSearchListDataSource extends DataSource<any[]>{
             this.subscription.add(
                 this.apiService.get<DescriptorPage>(this.endpoint, parameters)
                     .pipe(
-                        catchError(() => of(new DescriptorPage()))
+                        catchError(() => {
+                            this.isLoadingResults = false;
+                            return of(new DescriptorPage());
+                        })
                     )
                     .subscribe(page => {
+                        this.isLoadingResults = false;
                         const data = this.cachedData || [];
                         this.cachedData = data.concat(page.content);
                         this.dataSubject.next(this.cachedData);

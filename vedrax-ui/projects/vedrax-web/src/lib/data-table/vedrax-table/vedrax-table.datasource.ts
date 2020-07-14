@@ -6,6 +6,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { VedraxApiService } from '../../services/vedrax-api.service';
 import { DescriptorPage } from '../../descriptor/descriptor-page';
 import { DescriptorTable } from '../../descriptor/descriptor-table';
+import { NVP } from '../../shared/nvp';
 
 /**
  * Class that implements the {@link DataSource}.
@@ -75,7 +76,7 @@ export class VedraxTableDataSource extends DataSource<any[]>{
      */
     addItem(item: any) {
         if (item && item.id) {
-            this.transformItem(item);
+            this.transformItemWithMapping(item);
             this.dataSubject.next([...this.data, item]);
         }
     }
@@ -85,8 +86,45 @@ export class VedraxTableDataSource extends DataSource<any[]>{
      * @param items 
      */
     addItems(items: any[] = []) {
-        this.transformItems(items);
+        this.transformItemsWithMapping(items);
         this.dataSubject.next(items);
+    }
+
+    /**
+     * Transform when boolean
+     * @param items 
+     */
+    private transformItemsWithMapping(items: any[] = []) {
+
+        this.descriptorTable.columns
+            .filter(column => column.mapping)
+            .forEach(column => {
+                items.map(item => {
+                    const key: string = String(item[column.id]);//in case of boolean
+                    item[column.id] = this.findValueMapping(column.mapping, key);
+                })
+            });
+
+    }
+
+    /**
+     * Transform when boolean
+     * @param items 
+     */
+    private transformItemWithMapping(item: any) {
+
+        this.descriptorTable.columns
+            .filter(column => column.mapping)
+            .forEach(column => {
+                const key: string = String(item[column.id]);//in case of boolean
+                item[column.id] = this.findValueMapping(column.mapping, key);
+            });
+
+    }
+
+    private findValueMapping(mapping: NVP[] = [], key: string): string {
+        const element: NVP = mapping.find(element => element.key === key);
+        return element ? String(element.value) : '';
     }
 
     /**
@@ -129,7 +167,7 @@ export class VedraxTableDataSource extends DataSource<any[]>{
     */
     updateItem(item: any = {}) {
         const idx = this.data.findIndex(x => x.id === item.id);
-        this.transformItem(item);
+        this.transformItemWithMapping(item);
         Object.assign(this.data[idx], item);
     }
 
