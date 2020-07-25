@@ -12,6 +12,7 @@ import { VedraxTableComponent } from '../data-table/vedrax-table/vedrax-table.co
 import { Validate } from '../util/validate';
 import { ActionType } from '../enum/action-types';
 import { FormDescriptorService } from '../services/form-descriptor.service';
+import { DownloadService } from '../services/download.service';
 
 class TableSelectionItem {
   action: DescriptorAction;
@@ -75,6 +76,7 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
 
   constructor(
     private formDescriptorService: FormDescriptorService,
+    private downloadService: DownloadService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -124,6 +126,19 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
       this.openFormDialogFromApi(endpoint, false);
       return;
     }
+
+    //download PDF with Content-Disposition attachment header
+    if (action.action === ActionType.download) {
+      this.downloadDocument(action.url, item['id']);
+    }
+  }
+
+  private downloadDocument(endpoint: string, id: string | number): void {
+    const path = `${endpoint}?id=${id}`;
+    this.subscription.add(
+      this.downloadService.download(path)
+        .subscribe()
+    );
   }
 
   private openFormDialogFromApi(endpoint: string, isForCreate: boolean): void {

@@ -1,6 +1,6 @@
 <mat-form-field *ngIf="descriptor">
     <input matInput [matDatepicker]="picker" [placeholder]="descriptor.controlLabel"
-        [formControl]="control">
+        [formControl]="control" [disabled]="hasProperty('disabled')">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     <mat-hint *ngIf="descriptor.controlHint">{{descriptor.controlHint}}</mat-hint>

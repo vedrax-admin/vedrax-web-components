@@ -1,5 +1,6 @@
 export * from './authentication.service';
 export * from './dialog-form.service';
+export * from './download.service';
 export * from './form-descriptor.service';
 export * from './form.service';
 export * from './loader.service';
