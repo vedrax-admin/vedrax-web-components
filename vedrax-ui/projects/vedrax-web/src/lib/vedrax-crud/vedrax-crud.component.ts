@@ -137,8 +137,19 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
     const path = `${endpoint}?id=${id}`;
     this.subscription.add(
       this.downloadService.download(path)
-        .subscribe()
+        .subscribe(data => this.downloadFile(data))
     );
+  }
+
+  private downloadFile(data: any) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = 'document';
+    // start download
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
 
   private openFormDialogFromApi(endpoint: string, isForCreate: boolean): void {
