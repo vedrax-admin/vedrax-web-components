@@ -4,6 +4,10 @@
         (onSubmit)="filter($event)" [submitted]="submitted">
     </vedrax-filter>
 
+    <div class="vedrax-table-export-button">
+        <button mat-raised-button color="primary" (click)="importToExcel()">Excel</button>
+    </div>
+
     <div class="vedrax-table-m-t-15 vedrax-table-box mat-elevation-z8">
         <table #table mat-table [dataSource]="datasource">
             <ng-container *ngFor="let col of descriptor.columns" [matColumnDef]="col.id">
