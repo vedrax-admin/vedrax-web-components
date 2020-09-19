@@ -1,4 +1,5 @@
 import { ActionType } from '../enum/action-types';
+import { DescriptorActivate} from './descriptor-activate';
 
 /**
  * A class that describes the available actions for a column
@@ -26,5 +27,10 @@ export class DescriptorAction {
      * <url>/<id>/<fragment>
      */
     fragment?: string;
+
+    /**
+     * Activate object
+     */
+    activate?: DescriptorActivate;
 
 }
