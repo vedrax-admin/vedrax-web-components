@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { DialogFormService } from '../../services';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { ApiMethod } from '../../enum/api-methods';
 import { DescriptorActivate } from '../../descriptor/descriptor-activate';
+import * as XLSX from 'xlsx';
 
 /**
  * Class that defines a table component with its search box
@@ -76,6 +77,11 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatPaginator) set matPaginator(matPaginator: MatPaginator) {
     this.paginator = matPaginator;
   }
+
+  /**
+   * The referenced table used for xlsx import
+   */
+  @ViewChild('table') table: ElementRef;
 
   /**
    * The datasource
@@ -233,6 +239,13 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
         }));
     }
+  }
+
+  public importToExcel(): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Data');
+    XLSX.writeFile(wb, 'table.xlsx');
   }
 
 }
