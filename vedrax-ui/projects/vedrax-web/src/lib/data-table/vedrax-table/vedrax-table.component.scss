@@ -9,8 +9,8 @@
 }
 
 .vedrax-table-export-button{
-    display: flex;
-    flex-direction: row;
+    display: inline-flex;
+    gap: 12px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
