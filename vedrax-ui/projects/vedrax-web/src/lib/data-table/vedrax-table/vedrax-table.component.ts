@@ -10,7 +10,7 @@ import { VedraxTableDataSource } from './vedrax-table.datasource';
 import { DescriptorTable } from '../../descriptor/descriptor-table';
 import { DescriptorAction } from '../../descriptor/descriptor-action';
 import { VedraxApiService } from '../../services/vedrax-api.service';
-import { DialogFormService } from '../../services';
+import { DialogFormService } from '../../services/dialog-form.service';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { ApiMethod } from '../../enum/api-methods';
 import { DescriptorActivate } from '../../descriptor/descriptor-activate';
@@ -242,10 +242,12 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   public importToExcel(): void {
+    
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Data');
     XLSX.writeFile(wb, 'table.xlsx');
+    
   }
 
 }
