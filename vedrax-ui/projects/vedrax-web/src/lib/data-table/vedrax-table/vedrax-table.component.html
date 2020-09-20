@@ -5,11 +5,16 @@
     </vedrax-filter>
 
     <div class="vedrax-table-export-button">
-        <button mat-raised-button color="primary" (click)="importToExcel()">Excel</button>
+        <button mat-raised-button color="primary" (click)="exporter.exportTable('xlsx')">
+            XLSX
+        </button>
+        <button mat-raised-button color="primary" (click)="exporter.exportTable('pdf')">
+            PDF
+        </button>
     </div>
 
     <div class="vedrax-table-m-t-15 vedrax-table-box mat-elevation-z8">
-        <table #table mat-table [dataSource]="datasource">
+        <table matTableExporter #exporter="matTableExporter" mat-table [dataSource]="datasource">
             <ng-container *ngFor="let col of descriptor.columns" [matColumnDef]="col.id">
                 <th mat-header-cell *matHeaderCellDef> {{col.label}} </th>
                 <td mat-cell *matCellDef="let element">

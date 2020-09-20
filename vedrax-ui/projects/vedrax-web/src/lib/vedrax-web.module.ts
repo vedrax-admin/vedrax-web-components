@@ -38,6 +38,7 @@ import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/materia
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { MomentUtcDateAdapter } from './services/moment-utc-date.adapter';
 import { VedraxTitleComponent } from './form-controls/vedrax-title/vedrax-title.component';
+import { MatTableExporterModule } from 'mat-table-exporter';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { VedraxTitleComponent } from './form-controls/vedrax-title/vedrax-title.
     FormsModule,
     ReactiveFormsModule,
     VedraxMaterialModule,
+    MatTableExporterModule,
     RouterModule
   ],
   declarations: [
