@@ -13,7 +13,7 @@
         </button>
     </div>
 
-    <div class="vedrax-table-m-t-15 vedrax-table-box mat-elevation-z8">
+    <div class="table-responsive vedrax-table-m-t-15 vedrax-table-box mat-elevation-z8">
         <table matTableExporter #exporter="matTableExporter" mat-table [dataSource]="datasource">
             <ng-container *ngFor="let col of descriptor.columns" [matColumnDef]="col.id">
                 <th mat-header-cell *matHeaderCellDef> {{col.label}} </th>
