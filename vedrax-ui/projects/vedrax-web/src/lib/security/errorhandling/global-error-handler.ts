@@ -11,19 +11,20 @@ import { SnackbarService } from '../../services/snackbar.service';
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
-  constructor(private injector: Injector, private router: Router) { }
+  constructor(private injector: Injector) { }
 
   handleError(error: Error | HttpErrorResponse) {
 
     const logger = this.injector.get(LoggingService);
-    const notifier = this.injector.get(SnackbarService)
+    const notifier = this.injector.get(SnackbarService);
+    const router = this.injector.get(Router);
 
     let message;
 
     if (error instanceof HttpErrorResponse) {
 
       if (error.status == 500) {
-        this.router.navigate(['/error']);
+        router.navigate(['/error']);
       }
       //server error
       message = error.error && error.error.message;
