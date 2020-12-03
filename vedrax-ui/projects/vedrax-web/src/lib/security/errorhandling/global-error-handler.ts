@@ -1,5 +1,6 @@
 import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { LoggingService } from '../../services/logging.service';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -10,7 +11,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector, private router: Router) { }
 
   handleError(error: Error | HttpErrorResponse) {
 
@@ -20,6 +21,10 @@ export class GlobalErrorHandler implements ErrorHandler {
     let message;
 
     if (error instanceof HttpErrorResponse) {
+
+      if (error.status == 500) {
+        this.router.navigateByUrl('/error', { replaceUrl: true })
+      }
       //server error
       message = error.error && error.error.message;
       logger.logError(message, error.error);
@@ -31,6 +36,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     }
 
     notifier.showError(message);
-    
+
   }
 }
