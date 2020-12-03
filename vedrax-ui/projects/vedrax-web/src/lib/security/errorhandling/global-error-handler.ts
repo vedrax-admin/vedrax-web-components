@@ -23,7 +23,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     if (error instanceof HttpErrorResponse) {
 
       if (error.status == 500) {
-        this.router.navigateByUrl('/error', { replaceUrl: true })
+        this.router.navigate(['/error']);
       }
       //server error
       message = error.error && error.error.message;
