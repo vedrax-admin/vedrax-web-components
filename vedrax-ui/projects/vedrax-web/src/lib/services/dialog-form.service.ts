@@ -31,4 +31,8 @@ export class DialogFormService {
             );
     }
 
+    close(){
+        this.dialog.closeAll();
+    }
+
 }
