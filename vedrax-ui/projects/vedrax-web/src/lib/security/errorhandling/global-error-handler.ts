@@ -23,15 +23,16 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     if (error instanceof HttpErrorResponse) {
 
+      //server error
+      message = `SERVER ERROR: ${error.error && error.error.message}`;
+      logger.logError(message, error.error);
+
       if (error.status == 500) {
         router.navigate(['/error']);
       }
-      //server error
-      message = error.error && error.error.message;
-      logger.logError(message, error.error);
     } else {
       //client error
-      message = error.message;
+      message = `CLIENT ERROR: ${error.message}`;
       const stackTrace = error.stack;
       logger.logError(message, stackTrace);
     }
