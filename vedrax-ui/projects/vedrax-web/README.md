@@ -9,7 +9,7 @@ Run `ng generate component component-name --project vedrax-common` to generate a
 
 ## Build
 
-Run `ng build vedrax-web --prod` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build vedrax-web --prod` to build the project. The build artifacts will be stored in the `dist/directory`.
 
 ## Publishing
 

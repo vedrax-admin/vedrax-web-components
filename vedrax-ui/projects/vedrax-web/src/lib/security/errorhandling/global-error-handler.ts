@@ -15,6 +15,10 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   handleError(error: Error | HttpErrorResponse) {
 
+    if(!this.injector){
+      console.log("no injector");
+    }
+
     const logger = this.injector.get(LoggingService);
     const notifier = this.injector.get(SnackbarService);
     const router = this.injector.get(Router);
