@@ -17,18 +17,12 @@ export class DescriptorErrorEvent {
      */
     message: string;
 
-    /**
-     * Complete stack trace
-     */
-    stack_trace: any;
-
     context: {
         httpRequest: {
-            method: string,
             url: string,
-            userAgent: string
+            userAgent?: string
         },
-        user: string
+        user?: string
     };
 
 
