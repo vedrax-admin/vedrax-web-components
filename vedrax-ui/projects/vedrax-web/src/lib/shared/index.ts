@@ -9,3 +9,4 @@ export * from './user-dto';
 export * from './user.model';
 export * from './api-status';
 export * from './configuration';
+export * from './di';

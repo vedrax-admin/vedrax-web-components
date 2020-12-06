@@ -41,7 +41,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { ConfigService } from './services/config.service';
 import { VedraxErrorHandler } from './security/error/vedrax-error-handler';
 import { Configuration } from './shared/configuration';
-import { VEDRAX_CONFIG_TOKEN } from './shared/di';
+import { VEDRAX_CONFIG } from './shared/di';
 
 
 @NgModule({
@@ -126,10 +126,9 @@ import { VEDRAX_CONFIG_TOKEN } from './shared/di';
 })
 export class VedraxWebModule {
   static forRoot(configuration: Configuration): ModuleWithProviders {
-    console.log(configuration);
     return {
       ngModule: VedraxWebModule,
-      providers: [{ provide: VEDRAX_CONFIG_TOKEN, useValue: configuration }]
+      providers: [{ provide: VEDRAX_CONFIG, useValue: configuration }]
     };
   }
 }
