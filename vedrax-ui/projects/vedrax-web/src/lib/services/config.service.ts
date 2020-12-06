@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Configuration } from '../shared/configuration';
-import { VEDRAX_CONFIG} from '../shared/di';
+import { VEDRAX_CONFIG } from '../shared/di';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +11,10 @@ export class ConfigService {
 
     getHostname(): string {
         return this.config.hostname;
+    }
+
+    getBaseUrl(): string {
+        return `https://${this.getHostname()}`;
     }
 
     getGCPProjectId(): string {
