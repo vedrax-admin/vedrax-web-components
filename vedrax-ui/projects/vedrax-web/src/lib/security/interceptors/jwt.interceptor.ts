@@ -20,8 +20,9 @@ export class JwtInterceptor implements HttpInterceptor {
      */
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+        const url = new URL(request.url);
         //add authorization header only for the given hostname
-        if (location.hostname === this.config.getHostname()) {
+        if (url.hostname === this.config.getHostname()) {
 
             let currentUser = this.authenticationService.currentUserValue;
             if (currentUser && currentUser.token) {
