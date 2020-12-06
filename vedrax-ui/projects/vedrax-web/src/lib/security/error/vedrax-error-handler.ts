@@ -43,8 +43,7 @@ export class VedraxErrorHandler implements ErrorHandler {
       //client error
       message = errorService.getClientMessage(error);
       stack = errorService.getClientStack(error);
-      errorService.reportToStackdriver(error, url)
-        .subscribe();
+      errorService.reportToStackdriver(error, url);
       this.redirectToErrorPage();
     }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators'
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import * as StackTrace from 'stacktrace-js';
 import { Validate } from '../util/validate';
 import { ConfigService } from './config.service';
@@ -33,45 +33,35 @@ export class ErrorService {
         return error.error;
     }
 
-    reportToStackdriver(error: Error, path: string, user: string = 'User'): Observable<any> {
+    reportToStackdriver(error: Error, path: string, user: string = 'User') {
         Validate.isNotNull(error, 'error must be provided');
         Validate.isNotNull(path, 'path must be provided');
 
-        const stacktrace = this.stacktraceToString(error);
-        const reportedErrorEvent = this.errorToReportedErrorEvent(stacktrace, path, user);
-
-        return this.httpClient
-            .post(this.config.getGCPErrorReportingApiEndpoint(), JSON.stringify(reportedErrorEvent), { headers: new HttpHeaders().set('Content-Type', 'application/json') })
-            .pipe(
-                catchError(error => of({}))
-            );
-
+        this.resolveError(error).then(stack => {
+            const reportedErrorEvent = this.errorToReportedErrorEvent(stack, path, user);
+            this.sendError(reportedErrorEvent);
+        });
     }
 
-    private stacktraceToString(error: Error): string {
+    private resolveError(error: Error) {
 
-        let lines = [error.toString()];
+        return StackTrace.fromError(error).then(stack => {
 
-        StackTrace.fromError(error).then(stackframes => {
+            let lines = [error.toString()];
 
-            stackframes.forEach(stack => {
-
-                console.log(stack);
-
+            stack.forEach(s => {
                 lines.push([
                     '    at ',
-                    // If a function name is not available '<anonymous>' will be used.
-                    stack.getFunctionName() || '<anonymous>', ' (',
-                    stack.getFileName(), ':',
-                    stack.getLineNumber(), ':',
-                    stack.getColumnNumber(), ')',
+                    s.getFunctionName() || '<anonymous>', ' (',
+                    s.getFileName(), ':',
+                    s.getLineNumber(), ':',
+                    s.getColumnNumber(), ')',
                 ].join(''));
+            })
 
-            });
-
+            return lines.join('\n');
         });
 
-        return lines.join('\n');
     }
 
     private errorToReportedErrorEvent(stacktrace: string, url: string, user: string) {
@@ -89,6 +79,15 @@ export class ErrorService {
                 user: user
             }
         };
+    }
+
+    private sendError(reportedErrorEvent) {
+        this.httpClient
+            .post(this.config.getGCPErrorReportingApiEndpoint(), JSON.stringify(reportedErrorEvent),
+                { headers: new HttpHeaders().set('Content-Type', 'application/json') })
+            .pipe(
+                catchError(error => of({}))
+            ).subscribe();
     }
 
 

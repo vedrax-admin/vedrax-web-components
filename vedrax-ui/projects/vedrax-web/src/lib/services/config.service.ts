@@ -29,4 +29,8 @@ export class ConfigService {
         return `https://clouderrorreporting.googleapis.com/v1beta1/projects/${this.getGCPProjectId()}/events:report?key=${this.getGCPErrorReportingApiKey()}`;
     }
 
+    isRegisterApi(url: string): boolean {
+        return this.getGCPErrorReportingApiEndpoint() !== url;
+    }
+
 }

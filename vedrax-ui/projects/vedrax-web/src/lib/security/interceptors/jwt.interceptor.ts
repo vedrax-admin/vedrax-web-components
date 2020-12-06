@@ -5,6 +5,13 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 
+// case insensitive check against config and value
+const startsWithAny = (arr: string[] = []) => (value = '') => {
+    return arr.some(test => value.toLowerCase().startsWith(test.toLowerCase()));
+};
+
+// http, https, protocol relative
+const isAbsoluteURL = startsWithAny(['https', 'http', '//']);
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -21,7 +28,7 @@ export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         //add authorization header only for the given hostname
-        if (request.url.startsWith(this.config.getBaseUrl())) {
+        if (this.config.isRegisterApi(request.url)) {
 
             let currentUser = this.authenticationService.currentUserValue;
             if (currentUser && currentUser.token) {
