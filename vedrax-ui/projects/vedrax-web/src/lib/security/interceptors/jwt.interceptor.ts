@@ -3,12 +3,15 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS
 import { Observable } from 'rxjs';
 
 import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
 
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-    constructor(private authenticationService: AuthenticationService) { }
+    constructor(
+        private authenticationService: AuthenticationService,
+        private config: ConfigService) { }
 
     /**
      * Add JWT token when available in request header
@@ -17,13 +20,18 @@ export class JwtInterceptor implements HttpInterceptor {
      */
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        let currentUser = this.authenticationService.currentUserValue;
-        if (currentUser && currentUser.token) {
-            request = request.clone({
-                setHeaders: {
-                    Authorization: `Bearer ${currentUser.token}`
-                }
-            });
+        //add authorization header only for the given hostname
+        if (location.hostname === this.config.getHostname()) {
+
+            let currentUser = this.authenticationService.currentUserValue;
+            if (currentUser && currentUser.token) {
+                request = request.clone({
+                    setHeaders: {
+                        Authorization: `Bearer ${currentUser.token}`
+                    }
+                });
+            }
+
         }
 
         return next.handle(request);

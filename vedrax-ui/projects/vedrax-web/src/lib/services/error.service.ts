@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DescriptorErrorEvent } from '../descriptor/descriptor-error-event';
-import { Observable } from 'rxjs';
-
+import { catchError } from 'rxjs/operators'
+import { Observable, of } from 'rxjs';
 import * as StackTrace from 'stacktrace-js';
 import { Validate } from '../util/validate';
+import { ConfigService } from './config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ErrorService {
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private config: ConfigService) { }
 
     getClientMessage(error: Error): string {
         if (!navigator.onLine) {
@@ -29,41 +29,52 @@ export class ErrorService {
         return error.error && error.error.message;
     }
 
-    getServerStack(error: HttpErrorResponse): string {
-        return 'stack';
+    getServerStack(error: HttpErrorResponse): any {
+        return error.error;
     }
 
-    reportToStackdriver(projectId: string, apiKey: string, error: Error, path: string): Observable<any> {
-        Validate.isNotNull(projectId, 'project ID must be provided');
-        Validate.isNotNull(apiKey, 'api key must be provided');
+    reportToStackdriver(error: Error, path: string, user: string = 'User'): Observable<any> {
         Validate.isNotNull(error, 'error must be provided');
         Validate.isNotNull(path, 'path must be provided');
 
-        const url = `https://clouderrorreporting.googleapis.com/v1beta1/projects/${projectId}/events:report?key=${apiKey}`;
         const stacktrace = this.stacktraceToString(error);
-        const reportedErrorEvent = this.errorToReportedErrorEvent(stacktrace, path);
+        const reportedErrorEvent = this.errorToReportedErrorEvent(stacktrace, path, user);
 
         return this.httpClient
-            .post(url, JSON.stringify(reportedErrorEvent), { headers: new HttpHeaders().set('Content-Type', 'application/json') });
+            .post(this.config.getGCPErrorReportingApiEndpoint(), JSON.stringify(reportedErrorEvent), { headers: new HttpHeaders().set('Content-Type', 'application/json') })
+            .pipe(
+                catchError(error => of({}))
+            );
 
     }
 
     private stacktraceToString(error: Error): string {
 
-        let stackString = '';
+        let lines = [error.toString()];
 
         StackTrace.fromError(error).then(stackframes => {
-            stackString = stackframes
-                .splice(0, 20)
-                .map(function (sf) {
-                    return sf.toString();
-                }).join('\n');
+
+            stackframes.forEach(stack => {
+
+                console.log(stack);
+
+                lines.push([
+                    '    at ',
+                    // If a function name is not available '<anonymous>' will be used.
+                    stack.getFunctionName() || '<anonymous>', ' (',
+                    stack.getFileName(), ':',
+                    stack.getLineNumber(), ':',
+                    stack.getColumnNumber(), ')',
+                ].join(''));
+
+            });
+
         });
 
-        return stackString;
+        return lines.join('\n');
     }
 
-    private errorToReportedErrorEvent(stacktrace: string, url: string, user: string = 'User') {
+    private errorToReportedErrorEvent(stacktrace: string, url: string, user: string) {
         return {
             eventTime: new Date().toISOString(),
             serviceContext: {

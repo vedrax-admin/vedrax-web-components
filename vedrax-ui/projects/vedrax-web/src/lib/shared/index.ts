@@ -7,3 +7,5 @@ export * from './vedrax-base.component';
 export * from './role.enum';
 export * from './user-dto';
 export * from './user.model';
+export * from './api-status';
+export * from './configuration';

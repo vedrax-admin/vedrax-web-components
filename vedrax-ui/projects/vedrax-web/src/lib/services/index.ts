@@ -9,3 +9,4 @@ export * from './logging.service';
 export * from './moment-utc-date.adapter';
 export * from './snackbar.service';
 export * from './vedrax-api.service';
+export * from './config.service';

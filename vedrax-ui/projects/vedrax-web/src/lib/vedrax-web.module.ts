@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -39,6 +39,8 @@ import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { MomentUtcDateAdapter } from './services/moment-utc-date.adapter';
 import { VedraxTitleComponent } from './form-controls/vedrax-title/vedrax-title.component';
 import { MatTableExporterModule } from 'mat-table-exporter';
+import { ConfigService } from './services/config.service';
+import { VedraxErrorHandler } from './security/error/vedrax-error-handler';
 
 
 @NgModule({
@@ -112,12 +114,20 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     VedraxModalComponent
   ],
   providers: [
-    errorInterceptorProvider,
     jwtInterceptorProvider,
+    { provide: ErrorHandler, useClass: VedraxErrorHandler },
     loaderInterceptorProvider,
     { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     { provide: DateAdapter, useClass: MomentUtcDateAdapter }
   ]
 })
-export class VedraxWebModule { }
+export class VedraxWebModule {
+  static forRoot(configuration): ModuleWithProviders {
+    console.log(configuration);
+    return {
+      ngModule: VedraxWebModule,
+      providers: [ConfigService, { provide: 'config', useValue: configuration }]
+    };
+  }
+}
