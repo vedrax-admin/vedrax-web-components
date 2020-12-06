@@ -6,7 +6,6 @@ import { LoggingService } from '../../services/logging.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { ErrorService } from '../../services/error.service';
 
-
 /**
  * Global error handler. Used it by adding to provider of the root module
  */

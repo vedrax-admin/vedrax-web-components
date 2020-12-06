@@ -23,7 +23,6 @@ import { VedraxSelectComponent } from './form-controls/vedrax-select/vedrax-sele
 import { VedraxValidationComponent } from './form-controls/vedrax-validation/vedrax-validation.component';
 import { VedraxModalComponent } from './vedrax-modal/vedrax-modal.component';
 import { VedraxLoginComponent } from './security/login/login.component';
-import { errorInterceptorProvider } from './security/interceptors/error.interceptor';
 import { jwtInterceptorProvider } from './security/interceptors/jwt.interceptor';
 import { loaderInterceptorProvider } from './loader/interceptors/loader.interceptor';
 import { VedraxLoaderComponent } from './loader/loader.component';
@@ -41,6 +40,8 @@ import { VedraxTitleComponent } from './form-controls/vedrax-title/vedrax-title.
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { ConfigService } from './services/config.service';
 import { VedraxErrorHandler } from './security/error/vedrax-error-handler';
+import { Configuration } from './shared/configuration';
+import { VEDRAX_CONFIG_TOKEN } from './shared/di';
 
 
 @NgModule({
@@ -119,15 +120,16 @@ import { VedraxErrorHandler } from './security/error/vedrax-error-handler';
     loaderInterceptorProvider,
     { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-    { provide: DateAdapter, useClass: MomentUtcDateAdapter }
+    { provide: DateAdapter, useClass: MomentUtcDateAdapter },
+    ConfigService
   ]
 })
 export class VedraxWebModule {
-  static forRoot(configuration): ModuleWithProviders {
+  static forRoot(configuration: Configuration): ModuleWithProviders {
     console.log(configuration);
     return {
       ngModule: VedraxWebModule,
-      providers: [ConfigService, { provide: 'config', useValue: configuration }]
+      providers: [{ provide: VEDRAX_CONFIG_TOKEN, useValue: configuration }]
     };
   }
 }
