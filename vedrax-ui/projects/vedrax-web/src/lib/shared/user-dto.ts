@@ -5,7 +5,7 @@ export class UserDto {
     /**
      * Username
      */
-    email: string;
+    username: string;
 
     /**
      * Password

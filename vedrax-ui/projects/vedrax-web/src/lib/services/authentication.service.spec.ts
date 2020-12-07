@@ -8,7 +8,7 @@ import { User } from '../shared/user.model';
 import { Role } from '../shared/role.enum';
 
 const SIMPLE_USER: User = {
-    email: 'elodie.penchenat@vedrax.com',
+    username: 'elodie.penchenat@vedrax.com',
     fullName: 'Elodie Penchenat',
     userRole: Role.USER,
     token: 'token'
@@ -39,7 +39,7 @@ describe('AuthenticationService', () => {
         spyOn(localStorage, 'setItem');
         spyOn(authenticationService, 'setAuthentication');
 
-        authenticationService.login({ email: 'username', password: 'password' },'/um/public/auth')
+        authenticationService.login({ username: 'username', password: 'password' },'/um/public/auth')
             .subscribe((user: User) => {
                 testUser(user);
                 expect(localStorage.setItem).toHaveBeenCalledTimes(1);

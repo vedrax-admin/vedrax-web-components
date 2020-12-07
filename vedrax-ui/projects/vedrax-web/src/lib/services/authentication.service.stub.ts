@@ -4,7 +4,7 @@ import { UserDto } from '../shared/user-dto';
 import { Role } from '../shared/role.enum';
 
 const SIMPLE_USER: User = {
-    email: 'elodie.penchenat@vedrax.com',
+    username: 'elodie.penchenat@vedrax.com',
     fullName: 'Elodie Penchenat',
     userRole: Role.USER,
     token: 'token'

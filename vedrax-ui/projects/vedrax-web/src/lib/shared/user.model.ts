@@ -7,7 +7,7 @@ export class User {
     /**
      * Username
      */
-    email: string;
+    username: string;
 
     /**
      * Full name

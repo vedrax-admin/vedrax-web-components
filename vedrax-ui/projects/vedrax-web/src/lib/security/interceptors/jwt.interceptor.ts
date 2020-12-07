@@ -27,7 +27,7 @@ export class JwtInterceptor implements HttpInterceptor {
      */
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        //add authorization header only for the given hostname
+        //add authorization header only for API
         if (this.config.isRegisterApi(request.url)) {
 
             let currentUser = this.authenticationService.currentUserValue;

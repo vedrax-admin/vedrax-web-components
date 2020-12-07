@@ -5,6 +5,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { LoggingService } from '../../services/logging.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { ErrorService } from '../../services/error.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 /**
  * Global error handler. Used it by adding to provider of the root module
@@ -24,6 +25,9 @@ export class VedraxErrorHandler implements ErrorHandler {
     const errorService = this.injector.get(ErrorService);
     const location = this.injector.get(LocationStrategy);
     const url = location instanceof PathLocationStrategy ? location.path() : '';
+    const authService = this.injector.get(AuthenticationService);
+
+    const username = authService.currentUserValue ? authService.currentUserValue.username : 'Anonymous user';
 
     let message;
     let stack;
@@ -33,6 +37,8 @@ export class VedraxErrorHandler implements ErrorHandler {
       //server error
       if (error.status == 500) {
         this.redirectToErrorPage();
+      } else if (error.status == 401 || error.status == 403) {
+        authService.logout();
       } else {
         message = errorService.getServerMessage(error);
         stack = errorService.getServerStack(error);
@@ -43,7 +49,7 @@ export class VedraxErrorHandler implements ErrorHandler {
       //client error
       message = errorService.getClientMessage(error);
       stack = errorService.getClientStack(error);
-      errorService.reportToStackdriver(error, url);
+      errorService.reportToStackdriver(error, url, username);
       this.redirectToErrorPage();
     }
 
