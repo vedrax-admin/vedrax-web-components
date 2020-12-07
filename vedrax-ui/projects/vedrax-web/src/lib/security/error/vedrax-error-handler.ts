@@ -34,14 +34,16 @@ export class VedraxErrorHandler implements ErrorHandler {
 
     if (error instanceof HttpErrorResponse) {
 
+      message = errorService.getServerMessage(error);
+      stack = errorService.getServerStack(error);
+
       //server error
       if (error.status == 500) {
         this.redirectToErrorPage();
       } else if (error.status == 401 || error.status == 403) {
+        notifier.showError(message);
         authService.logout();
       } else {
-        message = errorService.getServerMessage(error);
-        stack = errorService.getServerStack(error);
         notifier.showError(message);
       }
 
