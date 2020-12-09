@@ -1,0 +1,9 @@
+<div class="vedrax-input-file-container" *ngIf="descriptor">
+
+    <vedrax-upload [descriptor]="descriptor" (uploadedFile)="handleUploadedFile($event)"></vedrax-upload>
+
+    <div class="m-t-15 m-b-15" [ngClass]="uploadFile.file ? 'alert alert-info' : 'alert alert-warn'" *ngIf="uploadFile">
+        {{uploadFile.file ? uploadFile.file.name : uploadFile.error.errorMessage}}
+    </div>
+
+</div>

@@ -13,5 +13,6 @@ export enum ControlType {
     matrix = "matrix",
     nvp = "nvp",
     chips = "chips",
-    autocomplete = "autocomplete"
+    autocomplete = "autocomplete",
+    upload = "upload"
 }

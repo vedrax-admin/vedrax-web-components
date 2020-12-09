@@ -19,3 +19,4 @@ export * from './vedrax-select/vedrax-select.component';
 export * from './vedrax-title/vedrax-title.component';
 export * from './vedrax-validation/vedrax-validation.component';
 export * from './vedrax-upload/vedrax-upload.component';
+export * from './vedrax-input-file/vedrax-input-file.component';

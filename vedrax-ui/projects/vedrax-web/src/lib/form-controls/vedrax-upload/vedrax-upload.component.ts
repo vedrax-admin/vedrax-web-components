@@ -1,9 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { from, Observable, Observer, of } from 'rxjs';
-import { catchError, concatMap, take } from 'rxjs/operators';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { DescriptorFormControl } from '../../descriptor/descriptor-form-control';
 import { VedraxFile } from '../../util/vedrax-file';
 
-const INVALID_FILE = 'Fichier invalide';
+const INVALID_TYPE = 'Fichier invalide';
 const INVALID_SIZE = 'Taille de fichier invalide';
 
 @Component({
@@ -13,7 +12,8 @@ const INVALID_SIZE = 'Taille de fichier invalide';
 })
 export class VedraxUploadComponent implements OnInit {
 
-  @Output() uploadedFiles: EventEmitter<VedraxFile> = new EventEmitter();
+  @Input() descriptor: DescriptorFormControl;
+  @Output() uploadedFile: EventEmitter<VedraxFile> = new EventEmitter();
 
   constructor() { }
 
@@ -21,41 +21,23 @@ export class VedraxUploadComponent implements OnInit {
   }
 
   uploadFiles(event) {
-    if (event) {
-      const files = event.target?.files;
-      const nbOfFiles = files.length;
-      from(files)
-        .pipe(
-          concatMap((file: File) => this.validateFile(file).pipe(catchError((error: VedraxFile) => of(error)))),
-          take(nbOfFiles)
-        )
-        .subscribe((validatedFile: VedraxFile) => {
-          this.uploadedFiles.emit(validatedFile);
-        })
-    }
-  }
+    const file = (event.target as HTMLInputElement).files[0];
 
-  private validateFile(file: File): Observable<VedraxFile> {
-    const fileReader: FileReader = new FileReader();
-    return new Observable((observer: Observer<VedraxFile>) => {
-      this.validateSize(file, observer);
-      fileReader.readAsDataURL(file);
-      fileReader.onload = event => {
-        observer.next({ file });
-        observer.complete();
-      };
-      fileReader.onerror = () => {
-        const { name } = file;
-        observer.error({ error: { name, errorMessage: INVALID_FILE } });
-      };
-    });
-  }
+    const { type, name, size } = file;
 
-  private validateSize(file: File, observer: Observer<VedraxFile>): void {
-    const { name, size } = file;
     if (!this.isValidSize(size)) {
-      observer.error({ error: { name, errorMessage: INVALID_SIZE } });
+      this.uploadedFile.emit({ error: { name, errorMessage: INVALID_SIZE } });
     }
+
+    if (!this.isValidType(this.descriptor.controlAccept, type)) {
+      this.uploadedFile.emit({ error: { name, errorMessage: INVALID_TYPE } });
+    }
+
+    this.uploadedFile.emit({ file });
+  }
+
+  private isValidType(allowedFileTypes: string[] = [], type: string): boolean {
+    return allowedFileTypes.indexOf(type) > -1;
   }
 
   private isValidSize(size: number): boolean {

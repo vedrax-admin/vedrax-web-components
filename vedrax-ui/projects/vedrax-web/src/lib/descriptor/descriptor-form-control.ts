@@ -67,4 +67,9 @@ export class DescriptorFormControl {
      */
     controlSearch?: DescriptorAutocomplete;
 
+    /**
+     * Used to pass MIME to input file
+     */
+    controlAccept?: string[];
+
 }

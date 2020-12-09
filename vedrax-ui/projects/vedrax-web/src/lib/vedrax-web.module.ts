@@ -43,6 +43,7 @@ import { VedraxErrorHandler } from './security/error/vedrax-error-handler';
 import { Configuration } from './shared/configuration';
 import { VEDRAX_CONFIG } from './shared/di';
 import { VedraxUploadComponent } from './form-controls/vedrax-upload/vedrax-upload.component';
+import { VedraxInputFileComponent } from './form-controls/vedrax-input-file/vedrax-input-file.component';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { VedraxUploadComponent } from './form-controls/vedrax-upload/vedrax-uplo
     VedraxAutocompleteComponent,
     VedraxSearchListComponent,
     VedraxTitleComponent,
-    VedraxUploadComponent
+    VedraxUploadComponent,
+    VedraxInputFileComponent
   ],
   exports: [
     VedraxFilterComponent,
@@ -109,7 +111,9 @@ import { VedraxUploadComponent } from './form-controls/vedrax-upload/vedrax-uplo
     VedraxCrudComponent,
     VedraxAutocompleteComponent,
     VedraxSearchListComponent,
-    VedraxTitleComponent
+    VedraxTitleComponent,
+    VedraxUploadComponent,
+    VedraxInputFileComponent
   ],
   entryComponents: [
     VedraxTableComponent,

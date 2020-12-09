@@ -5,7 +5,7 @@
             {{item.value}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
-        <input [id]="descriptor.controlName" [placeholder]="descriptor.controlLabel" [matChipInputFor]="chipList"
+        <input [placeholder]="descriptor.controlLabel" [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
             (matChipInputTokenEnd)="add($event)" />
     </mat-chip-list>
