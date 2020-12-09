@@ -42,6 +42,7 @@ import { ConfigService } from './services/config.service';
 import { VedraxErrorHandler } from './security/error/vedrax-error-handler';
 import { Configuration } from './shared/configuration';
 import { VEDRAX_CONFIG } from './shared/di';
+import { VedraxUploadComponent } from './form-controls/vedrax-upload/vedrax-upload.component';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { VEDRAX_CONFIG } from './shared/di';
     DebounceClickDirective,
     VedraxAutocompleteComponent,
     VedraxSearchListComponent,
-    VedraxTitleComponent
+    VedraxTitleComponent,
+    VedraxUploadComponent
   ],
   exports: [
     VedraxFilterComponent,

@@ -12,3 +12,4 @@ export * from './descriptor-property';
 export * from './descriptor-search';
 export * from './descriptor-table';
 export * from './descriptor-validation';
+export * from './descriptor-upload';

@@ -1,0 +1,7 @@
+<div class="vedrax-upload-container" *ngIf="descriptor">
+    <button mat-button color="primary" (click)="vedraxFileInput.click()">{{descriptor.label}}</button>
+    <input type="file" hidden #vedraxFileInput 
+    [attr.accept]="descriptor.accept" 
+    [multiple]="descriptor.multiple" 
+    (change)="uploadFiles($event)">
+</div>
