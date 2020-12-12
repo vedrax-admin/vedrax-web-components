@@ -23,13 +23,19 @@ export class VedraxInputFileComponent implements OnInit {
   }
 
   handleUploadedFile(uploadedFile: VedraxFile) {
-    const reader = new FileReader();
-    this.uploadFile = uploadedFile;
 
-    reader.readAsDataURL(this.uploadFile.file);
-    reader.onload = () => {
-      this.form.get(this.descriptor.controlName).setValue(reader.result);
-    };
+    if (uploadedFile && uploadedFile.file) {
+
+      const reader = new FileReader();
+      this.uploadFile = uploadedFile;
+
+      reader.onload = () => {
+        this.form.get(this.descriptor.controlName).setValue(reader.result);
+      };
+
+      reader.readAsDataURL(this.uploadFile.file);
+
+    }
 
   }
 
