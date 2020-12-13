@@ -68,7 +68,9 @@ export class VedraxApiService {
         Validate.isNotNull(descriptor, 'Form descriptor must be provided');
         Validate.isNotNull(descriptor.method, 'methid in descriptor must be provided');
 
-        return descriptor.method === ApiMethod.POST ? this.post<T>(descriptor.endpoint, body) : this.put<T>(descriptor.endpoint, body);
+        return descriptor.method === ApiMethod.POST ?
+            this.post<T>(descriptor.endpoint, body, descriptor.multipart) :
+            this.put<T>(descriptor.endpoint, body, descriptor.multipart);
     }
 
     /**
@@ -76,11 +78,13 @@ export class VedraxApiService {
      * @param path the endpoint
      * @param body the body of the request
      */
-    put<T>(path: string, body: object = {}): Observable<any> {
+    put<T>(path: string, body: object = {}, multipart: boolean = false): Observable<any> {
         Validate.isNotNull(path, 'Path must be provided');
 
+        const headers = multipart ? {} : this.options;
+
         return this.httpClient
-            .put(path, JSON.stringify(body), this.options);
+            .put(path, multipart ? this.toFormData(body) : JSON.stringify(body), headers);
     }
 
     /**
@@ -88,11 +92,28 @@ export class VedraxApiService {
      * @param path the endpoint
      * @param body the body of the request
      */
-    post<T>(path: string, body: object = {}): Observable<any> {
+    post<T>(path: string, body: object = {}, multipart: boolean = false): Observable<any> {
         Validate.isNotNull(path, 'Path must be provided');
 
+        const headers = multipart ? {} : this.options;
+
         return this.httpClient
-            .post(path, JSON.stringify(body), this.options);
+            .post(path, multipart ? this.toFormData(body) : JSON.stringify(body), headers);
+    }
+
+    /**
+     * Helper method for converting body to FormData.
+     * Used for passing MultiPart file along with attributes
+     * @param body 
+     */
+    private toFormData(body: object = {}): FormData {
+        let formData = new FormData();
+
+        for (let key in body) {
+            formData.append(key, body[key]);
+        }
+
+        return formData;
     }
 
 }

@@ -41,6 +41,11 @@ export class DescriptorForm {
     method: ApiMethod;
 
     /**
+     * Is a multipart form ?
+     */
+    multipart?: boolean;
+
+    /**
      *  Redirect url when the API returns OK
      */
     successUrl?: string;

@@ -22,7 +22,7 @@ export class VedraxUploadComponent implements OnInit {
 
   uploadFiles(event) {
 
-    if (event.target.files && event.target.files.length) {
+    if (event.target.files && event.target.files.length > 0) {
 
       const file = (event.target as HTMLInputElement).files[0];
 
@@ -30,10 +30,12 @@ export class VedraxUploadComponent implements OnInit {
 
       if (!this.isValidSize(size)) {
         this.uploadedFile.emit({ error: { name, errorMessage: INVALID_SIZE } });
+        return;
       }
 
       if (!this.isValidType(this.descriptor.controlAccept, type)) {
         this.uploadedFile.emit({ error: { name, errorMessage: INVALID_TYPE } });
+        return;
       }
 
       this.uploadedFile.emit({ file });
