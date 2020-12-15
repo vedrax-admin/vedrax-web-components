@@ -72,4 +72,9 @@ export class DescriptorFormControl {
      */
     controlAccept?: string[];
 
+    /**
+     * Use to control the size of the input file
+     */
+    controlSizeLimit?: number;
+
 }
