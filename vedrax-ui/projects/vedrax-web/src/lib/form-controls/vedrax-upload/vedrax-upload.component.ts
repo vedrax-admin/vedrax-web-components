@@ -22,19 +22,14 @@ export class VedraxUploadComponent implements OnInit {
 
   uploadFiles(event) {
 
-    if (event.target.files && event.target.files.length > 0) {
+    if (event.target.files.length > 0) {
 
       const file = (event.target as HTMLInputElement).files[0];
 
       const { type, name, size } = file;
 
-      if (!this.isValidSize(size)) {
-        this.uploadedFile.emit({ error: { name, errorMessage: INVALID_SIZE } });
-        return;
-      }
-
       if (!this.isValidType(this.descriptor.controlAccept, type)) {
-        this.uploadedFile.emit({ error: { name, errorMessage: INVALID_TYPE } });
+        this.uploadedFile.emit({ error: { name, errorMessage: `Only accepted file type: ${this.descriptor.controlAccept}` } });
         return;
       }
 

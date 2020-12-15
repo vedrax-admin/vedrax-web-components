@@ -24,9 +24,10 @@ export class VedraxInputFileComponent implements OnInit {
 
   handleUploadedFile(uploadedFile: VedraxFile) {
 
+    this.uploadFile = uploadedFile;
+
     if (uploadedFile && uploadedFile.file) {
 
-      this.uploadFile = uploadedFile;
       this.form.get(this.descriptor.controlName).setValue(uploadedFile.file);
 
     }

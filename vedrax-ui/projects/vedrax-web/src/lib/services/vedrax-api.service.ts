@@ -7,6 +7,12 @@ import { Validate } from '../util/validate';
 import { DescriptorForm } from '../descriptor/descriptor-form';
 import { DescriptorEndpoint } from '../descriptor/descriptor-endpoint';
 
+
+export class FormDataWithContentType {
+    form: FormData;
+    contentType: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -81,10 +87,13 @@ export class VedraxApiService {
     put<T>(path: string, body: object = {}, multipart: boolean = false): Observable<any> {
         Validate.isNotNull(path, 'Path must be provided');
 
-        const headers = multipart ? {} : this.options;
+        if (multipart) {
+            const formDataWithContentType: FormDataWithContentType = this.toFormData(body);
+            return this.httpClient.put(path, formDataWithContentType.form, this.setHeader(formDataWithContentType.contentType));
+        }
 
         return this.httpClient
-            .put(path, multipart ? this.toFormData(body) : JSON.stringify(body), headers);
+            .put(path, JSON.stringify(body), this.options);
     }
 
     /**
@@ -95,10 +104,13 @@ export class VedraxApiService {
     post<T>(path: string, body: object = {}, multipart: boolean = false): Observable<any> {
         Validate.isNotNull(path, 'Path must be provided');
 
-        const headers = multipart ? {} : this.options;
+        if (multipart) {
+            const formDataWithContentType: FormDataWithContentType = this.toFormData(body);
+            return this.httpClient.post(path, formDataWithContentType.form, this.setHeader(formDataWithContentType.contentType));
+        }
 
         return this.httpClient
-            .post(path, multipart ? this.toFormData(body) : JSON.stringify(body), headers);
+            .post(path, JSON.stringify(body), this.options);
     }
 
     /**
@@ -106,14 +118,34 @@ export class VedraxApiService {
      * Used for passing MultiPart file along with attributes
      * @param body 
      */
-    private toFormData(body: object = {}): FormData {
+    private toFormData(body: object = {}): FormDataWithContentType {
         let formData = new FormData();
 
-        for (let key in body) {
-            formData.append(key, body[key]);
+        let nbOfFile = 0;
+
+        for (const key of Object.keys(body)) {
+            const value = body[key];
+
+            if (value) {
+
+                nbOfFile += this.isFile(value);
+
+                formData.append(key, value);
+            }
         }
 
-        return formData;
+        const contentTypeValue = nbOfFile > 0 ? 'multipart/form-data' : 'application/json';
+
+        return { form: formData, contentType: contentTypeValue };
+
+    }
+
+    private isFile(value: any): number {
+        return value instanceof File ? 1 : 0;
+    }
+
+    private setHeader(contentType: string): any {
+        { headers: new HttpHeaders().set('Content-Type', contentType) };
     }
 
 }
