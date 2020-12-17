@@ -44,6 +44,7 @@ import { Configuration } from './shared/configuration';
 import { VEDRAX_CONFIG } from './shared/di';
 import { VedraxUploadComponent } from './form-controls/vedrax-upload/vedrax-upload.component';
 import { VedraxInputFileComponent } from './form-controls/vedrax-input-file/vedrax-input-file.component';
+import { VedraxConfirmComponent } from './vedrax-confirm/vedrax-confirm.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { VedraxInputFileComponent } from './form-controls/vedrax-input-file/vedr
     VedraxSearchListComponent,
     VedraxTitleComponent,
     VedraxUploadComponent,
-    VedraxInputFileComponent
+    VedraxInputFileComponent,
+    VedraxConfirmComponent
   ],
   exports: [
     VedraxFilterComponent,
@@ -113,12 +115,14 @@ import { VedraxInputFileComponent } from './form-controls/vedrax-input-file/vedr
     VedraxSearchListComponent,
     VedraxTitleComponent,
     VedraxUploadComponent,
-    VedraxInputFileComponent
+    VedraxInputFileComponent,
+    VedraxConfirmComponent
   ],
   entryComponents: [
     VedraxTableComponent,
     VedraxFormModalComponent,
-    VedraxModalComponent
+    VedraxModalComponent,
+    VedraxConfirmComponent
   ],
   providers: [
     jwtInterceptorProvider,

@@ -12,4 +12,5 @@ export * from './lib/shared';
 export * from './lib/util';
 export * from './lib/vedrax-crud/vedrax-crud.component';
 export * from './lib/vedrax-modal/vedrax-modal.component';
+export * from './lib/vedrax-confirm/vedrax-confirm.component';
 export * from './lib/vedrax-web.module';
