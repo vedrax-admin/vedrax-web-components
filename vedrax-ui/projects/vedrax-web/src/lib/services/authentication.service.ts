@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { VedraxApiService } from './vedrax-api.service';
 import { User } from '../shared/user.model';
 import { UserDto } from '../shared/user-dto';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +22,8 @@ export class AuthenticationService {
      */
     public currentUserObs: Observable<User>;
 
-    constructor(private apiService: VedraxApiService) {
+    constructor(private apiService: VedraxApiService,
+        private router: Router) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUserObs = this.currentUserSubject.asObservable();
     }
@@ -65,5 +67,6 @@ export class AuthenticationService {
     logout() {
         localStorage.removeItem('currentUser');
         this.setAuthentication(null);
+        this.router.navigate(['/']);//return to login page
     }
 }

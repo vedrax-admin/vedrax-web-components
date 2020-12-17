@@ -22,6 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     this.authenticationService.logout();
                     //location.reload(true);
                 }
+                
 
             }
 

@@ -1,6 +1,6 @@
 {
   "name": "@vedrax/vedrax-web",
-  "version": "0.0.164",
+  "version": "0.0.165",
   "peerDependencies": {
     "@angular/flex-layout": "^9.0.0-beta.29",
     "@angular/material": "^9.2.0"
