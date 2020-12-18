@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormGroupDirective } from '@angular/forms';
 
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { FormService } from '../../services/form.service';
@@ -55,10 +55,14 @@ export class VedraxFormComponent implements OnInit {
    * 
    * @param dto 
    */
-  submit(dto: any): void {
+  submit(dto: any, formDirective: FormGroupDirective): void {
     if (this.form.valid) {
       this.submitted = true;
       this.onSubmit.emit(dto);
+
+      //reset form
+      formDirective.resetForm();
+      this.form.reset();
     }
   }
 

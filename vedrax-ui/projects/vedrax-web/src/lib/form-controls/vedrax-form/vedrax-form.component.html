@@ -1,4 +1,4 @@
-<form [formGroup]="form" novalidate (ngSubmit)="submit(form.value)">
+<form [formGroup]="form" #formDirective="ngForm" novalidate (ngSubmit)="submit(form.value, formDirective)">
 
     <vedrax-controls [descriptor]="descriptor" [form]="form"></vedrax-controls>
 
