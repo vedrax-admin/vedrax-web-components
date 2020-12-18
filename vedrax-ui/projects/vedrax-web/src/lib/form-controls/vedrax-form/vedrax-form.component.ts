@@ -55,7 +55,7 @@ export class VedraxFormComponent implements OnInit {
    * 
    * @param dto 
    */
-  submit(dto: any) {
+  submit(dto: any): void {
     if (this.form.valid) {
       this.submitted = true;
       this.onSubmit.emit(dto);
@@ -65,7 +65,7 @@ export class VedraxFormComponent implements OnInit {
   /**
    * Emit an event on cancel
    */
-  cancel() {
+  cancel(): void {
     this.onCancel.emit(true);
   }
 
@@ -73,7 +73,13 @@ export class VedraxFormComponent implements OnInit {
    * reset form
    */
   reset(): void {
+
     this.form.reset();
+
+    //hack for removing validation error when resetting
+    Object.keys(this.form.controls).forEach(key => {
+      this.form.get(key).setErrors(null);
+    });
   }
 
   /**
