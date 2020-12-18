@@ -4,7 +4,7 @@
 
     <div class="m-t-15" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="10px">
         <button *ngIf="enableCancel" type="button" mat-raised-button (click)="cancel()">{{cancelLabel}}</button>
-        <button type="submit" [disabled]="form.invalid || submitted" mat-raised-button
+        <button type="submit" [disabled]="!form.valid || submitted" mat-raised-button
             color="primary">{{submitLabel}}</button>
     </div>
 
