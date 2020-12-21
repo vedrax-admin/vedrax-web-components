@@ -13,17 +13,10 @@ export class ErrorInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError((err: HttpErrorResponse) => {
 
-            if (err.error instanceof ErrorEvent) {
-                //TODO : add server log for client errors
-            } else {
-
-                if ([401, 403].indexOf(err.status) !== -1) {
-                    // automatically logout
-                    this.authenticationService.logout();
-                    //location.reload(true);
-                }
-                
-
+            if ([401, 403].indexOf(err.status) !== -1) {
+                // automatically logout
+                this.authenticationService.logout();
+                //location.reload(true);
             }
 
             //rethrow error

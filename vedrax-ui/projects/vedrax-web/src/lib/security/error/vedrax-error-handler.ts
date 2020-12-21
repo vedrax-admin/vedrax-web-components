@@ -40,9 +40,6 @@ export class VedraxErrorHandler implements ErrorHandler {
       //server error
       if (error.status == 500) {
         this.redirectToErrorPage();
-      } else if (error.status == 401 || error.status == 403) {
-        notifier.showError(message);
-        authService.logout();
       } else {
         notifier.showError(message);
       }

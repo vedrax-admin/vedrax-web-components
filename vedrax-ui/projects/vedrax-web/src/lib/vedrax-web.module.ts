@@ -45,6 +45,7 @@ import { VEDRAX_CONFIG } from './shared/di';
 import { VedraxUploadComponent } from './form-controls/vedrax-upload/vedrax-upload.component';
 import { VedraxInputFileComponent } from './form-controls/vedrax-input-file/vedrax-input-file.component';
 import { VedraxConfirmComponent } from './vedrax-confirm/vedrax-confirm.component';
+import { errorInterceptorProvider } from './security/interceptors/error.interceptor';
 
 
 @NgModule({
@@ -126,9 +127,10 @@ import { VedraxConfirmComponent } from './vedrax-confirm/vedrax-confirm.componen
   ],
   providers: [
     jwtInterceptorProvider,
+    errorInterceptorProvider,
     { provide: ErrorHandler, useClass: VedraxErrorHandler },
     loaderInterceptorProvider,
-    { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     { provide: DateAdapter, useClass: MomentUtcDateAdapter },
     ConfigService

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 
 import { DescriptorForm } from '../../descriptor/descriptor-form';
@@ -10,6 +10,8 @@ import { FormService } from '../../services/form.service';
   styleUrls: ['./vedrax-form.component.scss']
 })
 export class VedraxFormComponent implements OnInit {
+
+  @ViewChild('formDirective') formRef: FormGroupDirective;
 
   /**
    * The descriptor form
@@ -55,14 +57,10 @@ export class VedraxFormComponent implements OnInit {
    * 
    * @param dto 
    */
-  submit(dto: any, formDirective: FormGroupDirective): void {
+  submit(dto: any): void {
     if (this.form.valid) {
       this.submitted = true;
       this.onSubmit.emit(dto);
-
-      //reset form
-      formDirective.resetForm();
-      this.form.reset();
     }
   }
 
@@ -77,13 +75,9 @@ export class VedraxFormComponent implements OnInit {
    * reset form
    */
   reset(): void {
-
+    //reset form
+    this.formRef.resetForm();
     this.form.reset();
-
-    //hack for removing validation error when resetting
-    Object.keys(this.form.controls).forEach(key => {
-      this.form.get(key).setErrors(null);
-    });
   }
 
   /**
