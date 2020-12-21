@@ -76,6 +76,7 @@ export class VedraxFormComponent implements OnInit {
    */
   reset(): void {
     //reset form
+    this.submitted = false;
     this.formRef.resetForm();
     this.form.reset();
   }
