@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { VedraxMaterialModule } from './material/vedrax-material.module';
+import {DecimalPipe} from '@angular/common';
 
 import { VedraxBaseComponent } from './shared/vedrax-base.component';
 import { VedraxFilterComponent } from './data-table/vedrax-filter/vedrax-filter.component';
@@ -126,6 +127,7 @@ import { errorInterceptorProvider } from './security/interceptors/error.intercep
     VedraxConfirmComponent
   ],
   providers: [
+    DecimalPipe,
     jwtInterceptorProvider,
     errorInterceptorProvider,
     { provide: ErrorHandler, useClass: VedraxErrorHandler },
