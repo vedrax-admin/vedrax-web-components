@@ -15,10 +15,14 @@
 
 
                     <p *ngFor="let entry of control.get('entries').controls; let y = index;">
-                        <mat-form-field appearance="outline">
+                        <vedrax-input-number [form]="form" [control]="entry.get('value')" 
+                                [matrixIndex]="i" [entriesIndex]="y"
+                                [label]="entry.get('key').value"></vedrax-input-number>
+
+                        <!--<mat-form-field appearance="outline">
                             <mat-label>{{entry.get('key').value}}</mat-label>
                             <input required matInput [formControl]="entry.get('value')">
-                        </mat-form-field>
+                        </mat-form-field>-->
                     </p>
 
                 </mat-expansion-panel>

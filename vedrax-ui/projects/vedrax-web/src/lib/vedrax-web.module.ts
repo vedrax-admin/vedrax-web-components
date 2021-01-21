@@ -47,6 +47,7 @@ import { VedraxUploadComponent } from './form-controls/vedrax-upload/vedrax-uplo
 import { VedraxInputFileComponent } from './form-controls/vedrax-input-file/vedrax-input-file.component';
 import { VedraxConfirmComponent } from './vedrax-confirm/vedrax-confirm.component';
 import { errorInterceptorProvider } from './security/interceptors/error.interceptor';
+import { VedraxInputNumberComponent } from './form-controls/vedrax-input-number/vedrax-input-number.component';
 
 
 @NgModule({
@@ -89,7 +90,8 @@ import { errorInterceptorProvider } from './security/interceptors/error.intercep
     VedraxTitleComponent,
     VedraxUploadComponent,
     VedraxInputFileComponent,
-    VedraxConfirmComponent
+    VedraxConfirmComponent,
+    VedraxInputNumberComponent
   ],
   exports: [
     VedraxFilterComponent,
@@ -118,6 +120,7 @@ import { errorInterceptorProvider } from './security/interceptors/error.intercep
     VedraxTitleComponent,
     VedraxUploadComponent,
     VedraxInputFileComponent,
+    VedraxInputNumberComponent,
     VedraxConfirmComponent
   ],
   entryComponents: [
