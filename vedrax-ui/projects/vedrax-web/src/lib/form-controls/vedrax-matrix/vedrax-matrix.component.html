@@ -17,8 +17,7 @@
                     <p *ngFor="let entry of control.get('entries').controls; let y = index;">
                         <mat-form-field appearance="outline">
                             <mat-label>{{entry.get('key').value}}</mat-label>
-                            <input [value]="entry.get('value').value | number" 
-                                required matInput [formControl]="entry.get('value')">
+                            <input required matInput [formControl]="entry.get('value')">
                         </mat-form-field>
                     </p>
 
