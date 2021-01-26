@@ -13,6 +13,8 @@ import { Validate } from '../util/validate';
 import { ActionType } from '../enum/action-types';
 import { FormDescriptorService } from '../services/form-descriptor.service';
 import { DownloadService } from '../services/download.service';
+import { VedraxApiService } from '../services/vedrax-api.service';
+import { SnackbarService } from '../services/snackbar.service';
 
 class TableSelectionItem {
   action: DescriptorAction;
@@ -76,7 +78,9 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
 
   constructor(
     private formDescriptorService: FormDescriptorService,
+    private vedraxApiService: VedraxApiService,
     private downloadService: DownloadService,
+    private snackBarService: SnackbarService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -131,6 +135,20 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
     if (action.action === ActionType.download) {
       this.downloadDocument(action.url, item['id']);
     }
+
+    //call directly PUT API
+    if (action.action === ActionType.job) {
+      this.initJobOnServer(endpoint);
+    }
+  }
+
+  private initJobOnServer(endpoint: string): void {
+    this.subscription.add(
+      this.vedraxApiService.put(endpoint).subscribe(
+        vo => {
+          this.tableComponent.updateItem(vo);
+          this.snackBarService.open('Init. Job...');
+        }));
   }
 
   private downloadDocument(endpoint: string, id: string | number): void {
