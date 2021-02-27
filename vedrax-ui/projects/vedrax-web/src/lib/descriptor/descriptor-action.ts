@@ -1,5 +1,5 @@
 import { ActionType } from '../enum/action-types';
-import { DescriptorActivate} from './descriptor-activate';
+import { DescriptorActivate } from './descriptor-activate';
 
 /**
  * A class that describes the available actions for a column
@@ -32,5 +32,10 @@ export class DescriptorAction {
      * Activate object
      */
     activate?: DescriptorActivate;
+
+    /**
+     * Pass action parameters
+     */
+    params?: Map<string, any> = new Map();
 
 }

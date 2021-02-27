@@ -131,36 +131,53 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
       return;
     }
 
-    //download PDF with Content-Disposition attachment header
+    //download file with Content-Disposition attachment header
     if (action.action === ActionType.download) {
-      this.downloadDocument(action.url, item['id']);
+      this.downloadDocument(action.url, item['id'], action.params);
     }
 
     //call directly PUT API
     if (action.action === ActionType.job) {
-      this.initJobOnServer(endpoint);
+      this.initJobOnServer(endpoint, action.params);
     }
   }
 
-  private initJobOnServer(endpoint: string): void {
+  private initJobOnServer(endpoint: string, params: Map<string, any> = new Map()): void {
+    const query = this.generateQuery(params);
     this.subscription.add(
-      this.vedraxApiService.put(endpoint).subscribe(
+      this.vedraxApiService.put(`${endpoint}${query}`).subscribe(
         vo => {
           this.tableComponent.updateItem(vo);
           this.snackBarService.open('Init. Job...');
         }));
   }
 
-  private downloadDocument(endpoint: string, id: string | number): void {
-    const path = `${endpoint}?id=${id}`;
+  private downloadDocument(endpoint: string, id: string | number, params: Map<string, any> = new Map()): void {
+    const query = this.generateQuery(params);
+    const path = `${endpoint}?id=${id}${query}`;
     this.subscription.add(
       this.downloadService.download(path)
-        .subscribe(data => this.downloadFile(data))
+        .subscribe(data => this.downloadFile(data, params.get('mime')))
     );
   }
 
-  private downloadFile(data: any) {
-    const blob = new Blob([data], { type: 'application/pdf' });
+  private generateQuery(params: Map<string, any> = new Map()): string {
+
+    let query: string = '';
+
+    if (params.size == 0) {
+      return query;
+    }
+
+    for (let [key, value] of params) {
+      query += `&${key}=${value}`;
+    }
+
+    return query;
+  }
+
+  private downloadFile(data: any, mime: string = "pdf") {
+    const blob = new Blob([data], { type: `application/${mime}` });
     const url = window.URL.createObjectURL(blob);
     let a = document.createElement("a");
     a.href = url;
