@@ -24,8 +24,12 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #actionMenu="matMenu">
-                            <a *ngFor="let action of navigations" mat-menu-item
+                            <!--<a *ngFor="let action of navigations" mat-menu-item
+                                (click)="select(action, element)">{{action.label}}</a>-->
+                            <ng-container *ngFor="let action of navigations">
+                                <a *ngIf="isActionEnable(action, element)" mat-menu-item
                                 (click)="select(action, element)">{{action.label}}</a>
+                            </ng-container>
                         </mat-menu>
 
                     </div>

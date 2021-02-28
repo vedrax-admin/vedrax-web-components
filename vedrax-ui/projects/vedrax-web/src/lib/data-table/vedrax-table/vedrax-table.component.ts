@@ -186,7 +186,17 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.onSelect.emit({ action, item });
   }
 
-  private stopEmit(activate: DescriptorActivate, item: any = {}): boolean {
+  isActionEnable(action: DescriptorAction, item: any): boolean {
+    const activate = action.activate;
+
+    if (activate) {
+      return item[activate.field] === activate.expected;
+    }
+
+    return true;
+  }
+
+  stopEmit(activate: DescriptorActivate, item: any = {}): boolean {
     return activate && item[activate.field] !== activate.expected;
   }
 
