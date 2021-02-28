@@ -145,7 +145,7 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   private initJobOnServer(endpoint: string, params: Map<string, any> = new Map()): void {
     const query = this.generateQuery(params);
     this.subscription.add(
-      this.vedraxApiService.put(`${endpoint}${query}`).subscribe(
+      this.vedraxApiService.get(`${endpoint}${query}`).subscribe(
         vo => {
           this.tableComponent.updateItem(vo);
           this.snackBarService.open('Init. Job...');
