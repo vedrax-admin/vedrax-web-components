@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -145,43 +146,42 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
   private initJobOnServer(endpoint: string, params: Map<string, any> = new Map()): void {
     const query = this.generateQuery(params);
     this.subscription.add(
-      this.vedraxApiService.get(`${endpoint}${query}`).subscribe(
+      this.vedraxApiService.get(endpoint, query).subscribe(
         vo => {
           this.tableComponent.updateItem(vo);
           this.snackBarService.open('Init. Job...');
         }));
   }
 
-  private downloadDocument(endpoint: string, id: string | number, params: Map<string, any> = new Map()): void {
+  private downloadDocument(endpoint: string,
+    id: string | number,
+    params: Map<string, any> = new Map()): void {
+    //add id as a query parameter
+    params.set('id', id);
     const query = this.generateQuery(params);
-    const path = `${endpoint}?id=${id}${query}`;
     this.subscription.add(
-      this.downloadService.download(path)
-        .subscribe(data => this.downloadFile(data, params.get('mime')))
+      this.downloadService.download(endpoint, query)
+        .subscribe(data => this.downloadFile(data, id, params))
     );
   }
 
-  private generateQuery(params: Map<string, any> = new Map()): string {
+  private generateQuery(params: Map<string, any> = new Map()): HttpParams {
 
-    let query: string = '';
-
-    if (params.size == 0) {
-      return query;
-    }
+    const parameters = new HttpParams();
 
     for (let [key, value] of params) {
-      query += `&${key}=${value}`;
+      parameters.set(key, value);
     }
 
-    return query;
+    return parameters;
   }
 
-  private downloadFile(data: any, mime: string = "pdf") {
-    const blob = new Blob([data], { type: `application/${mime}` });
+  private downloadFile(data: any, id: string | number, params: Map<string, any> = new Map()) {
+    const blob = new Blob([data], { type: `application/${params.get('extension')}` });
     const url = window.URL.createObjectURL(blob);
     let a = document.createElement("a");
     a.href = url;
-    a.download = 'document';
+    a.download = `${params.get('type')}${id}.${params.get('extension')}`;
     // start download
     a.click();
     window.URL.revokeObjectURL(url);
