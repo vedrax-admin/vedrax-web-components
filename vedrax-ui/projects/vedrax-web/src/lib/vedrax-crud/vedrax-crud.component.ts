@@ -153,11 +153,9 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
         }));
   }
 
-  private downloadDocument(endpoint: string,
-    id: string | number,
-    params: Map<string, any> = new Map()): void {
+  private downloadDocument(endpoint: string, id: string | number, params: Map<string, any> = new Map()): void {
     //add id as a query parameter
-    params.set('id', id);
+    params = params.set('id', id);
     const query = this.generateQuery(params);
     this.subscription.add(
       this.downloadService.download(endpoint, query)
@@ -167,10 +165,10 @@ export class VedraxCrudComponent implements OnInit, OnDestroy {
 
   private generateQuery(params: Map<string, any> = new Map()): HttpParams {
 
-    const parameters = new HttpParams();
+    let parameters = new HttpParams();
 
     for (let [key, value] of params) {
-      parameters.set(key, value);
+      parameters = parameters.set(key, value);
     }
 
     return parameters;
