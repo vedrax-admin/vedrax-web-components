@@ -14,6 +14,7 @@ import { DialogFormService } from '../../services/dialog-form.service';
 import { DescriptorForm } from '../../descriptor/descriptor-form';
 import { ApiMethod } from '../../enum/api-methods';
 import { DescriptorActivate } from '../../descriptor/descriptor-activate';
+import { ComparatorType } from '../../enum/comparator-type';
 
 /**
  * Class that defines a table component with its search box
@@ -175,29 +176,38 @@ export class VedraxTableComponent implements AfterViewInit, OnInit, OnDestroy {
    * @param element the selected element
    */
   select(action: DescriptorAction, item: any): void {
-
-    const activate = action.activate;
-
-    if (this.stopEmit(activate, item)) {
-      alert(activate.message);
-      return;
-    }
-
     this.onSelect.emit({ action, item });
   }
 
-  isActionEnable(action: DescriptorAction, item: any): boolean {
-    const activate = action.activate;
-
-    if (activate) {
-      return item[activate.field] === activate.expected;
-    }
-
-    return true;
+  /**
+   * Method used for dynamically enabled/disabled an action on a row
+   * 
+   * @param action the action
+   * @param item the row item
+   */
+  isActionEnable(action: DescriptorAction, item: any = {}): boolean {
+    return action && action.activate ? this.applyComparison(action.activate, item) : true;
   }
 
-  stopEmit(activate: DescriptorActivate, item: any = {}): boolean {
-    return activate && item[activate.field] !== activate.expected;
+  /**
+   * Helper method for applying the provided comparator
+   * 
+   * @param activate the activate object
+   * @param item the row item
+   */
+  private applyComparison(activate: DescriptorActivate, item: any): boolean {
+    if (activate.comparator == ComparatorType.eq) {
+      return item[activate.field] === activate.value;
+    }
+    if (activate.comparator == ComparatorType.neq) {
+      return item[activate.field] !== activate.value;
+    }
+    if (activate.comparator == ComparatorType.gt) {
+      return item[activate.field] > activate.value;
+    }
+    if (activate.comparator == ComparatorType.lt) {
+      return item[activate.field] < activate.value;
+    }
   }
 
   /**

@@ -1,3 +1,5 @@
+import { ComparatorType } from "../enum/comparator-type";
+
 export class DescriptorActivate {
 
     /**
@@ -6,13 +8,13 @@ export class DescriptorActivate {
     field: string;
 
     /**
-     * expected value
+     * The comparison type
      */
-    expected: any;
+    comparator: ComparatorType;
 
     /**
-     * The displayed message in case the expected value does not match
+     * expected value
      */
-    message:string;
+    value: any;
 
 }
