@@ -18,9 +18,9 @@ export class VedraxFormComponent implements OnInit {
    */
   @Input() descriptor: DescriptorForm;
 
-  @Input() submitLabel?: string = 'Submit';
+  @Input() submitLabel?: string = 'Soumettre';
 
-  @Input() cancelLabel?: string = 'Cancel';
+  @Input() cancelLabel?: string = 'Fermer';
 
   @Input() enableCancel?: boolean = true;
 

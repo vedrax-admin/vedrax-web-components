@@ -52,7 +52,7 @@ export class VedraxFormModalComponent implements OnInit, OnDestroy {
           }))
         .subscribe(data => {
           if (data) {
-            this.snackbarService.open(formDescriptor.successMessage || 'done');
+            this.snackbarService.open(formDescriptor.successMessage || 'OK');
             this.dialogRef.close(data);
           }
         }));

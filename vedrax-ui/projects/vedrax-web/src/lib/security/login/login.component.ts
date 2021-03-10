@@ -38,6 +38,11 @@ export class VedraxLoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
 
   /**
+   * The submit label
+   */
+  submitLabel: string = 'Se connecter';
+
+  /**
    * The form component
    */
   @ViewChild(VedraxFormComponent) formComponent: VedraxFormComponent;

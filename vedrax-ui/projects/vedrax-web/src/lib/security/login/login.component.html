@@ -3,11 +3,11 @@
         <mat-card-header>
             <div mat-card-avatar class="login-card-logo"></div>
             <mat-card-title>{{descriptor.title}}</mat-card-title>
-            <mat-card-subtitle>Login</mat-card-subtitle>
+            <mat-card-subtitle>Connexion</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
 
-            <vedrax-form [descriptor]="descriptor" [enableCancel]="enableCancel" (onSubmit)="submit($event)"
+            <vedrax-form [descriptor]="descriptor" [enableCancel]="enableCancel" [submitLabel]="submitLabel" (onSubmit)="submit($event)"
                 (onCancel)="redirectToRegister($event)">
             </vedrax-form>
 
