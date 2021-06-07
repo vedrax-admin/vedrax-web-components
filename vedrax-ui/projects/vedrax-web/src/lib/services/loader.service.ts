@@ -7,7 +7,7 @@ export class LoaderService {
     /**
      * Hold the loading status that needs to be share with other components
      */
-    private loadingStatus: BehaviorSubject<boolean> = new BehaviorSubject(false);;
+    private loadingStatus: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public loaderState$: Observable<boolean> = this.loadingStatus.asObservable();
 
     constructor() {}

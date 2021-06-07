@@ -145,7 +145,7 @@ export class VedraxApiService {
     }
 
     private setHeader(contentType: string): any {
-        { headers: new HttpHeaders().set('Content-Type', contentType) };
+        return { headers: new HttpHeaders().set('Content-Type', contentType) };
     }
 
 }
